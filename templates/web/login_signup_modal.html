@@ -19,9 +19,9 @@
 
 
 <p>
-<a class="btn btn-primary social-login-btn social-twitter" href="#"><i class="fa fa-twitter"></i></a>
-<a class="btn btn-primary social-login-btn social-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
-<a class="btn btn-primary social-login-btn social-google" href="#"><i class="fa fa-google-plus"></i></a>
+<a class="btn btn-primary social-login-btn social-twitter" href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}"><i class="fa fa-twitter"></i></a>
+<a class="btn btn-primary social-login-btn social-linkedin" href="{% url 'social:begin' 'linkedin' %}?next={{ request.path }}"><i class="fa fa-linkedin"></i></a>
+<a class="btn btn-primary social-login-btn social-google" href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}"><i class="fa fa-google-plus"></i></a>
 </p>
 
 
