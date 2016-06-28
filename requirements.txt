@@ -1,6 +1,5 @@
 defusedxml==0.4.1
 Django==1.9.7
-django-allauth==0.25.2
 django-debug-toolbar==1.4
 django-filter==0.13.0
 djangorestframework==3.3.3
