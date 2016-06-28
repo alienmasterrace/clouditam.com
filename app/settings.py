@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'social.apps.django_app.default',
     'web',
     'api',
     'rest_framework',
@@ -52,6 +53,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'app.urls'
@@ -70,6 +72,8 @@ TEMPLATES = [
                 'django.core.context_processors.media',
                 'django.core.context_processors.static',
                 'django.core.context_processors.tz',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -144,3 +148,35 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+AUTHENTICATION_BACKENDS = (
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.twitter.TwitterOAuth',
+    'social.backends.linkedin.LinkedinOAuth',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+
+######### SOCIAL AUTH #################
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '175127306832-c3q5iqsflng4jkk75igjjtohi45ugm1g.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '5Zd0jqqhPMjvRv8A3GZ_LKNj'
+SOCIAL_AUTH_TWITTER_KEY = '7XXd7YMKIFSykqPBpZIthL83N'
+SOCIAL_AUTH_TWITTER_SECRET = 'ooFgZ30dogEdHW0PDgzvoPHIebTNd50uv02OOtKobB0bKccIbk'
+SOCIAL_AUTH_LINKEDIN_KEY = '77nqv1tns8rdkr'
+SOCIAL_AUTH_LINKEDIN_SECRET = '531gpI7qJaEsCaZA'
+SOCIAL_AUTH_LINKEDIN_SCOPE = ['r_basicprofile', 'r_emailaddress']
+# Add the fields so they will be requested from linkedin.
+SOCIAL_AUTH_LINKEDIN_FIELD_SELECTORS = ['email-address', ]
+# Arrange to add the fields to UserSocialAuth.extra_data
+SOCIAL_AUTH_LINKEDIN_EXTRA_DATA = [('id', 'id'),
+                                   ('firstName', 'first_name'),
+                                   ('lastName', 'last_name'),
+                                   ('emailAddress', 'email_address'),]
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/auth/login'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/'
+SOCIAL_AUTH_CLEAN_USERNAMES = True
+SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = False
