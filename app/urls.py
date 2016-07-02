@@ -16,14 +16,15 @@ Including another URLconf
 from django.conf.urls import include, url, patterns
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.views.generic import TemplateView
 
 from app import settings
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('web.urls')),
+    url(r'^dashboard/', include('dashboard.urls')),
     url('^social/', include('social.apps.django_app.urls', namespace='social')),
-    url(r'^auth/', include('django.contrib.auth.urls', namespace='auth')),
     url(r'^api/v1/', include('api.urls')),
 ]
 
@@ -32,3 +33,8 @@ if settings.DEBUG:
     urlpatterns += patterns('',
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.MAINTENANCE:
+    urlpatterns = [
+    url(r'^', TemplateView.as_view(template_name='web/maintenance.html')),
+]
