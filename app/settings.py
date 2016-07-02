@@ -24,6 +24,7 @@ SECRET_KEY = ')lsmbbo7ivr%8$bvgf1*77g9+lv4p^=^2l1qsb0%u=*co*!38$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 DEVELOPMENT = True
+MAINTENANCE = False
 
 ALLOWED_HOSTS = []
 
@@ -117,8 +118,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'web/static'),)
-STATIC_ROOT = os.path.join(BASE_DIR, 'web/staticfiles')
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'web/media')
@@ -175,7 +176,7 @@ SOCIAL_AUTH_LINKEDIN_EXTRA_DATA = [('id', 'id'),
                                    ('lastName', 'last_name'),
                                    ('emailAddress', 'email_address'),]
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/auth/login'
+LOGIN_URL = '/signin/'
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/'
 SOCIAL_AUTH_CLEAN_USERNAMES = True
