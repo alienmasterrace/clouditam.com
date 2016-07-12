@@ -21,6 +21,27 @@ class PricingView(View):
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
+class ClientsView(View):
+    template_name = 'web/clients.html'
+
+    # @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+class ContactView(View):
+    template_name = 'web/contact.html'
+
+    # @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+class AboutView(View):
+    template_name = 'web/about.html'
+
+    # @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
 
 class AccountView(View):
     template_name = 'web/account/profile.html'
