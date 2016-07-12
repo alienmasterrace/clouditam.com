@@ -14,6 +14,13 @@ class IndexView(View):
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
+class PricingView(View):
+    template_name = 'web/pricing.html'
+
+    # @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
 
 class AccountView(View):
     template_name = 'web/account/profile.html'

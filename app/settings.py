@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'django_activeurl',
     'social.apps.django_app.default',
     'web',
     'api',
