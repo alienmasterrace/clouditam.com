@@ -15,7 +15,8 @@
     <meta name="author" content="Huban Creative">
 
     <link href="{% static "web/assets/libs/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet"/>
-    <link href="{% static "web/assets/libs/pace/pace.css" %}" rel="stylesheet"/>
+    {# TODO: PAGE LOAD EFFECT HERE #}
+{#    <link href="{% static "web/assets/libs/pace/pace.css" %}" rel="stylesheet"/>#}
     <link href="{% static "web/assets/libs/animate-css/animate.min.css" %}" rel="stylesheet"/>
     <link href="{% static "web/assets/libs/iconmoon/style.css" %}" rel="stylesheet"/>
 
@@ -58,8 +59,11 @@
                             <a href="javascript:;" class="btn btn-link"><i class="icon-facebook4"></i></a>
                             <a href="javascript:;" class="btn btn-link"><i class="icon-twitter4"></i></a>
                         </div>
-                        <a href="login.html" class="login-button">LOGIN</a><a href="signup.html" class="signup-button">SIGN
-                        UP</a>
+                        {% if not user.is_authenticated %}
+                        <a href="{% url "signin" %}" class="login-button">Signin</a><a href="{% url "signup" %}" class="signup-button">Signup</a>
+                        {% else %}
+                            Hello, {{ request.user.username }}<a href="{% url "dashboard" %}" class="login-button">Go To Dashboard</a><a href="{% url "logout" %}" class="login-button">Logout</a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="top-divider"></div>

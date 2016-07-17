@@ -357,12 +357,6 @@ body {
   outline: none !important;
   -webkit-font-smoothing: antialiased;
 }
-body.pace-running {
-  background: #fff;
-}
-body.pace-running #wrapper {
-  opacity: 0;
-}
 a {
   -webkit-font-smoothing: antialiased;
   outline: none !important;
