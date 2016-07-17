@@ -1,0 +1,109 @@
+{% extends 'dashboard/base.html' %}
+{% load staticfiles %}
+{% block page_title %}Sign-In{% endblock %}
+{% block body_class %}fixed-left login-page{% endblock %}
+{% block extra_css %}
+    <link href="{% static "dashboard/assets/libs/rickshaw/rickshaw.min.css" %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/morrischart/morris.css" %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/jquery-jvectormap/css/jquery-jvectormap-1.2.2.css" %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/jquery-clock/clock.css" %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/bootstrap-calendar/css/bic_calendar.css" %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/sortable/sortable-theme-bootstrap.css" %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/jquery-weather/simpleweather.css" %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/bootstrap-xeditable/css/bootstrap-editable.css" %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static "dashboard/assets/css/style.css" %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block extra_js %}
+    <script src="{% static "dashboard/assets/libs/d3/d3.v3.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/rickshaw/rickshaw.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/raphael/raphael-min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/morrischart/morris.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/jquery-knob/jquery.knob.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/jquery-jvectormap/js/jquery-jvectormap-1.2.2.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/jquery-jvectormap/js/jquery-jvectormap-us-aea-en.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/jquery-clock/clock.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/jquery-easypiechart/jquery.easypiechart.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/jquery-weather/jquery.simpleWeather-2.6.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/bootstrap-xeditable/js/bootstrap-editable.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/bootstrap-calendar/js/bic_calendar.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/js/apps/calculator.js" %}"></script>
+    <script src="{% static "dashboard/assets/js/apps/todo.js" %}"></script>
+    <script src="{% static "dashboard/assets/js/apps/notes.js" %}"></script>
+    <script src="{% static "dashboard/assets/js/pages/index.js" %}"></script>
+{% endblock %}
+{% block page %}
+    <div class="container">
+        <div class="full-content-center">
+            <p class="text-center"><a href="#"><img src="{% static "dashboard/assets/img/login-logo.png" %}" alt="Logo"></a>
+            </p>
+            <div class="login-wrap animated flipInX">
+                <div class="login-block">
+
+                    {% if redirect_to %}
+                        <form role="form" action="{% url "signin" %}?next={{ redirect_to }}" method="post">
+                    {% else %}
+                        <form role="form" action="{% url "signin" %}" method="post">
+                    {% endif %}
+                    {% csrf_token %}
+                    <div class="form-group login-input">
+                        <i class="fa fa-user overlay"></i>
+                        <input type="text" class="form-control text-input" placeholder="Username or Email"
+                               name="username_or_email">
+                    </div>
+                    <div class="form-group login-input">
+                        <i class="fa fa-key overlay"></i>
+                        <input type="password" class="form-control text-input" placeholder="********" name="passwrd">
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <button type="submit" class="btn btn-success btn-block">Signin</button>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="{% url "signup" %}" class="btn btn-default btn-block">Signup</a>
+                        </div>
+                    </div>
+                    </form>
+                    {% if error_msg %}
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="alert alert-danger nomargin">
+                                    {{ error_msg }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="row">
+                        <p class="text-center">Or <strong>Signin With</strong></p>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <a href="{% url 'social:begin' 'twitter' %}">
+                                <button class="btn btn-twitter btn-block"><i class="fa fa-twitter"></i>Twitter</button>
+                            </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="{% url 'social:begin' 'linkedin' %}">
+                                <button class="btn btn-linkedin btn-block"><i class="fa fa-linkedin"></i>Linkedin
+                                </button>
+                            </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="{% url 'social:begin' 'google-oauth2' %}">
+                                <button class="btn btn-google-plus btn-block"><i class="fa fa-google"></i>Google
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

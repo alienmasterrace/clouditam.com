@@ -1,11 +1,12 @@
-from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth import logout, authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, HttpResponseRedirect
 from django.utils.datetime_safe import datetime
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 from web.forms import SignUpForm, SignInForm
-
+import datetime
 
 class IndexView(View):
     template_name = 'web/index.html'
@@ -52,45 +53,82 @@ class AccountView(View):
 
 
 class SignInView(View):
-    template_name = 'web/signin.html'
+    template_name = 'signin.html'
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        redirect_to = request.GET.get('next')
+        if request.user.is_authenticated():
+            return HttpResponseRedirect('/')
+        else:
+            return render(request, self.template_name, locals())
 
     def post(self, request, *args, **kwargs):
         form = SignInForm(request.POST)
         if form.is_valid():
-            user = authenticate(username=form.data['username_or_email'], password=form.data['passwrd'])
+            ffield = form.data['username_or_email']
+            if '@' in ffield:
+                try:
+                    ffield = get_user_model().objects.get(email=ffield).username
+                except ObjectDoesNotExist:
+                    ffield = form.data['username_or_email']
+            user = authenticate(username=ffield, password=form.data['passwrd'])
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('/')
+                    if request.GET.get('next') is None:
+                        return HttpResponseRedirect('/')
+                    else:
+                        return HttpResponseRedirect(request.GET.get('next'))
                 else:
-                    error_msg = 'There was an error!'
+                    error_msg = 'Your account was locked.'
                     return render(request, self.template_name, {'form': form, 'error_msg': error_msg})
             else:
-                error_msg = 'There was an error!'
+                error_msg = 'Unable to log in with provided credentials.'
                 return render(request, self.template_name, {'form': form, 'error_msg': error_msg})
         else:
-            error_msg = 'There was an error!'
+            error_msg = 'Some fields are empty!'
             return render(request, self.template_name, {'form': form, 'error_msg': error_msg})
 
 
 class SignUpView(View):
-    template_name = 'web/index.html'
+    template_name = 'signup.html'
 
-    # @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        if not request.user.is_authenticated():
+            return render(request, self.template_name)
+        else:
+            return HttpResponseRedirect('/')
 
     def post(self, request, *args, **kwargs):
-        form = SignUpForm(request.POST)
-        print(form.errors)
-        return HttpResponseRedirect('/')
+        data = request.POST.copy()
+        data['date_joined'] = datetime.date.today()
+        data['last_login'] = datetime.datetime.now()
+        form = SignUpForm(data)
+        if form.is_valid():
+            form.save()
+            user = get_user_model().objects.get(username=form.data['username'], email=form.data['email'])
+            user.set_password(data['password'])
+            user.email = form.data['email']
+            # TODO: Simdilik active!
+            user.is_active = True
+            user.save()
+            u = authenticate(username=form.data['username'], password=form.data['password'])
+            login(request, u)
+            return HttpResponseRedirect('/')
+        else:
+            error_msg = ""
+            if form['username'].errors:
+                error_msg += form['username'].errors
+            if form['email'].errors:
+                error_msg += form['email'].errors
+            if form['password'].errors:
+                error_msg += form['password'].errors
+            return render(request, self.template_name, {'form': form, 'error_msg': error_msg})
 
 
 class LogoutView(View):
-    @method_decorator(login_required)
+
     def get(self, request, *args, **kwargs):
-        logout(request)
+        if request.user.is_authenticated():
+            logout(request)
         return HttpResponseRedirect('/')
