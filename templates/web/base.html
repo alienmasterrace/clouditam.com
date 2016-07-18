@@ -16,7 +16,7 @@
 
     <link href="{% static "web/assets/libs/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet"/>
     {# TODO: PAGE LOAD EFFECT HERE #}
-{#    <link href="{% static "web/assets/libs/pace/pace.css" %}" rel="stylesheet"/>#}
+    {#    <link href="{% static "web/assets/libs/pace/pace.css" %}" rel="stylesheet"/>#}
     <link href="{% static "web/assets/libs/animate-css/animate.min.css" %}" rel="stylesheet"/>
     <link href="{% static "web/assets/libs/iconmoon/style.css" %}" rel="stylesheet"/>
 
@@ -60,9 +60,15 @@
                             <a href="javascript:;" class="btn btn-link"><i class="icon-twitter4"></i></a>
                         </div>
                         {% if not user.is_authenticated %}
-                        <a href="{% url "signin" %}" class="login-button">Signin</a><a href="{% url "signup" %}" class="signup-button">Signup</a>
+                            <a href="{% url "signin" %}" class="login-button">Signin</a>
+                            <a href="{% url "signup" %}" class="signup-button">Signup</a>
                         {% else %}
-                            Hello, {{ request.user.username }}<a href="{% url "dashboard" %}" class="login-button">Go To Dashboard</a><a href="{% url "logout" %}" class="login-button">Logout</a>
+                            Hello,{% if request.user.first_name or request.user.last_name %}
+                            {{ request.user.first_name }} {{ request.user.last_name }} {% else %}
+                            {{ request.user.username }} {% endif %}
+                            <a href="{% url "account" %}" class="login-button">Account</a>
+                            <a href="{% url "dashboard" %}" class="login-button">Go To Dashboard</a>
+                            <a href="{% url "logout" %}" class="login-button">Logout</a>
                         {% endif %}
                     </div>
                 </div>
@@ -87,9 +93,9 @@
                 <div class="collapse navbar-collapse" id="main-navigation">
                     {% load activeurl %}
                     {% activeurl %}
-                    <ul class="nav navbar-nav navbar-right">
-                        {% include 'web/layouts/menu.html' %}
-                    </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            {% include 'web/layouts/menu.html' %}
+                        </ul>
                     {% endactiveurl %}
                 </div>
                 <!-- /.navbar-collapse -->
@@ -107,7 +113,8 @@
             <div class="row">
                 <div class="col-sm-4">
                     <a href="#">
-                        <img src="{% static "web/assets/img/logo.png" %}" alt="Coco Frontend Template" class="footer-logo">
+                        <img src="{% static "web/assets/img/logo.png" %}" alt="Coco Frontend Template"
+                             class="footer-logo">
                     </a>
                     <h5>Designing your future...</h5>
 

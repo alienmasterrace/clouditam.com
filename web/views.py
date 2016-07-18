@@ -45,9 +45,9 @@ class AboutView(View):
 
 
 class AccountView(View):
-    template_name = 'web/account/profile.html'
+    template_name = 'account.html'
 
-    # @method_decorator(login_required)
+    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 

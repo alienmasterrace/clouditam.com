@@ -11,7 +11,8 @@
     <meta name="author" content="Huban Creative">
 
     <!-- Base Css Files -->
-    <link href="{% static "dashboard/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" %}" rel="stylesheet"/>
+    <link href="{% static "dashboard/assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css" %}"
+          rel="stylesheet"/>
     <link href="{% static "dashboard/assets/libs/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet"/>
     <link href="{% static "dashboard/assets/libs/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet"/>
     <link href="{% static "dashboard/assets/libs/fontello/css/fontello.css" %}" rel="stylesheet"/>
@@ -46,10 +47,14 @@
     <link rel="apple-touch-icon" sizes="57x57" href="{% static "dashboard/assets/img/apple-touch-icon-57x57.png" %}"/>
     <link rel="apple-touch-icon" sizes="72x72" href="{% static "dashboard/assets/img/apple-touch-icon-72x72.png" %}"/>
     <link rel="apple-touch-icon" sizes="76x76" href="{% static "dashboard/assets/img/apple-touch-icon-76x76.png" %}"/>
-    <link rel="apple-touch-icon" sizes="114x114" href="{% static "dashboard/assets/img/apple-touch-icon-114x114.png" %}"/>
-    <link rel="apple-touch-icon" sizes="120x120" href="{% static "dashboard/assets/img/apple-touch-icon-120x120.png" %}"/>
-    <link rel="apple-touch-icon" sizes="144x144" href="{% static "dashboard/assets/img/apple-touch-icon-144x144.png" %}"/>
-    <link rel="apple-touch-icon" sizes="152x152" href="{% static "dashboard/assets/img/apple-touch-icon-152x152.png" %}"/>
+    <link rel="apple-touch-icon" sizes="114x114"
+          href="{% static "dashboard/assets/img/apple-touch-icon-114x114.png" %}"/>
+    <link rel="apple-touch-icon" sizes="120x120"
+          href="{% static "dashboard/assets/img/apple-touch-icon-120x120.png" %}"/>
+    <link rel="apple-touch-icon" sizes="144x144"
+          href="{% static "dashboard/assets/img/apple-touch-icon-144x144.png" %}"/>
+    <link rel="apple-touch-icon" sizes="152x152"
+          href="{% static "dashboard/assets/img/apple-touch-icon-152x152.png" %}"/>
 </head>
 <body class="{% block body_class %}{% endblock %}">
 <!-- Modal Start -->
@@ -107,8 +112,27 @@
     </div>
 </div>        <!-- Modal End -->
 <!-- Begin page -->
-{% block page %}
-{% endblock %}
+<div id="wrapper">
+    <!-- Top Bar Start -->
+    {% if request.user.is_authenticated %}
+        {% include 'dashboard/layouts/topbar.html' %}
+        <!-- Top Bar End -->
+        <!-- Left Sidebar Start -->
+        {% include 'dashboard/layouts/left_side.html' %}
+
+        <!-- Left Sidebar End -->            <!-- Right Sidebar Start -->
+        {% include 'dashboard/layouts/right_side.html' %}
+    {% endif %}
+    <!-- Right Sidebar End -->
+    <!-- Start right content -->
+    {% block login_page %}
+    {% endblock %}
+    {% block right_content %}
+    {% endblock %}
+    <!-- End right content -->
+
+</div>
+
 <!-- End of page -->
 <!-- the overlay modal element -->
 <div class="md-overlay"></div>
@@ -142,7 +166,7 @@
 
 <!-- Demo Specific JS Libraries -->
 <script src="{% static "dashboard/assets/libs/prettify/prettify.js" %}"></script>
-
+{# TODO: Change this for production #}
 <script src="{% static "dashboard/assets/js/init.js" %}"></script>
 
 <!-- Page Specific JS Libraries -->
