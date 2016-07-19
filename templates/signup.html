@@ -1,7 +1,7 @@
 {% extends 'dashboard/base.html' %}
 {% load staticfiles %}
 {% block page_title %}Sign-In{% endblock %}
-{% block body_class %}fixed-left login-page{% endblock %}
+{% block body_class %}login-page{% endblock %}
 {% block extra_css %}
     <link href="{% static "dashboard/assets/libs/rickshaw/rickshaw.min.css" %}" rel="stylesheet" type="text/css"/>
     <link href="{% static "dashboard/assets/libs/morrischart/morris.css" %}" rel="stylesheet" type="text/css"/>
@@ -36,8 +36,8 @@
     <script src="{% static "dashboard/assets/js/apps/notes.js" %}"></script>
     <script src="{% static "dashboard/assets/js/pages/index.js" %}"></script>
 {% endblock %}
-{% block page %}
-    <div class="container">
+{% block login_page %}
+    <div class="container login-page">
         <div class="container">
             <div class="full-content-center animated fadeInDownBig">
                 <p class="text-center"><a href="#"><img src="{% static "dashboard/assets/img/login-logo.png" %}"
