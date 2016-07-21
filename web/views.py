@@ -7,40 +7,55 @@ from django.views.generic import View
 from django.utils.decorators import method_decorator
 from web.forms import SignUpForm, SignInForm
 import datetime
+from web.models import Header
+
+
+# TODO: Move better place
+def get_header(pagen):
+    try:
+        return Header.objects.get(page=pagen)
+    except ObjectDoesNotExist:
+        return ""
+
 
 class IndexView(View):
     template_name = 'web/index.html'
 
-    # @method_decorator(login_required)
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+    def get(self, request):
+        header = get_header(1)
+        return render(request, self.template_name, {"header":header})
+
 
 class PricingView(View):
     template_name = 'web/pricing.html'
 
-    # @method_decorator(login_required)
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+    def get(self, request):
+        header = get_header(2)
+        return render(request, self.template_name, {"header": header})
+
 
 class ClientsView(View):
     template_name = 'web/clients.html'
 
-    # @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
+        header = get_header(3)
         return render(request, self.template_name)
+
 
 class ContactView(View):
     template_name = 'web/contact.html'
 
-    # @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
+        header = get_header(4)
         return render(request, self.template_name)
+
 
 class AboutView(View):
     template_name = 'web/about.html'
 
-    # @method_decorator(login_required)
+
     def get(self, request, *args, **kwargs):
+        header = get_header(5)
         return render(request, self.template_name)
 
 
