@@ -183,3 +183,9 @@ SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/'
 SOCIAL_AUTH_CLEAN_USERNAMES = True
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = False
+
+CKEDITOR_CONFIGS = {
+    'awesome_ckeditor': {
+        'toolbar': 'full',
+    },
+}
