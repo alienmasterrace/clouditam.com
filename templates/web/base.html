@@ -67,7 +67,8 @@
                             {{ request.user.first_name }} {{ request.user.last_name }} {% else %}
                             {{ request.user.username }} {% endif %}
                             <a href="{% url "account" %}" class="login-button hidden-sm hidden-xs hidden-md">Account</a>
-                            <a href="{% url "dashboard" %}" class="login-button hidden-sm hidden-xs hidden-md">Go To Dashboard</a>
+                            <a href="{% url "dashboard" %}" class="login-button hidden-sm hidden-xs hidden-md">Go To
+                                Dashboard</a>
                             <a href="{% url "logout" %}" class="login-button hidden-sm hidden-xs hidden-md">Logout</a>
                         {% endif %}
                     </div>
@@ -103,6 +104,13 @@
             <!-- /.container-->
         </nav>
         {% block header %}
+            <section class="main-slider" data-stellar-background-ratio="0.5"
+             style="background-image: url({{ header.bg_image.url }})">
+        <div class="slider-caption">
+            <div data-animate="fadeInDown" data-delay="100" data-duration="2s">{{ header.text_area|safe }} </div>
+            <a data-animate="fadeInUp" data-duration="2s" data-delay="200" href="{{ header.button_url }}"
+               class="btn btn-primary btn-lg">{{ header.button_text }}</a></div>
+    </section>
         {% endblock %}
     </header>
     {% block content %}
