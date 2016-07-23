@@ -7,7 +7,7 @@ from django.views.generic import View
 from django.utils.decorators import method_decorator
 from web.forms import SignUpForm, SignInForm
 import datetime
-from web.models import Header
+from web.models import Header, Account, PRICE_TYPE
 
 
 # TODO: Move better place
@@ -22,7 +22,7 @@ class IndexView(View):
     template_name = 'web/index.html'
 
     def get(self, request):
-        header = get_header(1)
+        header = get_header('Index')
         return render(request, self.template_name, {"header":header})
 
 
@@ -30,8 +30,11 @@ class PricingView(View):
     template_name = 'web/pricing.html'
 
     def get(self, request):
-        header = get_header(2)
-        return render(request, self.template_name, {"header": header})
+        header = get_header('Pricing')
+        prices = Account.objects.all()
+        col = int(12/len(prices)+1)*2
+        context = {"header": header, 'prices': prices, 'col':col}
+        return render(request, self.template_name, context)
 
 
 class ClientsView(View):

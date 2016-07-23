@@ -1,18 +1,20 @@
 from django.contrib.auth.models import User
 from django.db import models
 from ckeditor.fields import RichTextField
+from dashboard.models import Asset, DashUser, Application
 
 PAGE_TYPE = (
-    (1, 'Index'),
-    (2, 'Pricing'),
-    (3, 'Clients'),
-    (4, 'Contact'),
-    (5, 'About'),
+    ('Index', 'Index'),
+    ('Pricing', 'Pricing'),
+    ('Clients', 'Clients'),
+    ('Contact', 'Contact'),
+    ('About', 'About'),
 )
 
 PRICE_TYPE = (
-    (1, 'Monthly'),
-    (2, 'Annually')
+    ('Monthly', 'Monthly'),
+    ('Annually', 'Annually'),
+    ('Free', 'Free')
 )
 
 
@@ -33,14 +35,18 @@ class Client(models.Model):
 class Account(models.Model):
     name = models.CharField(max_length=64, null=True)
     asset_limit = models.IntegerField(null=True, default=10,help_text="Give 0 for unlimited.")
-    price = models.FloatField(null=True, default=0)
+    price = models.DecimalField(max_digits=64, decimal_places=2, null=True, default=0)
     details = RichTextField(null=True,config_name='awesome_ckeditor')
-    type = models.IntegerField(default=1, choices=PRICE_TYPE)
+    type = models.CharField(max_length=64,default="Monthly", choices=PRICE_TYPE)
 
 
 class Customer(models.Model):
+    address = models.TextField()
     account = models.ForeignKey(Account)
     user = models.OneToOneField(User, unique=True)
+    assets = models.ManyToManyField(Asset)
+    users = models.ManyToManyField(DashUser)
+    apps = models.ManyToManyField(Application)
 
 
 class Header(models.Model):
@@ -49,7 +55,7 @@ class Header(models.Model):
     text_area = RichTextField(config_name='awesome_ckeditor')
     button_text = models.CharField(max_length=64,null=True)
     button_url = models.CharField(max_length=64, null=True)
-    page = models.IntegerField(choices=PAGE_TYPE,default=1, unique=True)
+    page = models.CharField(max_length=64, choices=PAGE_TYPE,default="Index", unique=True)
 
     def __str__(self):
-        return "{} Page".format(PAGE_TYPE[self.page-1][1])
+        return "{} Page".format(self.page)

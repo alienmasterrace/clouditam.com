@@ -98,34 +98,41 @@
         <div class="container">
             <h2>OUR PACKAGES</h2><br>
             <div class="row">
-                <div class="col-md-3 col-sm-6">
+
+            <div class="col-md-6 col-sm-6">
+                <div class="pricing text-center">
+
+                    <div class="h1">
+                        <h1>Monthly</h1>
+                    </div>
+                <div class="row">
+                {% for price in prices %}
+                    {% if price.type == 'Monthly'%}
+                <div class="col-md-{{ col }} col-sm-6">
                     <div class="pricing text-center">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="pricing-header">
-                                    <h3>TRIAL</h3>
+                                    <h3>{{ price.name }}</h3>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="pricing-price">
-                                    FREE<br>
-                                    <p class="text-sm">Duis aute irure dolor in repre.</p>
+                                    {% if price.price == 0 %}
+                                        free<br>
+                                        {% else %}
+                                    <span class="pricing-currency">$</span>{{ price.price }}<span class="pricing-period">/m</span>
+                                    {% endif %}
+                                    <p class="text-sm">Small text here</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <ul class="list-unstyled pricing-features">
-                                <li><i class="icon-star7"></i><i class="icon-star7"></i><i class="icon-star6"></i><i
-                                        class="icon-star5"></i><i class="icon-star5"></i></li>
-                                <li>2 GB Diskspace</li>
-                                <li>10 GB Traffic</li>
-                                <li>10 Email Accounts</li>
-                                <li>1 Database</li>
-                                <li>Limited Support</li>
-                            </ul>
-                        </div>
+                       <div class="row">
+                            <br>
+                            {{ price.details|safe }}
+                            </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="pricing-buttons">
@@ -134,125 +141,67 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                    {% endif %}
+                    {% endfor %}
                 </div>
 
-                <div class="col-md-3 col-sm-6">
-                    <div class="pricing text-center">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-header">
-                                    <h3>BASIC</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-price">
-                                    <span class="pricing-currency">$</span>19<span class="pricing-period">/m</span><br>
-                                    <p class="text-sm">Duis aute irure dolor in repre.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <ul class="list-unstyled pricing-features">
-                                <li><i class="icon-star7"></i><i class="icon-star7"></i><i class="icon-star6"></i><i
-                                        class="icon-star5"></i><i class="icon-star5"></i></li>
-                                <li>10 GB Diskspace</li>
-                                <li>50 GB Traffic</li>
-                                <li>10 Email Accounts</li>
-                                <li>1 Database</li>
-                                <li>Limited Support</li>
-                            </ul>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-buttons">
-                                    <a class="btn btn-block btn-primary">PURCHASE</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3 col-sm-6">
-                    <div class="pricing text-center pricing-selected">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-header">
-                                    <h3>PROFESSIONAL</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-price">
-                                    <span class="pricing-currency">$</span>79<span class="pricing-period">/m</span><br>
-                                    <p class="text-sm">Duis aute irure dolor in repre.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <ul class="list-unstyled pricing-features">
-                                <li><i class="icon-star7"></i><i class="icon-star7"></i><i class="icon-star6"></i><i
-                                        class="icon-star5"></i><i class="icon-star5"></i></li>
-                                <li>20 GB Diskspace</li>
-                                <li>100 GB Traffic</li>
-                                <li>100 Email Accounts</li>
-                                <li>10 Database</li>
-                                <li>Limited Support</li>
-                                <li><b>Free SSL Certificate</b></li>
-                            </ul>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-buttons">
-                                    <a class="btn btn-block btn-primary">PURCHASE</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3 col-sm-6">
-                    <div class="pricing text-center">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-header">
-                                    <h3>PLATINIUM</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-price">
-                                    <span class="pricing-currency">$</span>149<span class="pricing-period">/m</span><br>
-                                    <p class="text-sm">Duis aute irure dolor in repre.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <ul class="list-unstyled pricing-features">
-                                <li><i class="icon-star7"></i><i class="icon-star7"></i><i class="icon-star6"></i><i
-                                        class="icon-star5"></i><i class="icon-star5"></i></li>
-                                <li>2000 GB Diskspace</li>
-                                <li>10 TB Traffic</li>
-                                <li>Unlimited Email Accounts</li>
-                                <li>Unlimited Database</li>
-                                <li>Unlimited Support</li>
-                                <li><b>Free SSL Certificate</b></li>
-                                <li><b>Free Domain</b></li>
-                            </ul>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-buttons">
-                                    <a class="btn btn-block btn-primary">PURCHASE</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
+            </div>
+
+
+            <div class="col-md-6 col-sm-6">
+                <div class="pricing text-center">
+
+                    <div class="h1">
+                        <h1>Annually</h1>
+                    </div>
+                <div class="row">
+                {% for price in prices %}
+                    {% if price.type == 'Annually'%}
+                <div class="col-md-{{ col }} col-sm-6">
+                    <div class="pricing text-center">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="pricing-header">
+                                    <h3>{{ price.name }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="pricing-price">
+                                    {% if price.price == 0 %}
+                                        free<br>
+                                        {% else %}
+                                    <span class="pricing-currency">$</span>{{ price.price }}<span class="pricing-period">/m</span><span class="pricing-m">x12</span>
+                                    {% endif %}
+                                    <p class="text-sm">small text here</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br>
+                            {{ price.details|safe }}
+                            </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="pricing-buttons">
+                                    <a class="btn btn-block btn-primary">PURCHASE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+            </div>
+            </div>
+
+            </div>
+
         </div>
     </section>
 {% endblock %}

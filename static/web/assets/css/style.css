@@ -959,7 +959,7 @@ header.inverted #topbar .top-divider {
   background: #68c39f;
 }
 .pricing .pricing-price {
-  font-size: 50px;
+  font-size: 24px;
   font-weight: 300;
   background: #abb7b7;
   color: #fff;
@@ -983,6 +983,12 @@ header.inverted #topbar .top-divider {
   color: #fff;
   font-size: 18px;
   top: -20px;
+  position: relative;
+}
+.pricing .pricing-m {
+  color: #fff;
+  font-size: 14px;
+  top: 10px;
   position: relative;
 }
 .pricing .pricing-period {
