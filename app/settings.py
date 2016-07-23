@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'ckeditor',
     'django_activeurl',
     'social.apps.django_app.default',
+    'dashboard',
     'web',
     'api',
     'rest_framework',

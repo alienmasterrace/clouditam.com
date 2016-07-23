@@ -17,6 +17,10 @@ PRICE_TYPE = (
     ('Free', 'Free')
 )
 
+class Settings(models.Model):
+    maintenance_message = models.TextField()
+
+
 
 class About(models.Model):
     pass
