@@ -30,11 +30,14 @@ class PricingView(View):
     template_name = 'web/pricing.html'
 
     def get(self, request):
-        header = get_header('Pricing')
-        prices = Account.objects.all()
-        col = int(12/len(prices)+1)*2
-        context = {"header": header, 'prices': prices, 'col':col}
-        return render(request, self.template_name, context)
+        if request.user.is_authenticated():
+            return HttpResponseRedirect('/')
+        else:
+            header = get_header('Pricing')
+            prices = Account.objects.all()
+            col = int(12/len(prices)+1)*2
+            context = {"header": header, 'prices': prices, 'col':col}
+            return render(request, self.template_name, context)
 
 
 class ClientsView(View):
