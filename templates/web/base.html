@@ -66,7 +66,7 @@
                             Hello,{% if request.user.first_name or request.user.last_name %}
                             {{ request.user.first_name }} {{ request.user.last_name }} {% else %}
                             {{ request.user.username }} {% endif %}
-                            <a href="{% url "account" %}" class="login-button hidden-sm hidden-xs hidden-md">Account</a>
+                            <a href="{% url "account-settings" %}" class="login-button hidden-sm hidden-xs hidden-md">Account</a>
                             <a href="{% url "dashboard" %}" class="login-button hidden-sm hidden-xs hidden-md">Go To
                                 Dashboard</a>
                             <a href="{% url "logout" %}" class="login-button hidden-sm hidden-xs hidden-md">Sign Out</a>

@@ -1,7 +1,7 @@
 <li><a href="{% url 'index' %}">Home</a></li>
 {% if request.user.is_authenticated %}
-<li><a href="{% url "account" %}" class="login-button hidden-lg hidden-desktop">Dashboard</a></li>
-<li><a href="{% url "dashboard" %}" class="login-button hidden-lg hidden-desktop">Account</a></li>
+<li><a href="{% url "dashboard" %}" class="login-button hidden-lg hidden-desktop">Dashboard</a></li>
+<li><a href="{% url "account-settings" %}" class="login-button hidden-lg hidden-desktop">Account</a></li>
 {% else %}
 <li><a href="{% url 'pricing' %}">Pricing</a></li>
 {% endif %}

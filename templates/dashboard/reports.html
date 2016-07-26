@@ -1,0 +1,40 @@
+{% extends 'dashboard/base.html' %}
+{% load staticfiles %}
+{% block page_title %}Reports{% endblock %}
+{% block body_class %}fixed-left{% endblock %}
+{% block extra_css %}
+    <link href="{% static "dashboard/assets/libs/rickshaw/rickshaw.min.css" %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/morrischart/morris.css" %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/jquery-jvectormap/css/jquery-jvectormap-1.2.2.css" %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/jquery-clock/clock.css" %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/bootstrap-calendar/css/bic_calendar.css" %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/sortable/sortable-theme-bootstrap.css" %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/jquery-weather/simpleweather.css" %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/bootstrap-xeditable/css/bootstrap-editable.css" %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static "dashboard/assets/css/style.css" %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block extra_js %}
+    <script src="{% static "dashboard/assets/libs/d3/d3.v3.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/rickshaw/rickshaw.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/raphael/raphael-min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/morrischart/morris.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/jquery-knob/jquery.knob.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/jquery-jvectormap/js/jquery-jvectormap-1.2.2.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/jquery-jvectormap/js/jquery-jvectormap-us-aea-en.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/jquery-clock/clock.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/jquery-easypiechart/jquery.easypiechart.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/jquery-weather/jquery.simpleWeather-2.6.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/bootstrap-xeditable/js/bootstrap-editable.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/bootstrap-calendar/js/bic_calendar.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/js/apps/calculator.js" %}"></script>
+    <script src="{% static "dashboard/assets/js/apps/todo.js" %}"></script>
+    <script src="{% static "dashboard/assets/js/apps/notes.js" %}"></script>
+    <script src="{% static "dashboard/assets/js/pages/index.js" %}"></script>
+{% endblock %}
+{% block right_content %}
+{% endblock %}

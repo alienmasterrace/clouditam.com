@@ -1,6 +1,6 @@
 {% extends 'dashboard/base.html' %}
 {% load staticfiles %}
-{% block page_title %}Account{% endblock %}
+{% block page_title %}Assets{% endblock %}
 {% block body_class %}fixed-left{% endblock %}
 {% block extra_css %}
     <link href="{% static "dashboard/assets/libs/rickshaw/rickshaw.min.css" %}" rel="stylesheet" type="text/css"/>
@@ -37,22 +37,4 @@
     <script src="{% static "dashboard/assets/js/pages/index.js" %}"></script>
 {% endblock %}
 {% block right_content %}
-    <div class="content-page">
-        <!-- ============================================================== -->
-        <!-- Start Content here -->
-        <!-- ============================================================== -->
-        <div class="content">
-            <!-- Start info box -->
-
-
-
-            <!-- Footer Start -->
-            {% include 'dashboard/layouts/footer.html' %}
-            <!-- Footer End -->
-        </div>
-        <!-- ============================================================== -->
-        <!-- End content here -->
-        <!-- ============================================================== -->
-
-    </div>
 {% endblock %}

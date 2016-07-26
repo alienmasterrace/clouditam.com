@@ -37,12 +37,6 @@
     <script src="{% static "dashboard/assets/js/pages/index.js" %}"></script>
 {% endblock %}
 {% block right_content %}
-    <div class="content-page">
-        <!-- ============================================================== -->
-        <!-- Start Content here -->
-        <!-- ============================================================== -->
-        <div class="content">
-            <!-- Start info box -->
             <div class="row top-summary">
                 <div class="col-lg-4 col-md-6">
                     <div class="widget green-1 animated fadeInDown">
@@ -118,39 +112,27 @@
                 </div>
 
             </div>
-            <!-- End of info box -->
-
             <div class="row">
 									<div class="col-lg-4 col-md-6">
 										<div class="btn-wrapper">
 
-							                <a class="btn btn-success btn-lg btn-block">Hardware Inventory Page</a>
+							                <a href="{% url "assets" %}" class="btn btn-success btn-lg btn-block">Hardware Inventory Page</a>
 
 										</div>
 									</div>
                                     <div class="col-lg-4 col-md-6">
 										<div class="btn-wrapper">
 
-							                <a class="btn btn-primary btn-lg btn-block">Software Inventory Page</a>
+							                <a href="{% url "software" %}" class="btn btn-primary btn-lg btn-block">Software Inventory Page</a>
 
 										</div>
 									</div>
                                     <div class="col-lg-4 col-md-6">
 										<div class="btn-wrapper">
 
-							                <a class="btn btn-default btn-lg btn-block">Users Inventory Page</a>
+							                <a href="{% url "users" %}" class="btn btn-default btn-lg btn-block">Users Inventory Page</a>
 
 										</div>
 									</div>
                 </div>
-
-            <!-- Footer Start -->
-            {% include 'dashboard/layouts/footer.html' %}
-            <!-- Footer End -->
-        </div>
-        <!-- ============================================================== -->
-        <!-- End content here -->
-        <!-- ============================================================== -->
-
-    </div>
 {% endblock %}
