@@ -1,8 +1,11 @@
 <li><a href="{% url 'index' %}">Home</a></li>
+{% if request.user.is_authenticated %}
 <li><a href="{% url "account" %}" class="login-button hidden-lg hidden-desktop">Dashboard</a></li>
 <li><a href="{% url "dashboard" %}" class="login-button hidden-lg hidden-desktop">Account</a></li>
+{% else %}
 <li><a href="{% url 'pricing' %}">Pricing</a></li>
+{% endif %}
 <li><a href="{% url 'clients' %}">Clients</a></li>
 <li><a href="{% url 'contact' %}">Contact</a></li>
 <li><a href="{% url 'about' %}">About</a></li>
-<li><a href="{% url "logout" %}" class="login-button hidden-lg hidden-desktop">Logout</a></li>
+<li><a href="{% url "logout" %}" class="login-button hidden-lg hidden-desktop">Sign Out</a></li>

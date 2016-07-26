@@ -1,5 +1,5 @@
 {% load staticfiles %}
-<div class="topbar">
+<div class="topbar" xmlns="http://www.w3.org/1999/html">
     <div class="topbar-left">
         <div class="logo">
             <h1><a href="#"><img src="{% static "dashboard/assets/img/logo.png" %}" alt="Logo"></a></h1>
@@ -12,49 +12,27 @@
     <div class="navbar navbar-default" role="navigation">
         <div class="container">
             <div class="navbar-collapse2">
-                <ul class="nav navbar-nav hidden-xs">
-                    {#                            <li class="dropdown">#}
-                    {#                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-th"></i></a>#}
-                    {#                                <div class="dropdown-menu grid-dropdown">#}
-                    {#                                    <div class="row stacked">#}
-                    {#                                        <div class="col-xs-4">#}
-                    {#                                            <a href="javascript:;" data-app="notes-app" data-status="active"><i#}
-                    {#                                                    class="icon-edit"></i>Notes</a>#}
-                    {#                                        </div>#}
-                    {#                                        <div class="col-xs-4">#}
-                    {#                                            <a href="javascript:;" data-app="todo-app" data-status="active"><i#}
-                    {#                                                    class="icon-check"></i>Todo List</a>#}
-                    {#                                        </div>#}
-                    {#                                        <div class="col-xs-4">#}
-                    {#                                            <a href="javascript:;" data-app="calc" data-status="inactive"><i#}
-                    {#                                                    class="fa fa-calculator"></i>Calculator</a>#}
-                    {#                                        </div>#}
-                    {#                                    </div>#}
-                    {#                                    <div class="row stacked">#}
-                    {#                                        <div class="col-xs-4">#}
-                    {#                                            <a href="javascript:;" data-app="weather-widget" data-status="active"><i#}
-                    {#                                                    class="icon-cloud-3"></i>Weather</a>#}
-                    {#                                        </div>#}
-                    {#                                        <div class="col-xs-4">#}
-                    {#                                            <a href="javascript:;" data-app="calendar-widget2" data-status="active"><i#}
-                    {#                                                    class="icon-calendar"></i>Calendar</a>#}
-                    {#                                        </div>#}
-                    {#                                        <div class="col-xs-4">#}
-                    {#                                            <a href="javascript:;" data-app="stock-app" data-status="inactive"><i#}
-                    {#                                                    class="icon-chart-line"></i>Stocks</a>#}
-                    {#                                        </div>#}
-                    {#                                    </div>#}
-                    {#                                    <div class="clearfix"></div>#}
-                    {#                                </div>#}
-                    {#                            </li>#}
-                    {#                            <li class="language_bar dropdown hidden-xs">#}
-                    {#                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">English <i#}
-                    {#                                        class="fa fa-caret-down"></i></a>#}
-                    {#                                <ul class="dropdown-menu pull-right">#}
-                    {#                                    <li><a href="#">English</a></li>#}
-                    {#                                </ul>#}
-                    {#                            </li>#}
-                </ul>
+                {% load activeurl %}
+                {% activeurl %}
+                    <ul class="nav navbar-nav hidden-xs">
+                        <li><a href="{% url 'index' %}"><i
+                                class='fa fa-home'></i><span> Home</span></a>
+                        </li>
+                        <li><a href='{% url 'clients' %}'><i
+                                class='fa fa-child'></i><span> Clients</span></a>
+                        </li>
+                        <li><a href='{% url 'contact' %}'><i
+                                class='fa fa-phone'></i><span> Contact</span></a>
+                        </li>
+                        <li><a href='{% url 'about' %}'><i
+                                class='fa fa-info'></i><span> About</span></a>
+                        </li>
+                        <li><a class="md-trigger" data-modal="logout-modal"><i
+                                class='icon-logout-1'></i><span>Sign Out</span></a>
+                        </li>
+
+                    </ul>
+                {% endactiveurl %}
                 <ul class="nav navbar-nav navbar-right top-navbar">
 
                     <li class="dropdown iconify hide-phone"><a href="#"
@@ -62,8 +40,7 @@
                             class="icon-resize-full-2"></i></a></li>
                     <li class="dropdown topbar-profile">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
-                                class="rounded-image topbar-profile-image"><img
-                                src="{% static "dashboard/images/users/user-35.jpg" %}"></span>
+                                class="text-blue-1">Dear,</span>
                             {% if request.user.first_name or request.user.last_name %}
                                 {{ request.user.first_name }} <strong>{{ request.user.last_name }}</strong> {% else %}
                                 {{ request.user.username }} {% endif %}<i class="fa fa-caret-down"></i></a>
@@ -73,13 +50,13 @@
                             <li class="divider"></li>
                             <li><a href="#"><i class="icon-help-2"></i> Help</a></li>
                             <li><a class="md-trigger" data-modal="logout-modal"><i class="icon-logout-1"></i>
-                                Logout</a></li>
+                                Sign Out</a></li>
                         </ul>
                     </li>
-                    <li class="right-opener">
-                        <a href="javascript:;" class="open-right"><i class="fa fa-angle-double-left"></i><i
-                                class="fa fa-angle-double-right"></i></a>
-                    </li>
+                    {#                    <li class="right-opener">#}
+                    {#                        <a href="javascript:;" class="open-right"><i class="fa fa-angle-double-left"></i><i#}
+                    {#                                class="fa fa-angle-double-right"></i></a>#}
+                    {#                    </li>#}
                 </ul>
             </div>
             <!--/.nav-collapse -->
