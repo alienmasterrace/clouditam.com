@@ -1830,7 +1830,8 @@ body.fixed-left .left-footer {
   bottom: 50px;
 }
 .left-footer {
-  height: 50px;
+  text-align: center;
+  height: 70px;
   bottom: 0px;
   position: absolute;
   width: 100%;
@@ -1839,7 +1840,7 @@ body.fixed-left .left-footer {
   padding: 15px;
 }
 .left-footer .progress.progress-xs {
-  margin: 9px 70px 9px 0;
+  margin: 9px 9px 9px 0;
   overflow: visible;
   position: relative;
 }
@@ -1849,7 +1850,6 @@ body.fixed-left .left-footer {
   right: -20px;
   top: -12px;
   padding: 7px 5px;
-  border-radius: 50%;
   background: #555;
   color: #f3f3f3;
 }
@@ -1973,8 +1973,8 @@ button.navbar-toggle {
 #sidebar-menu > ul > li > a.subdrop {
   background: #4d5252;
 }
-#sidebar-menu > ul > li.active,
-#sidebar-menu > ul > li.active.subdrop {
+#sidebar-menu > ul > li > a.active,
+#sidebar-menu > ul > li > a.active.subdrop {
   color: #fff;
   background: #68C39F !important;
   border-left: 5px solid rgba(0,0,0,0.3);
