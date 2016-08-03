@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
+    #'debug_toolbar',
     'ckeditor',
     'django_activeurl',
     'social.apps.django_app.default',
@@ -89,18 +89,22 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 
-if not DEVELOPMENT:
+if DEVELOPMENT:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-elif DEVELOPMENT:
+elif not DEVELOPMENT:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'clouditamrds01db01',
+            'USER': 'clouditamdbconn',
+            'PASSWORD': 'WyP8Nj6x9KeA4Rv7s',
+            'HOST': 'clouditamrds01.ccaxddwfxkwc.eu-central-1.rds.amazonaws.com',
+            'PORT': '5432',
         }
     }
 
