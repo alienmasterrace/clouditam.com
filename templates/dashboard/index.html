@@ -1,138 +1,103 @@
 {% extends 'dashboard/base.html' %}
 {% load staticfiles %}
 {% block page_title %}Dashboard{% endblock %}
-{% block body_class %}fixed-left{% endblock %}
-{% block extra_css %}
-    <link href="{% static "dashboard/assets/libs/rickshaw/rickshaw.min.css" %}" rel="stylesheet" type="text/css"/>
-    <link href="{% static "dashboard/assets/libs/morrischart/morris.css" %}" rel="stylesheet" type="text/css"/>
-    <link href="{% static "dashboard/assets/libs/jquery-jvectormap/css/jquery-jvectormap-1.2.2.css" %}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{% static "dashboard/assets/libs/jquery-clock/clock.css" %}" rel="stylesheet" type="text/css"/>
-    <link href="{% static "dashboard/assets/libs/bootstrap-calendar/css/bic_calendar.css" %}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{% static "dashboard/assets/libs/sortable/sortable-theme-bootstrap.css" %}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{% static "dashboard/assets/libs/jquery-weather/simpleweather.css" %}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{% static "dashboard/assets/libs/bootstrap-xeditable/css/bootstrap-editable.css" %}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{% static "dashboard/assets/css/style.css" %}" rel="stylesheet" type="text/css"/>
-{% endblock %}
-{% block extra_js %}
-    <script src="{% static "dashboard/assets/libs/d3/d3.v3.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/rickshaw/rickshaw.min.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/raphael/raphael-min.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/morrischart/morris.min.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/jquery-knob/jquery.knob.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/jquery-jvectormap/js/jquery-jvectormap-1.2.2.min.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/jquery-jvectormap/js/jquery-jvectormap-us-aea-en.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/jquery-clock/clock.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/jquery-easypiechart/jquery.easypiechart.min.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/jquery-weather/jquery.simpleWeather-2.6.min.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/bootstrap-xeditable/js/bootstrap-editable.min.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/bootstrap-calendar/js/bic_calendar.min.js" %}"></script>
-    <script src="{% static "dashboard/assets/js/apps/calculator.js" %}"></script>
-    <script src="{% static "dashboard/assets/js/apps/todo.js" %}"></script>
-    <script src="{% static "dashboard/assets/js/apps/notes.js" %}"></script>
-    <script src="{% static "dashboard/assets/js/pages/index.js" %}"></script>
-{% endblock %}
 {% block right_content %}
-            <div class="row top-summary">
-                <div class="col-lg-4 col-md-6">
-                    <div class="widget green-1 animated fadeInDown">
-                        <div class="widget-content padding">
-                            <div class="widget-icon">
-                                <i class="icon-barcode"></i>
-                            </div>
-                            <div class="text-box">
-                                <p class="maindata">TOTAL COUNT OF <b>HARDWARE</b></p>
-                                <h2><span class="animate-number" data-value="161" data-duration="3000">0</span>
-                                </h2>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="widget-footer">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <i class="fa fa-barcode rel-change"></i> <b>39%</b> of asset assigned
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
+    <div class="row top-summary">
+        <div class="col-lg-4 col-md-6">
+            <div class="widget green-1 animated fadeInDown">
+                <div class="widget-content padding">
+                    <div class="widget-icon">
+                        <i class="icon-barcode"></i>
+                    </div>
+                    <div class="text-box">
+                        <p class="maindata">TOTAL COUNT OF <b>HARDWARE</b></p>
+                        <h2><span class="animate-number" data-value="161" data-duration="3000">0</span>
+                        </h2>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="widget darkblue-2 animated fadeInDown">
-                        <div class="widget-content padding">
-                            <div class="widget-icon">
-                                <i class="icon-certificate"></i>
-                            </div>
-                            <div class="text-box">
-                                <p class="maindata">TOTAL COUNT OF <b>SOFTWARE TYPE</b></p>
-                                <h2><span class="animate-number" data-value="195" data-duration="3000">0</span>
-                                </h2>
-
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="widget-footer">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <i class="fa fa-certificate rel-change"></i> <b>11%</b> of software assigned
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
+                <div class="widget-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <i class="fa fa-barcode rel-change"></i> <b>39%</b> of asset assigned
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
+            </div>
+        </div>
 
-                 <div class="col-lg-4 col-md-6">
-                    <div class="widget lightblue-1 animated fadeInDown">
-                        <div class="widget-content padding">
-                            <div class="widget-icon">
-                                <i class="fa fa-users"></i>
-                            </div>
-                            <div class="text-box">
-                                <p class="maindata">TOTAL <b>USERS</b></p>
-                                <h2><span class="animate-number" data-value="65" data-duration="3000">0</span>
-                                </h2>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="widget-footer">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <i class="fa fa-users rel-change"></i> <b>6%</b> of users assigned
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="widget darkblue-2 animated fadeInDown">
+                <div class="widget-content padding">
+                    <div class="widget-icon">
+                        <i class="icon-certificate"></i>
+                    </div>
+                    <div class="text-box">
+                        <p class="maindata">TOTAL COUNT OF <b>SOFTWARE TYPE</b></p>
+                        <h2><span class="animate-number" data-value="195" data-duration="3000">0</span>
+                        </h2>
+
+                        <div class="clearfix"></div>
                     </div>
                 </div>
+                <div class="widget-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <i class="fa fa-certificate rel-change"></i> <b>11%</b> of software assigned
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="widget lightblue-1 animated fadeInDown">
+                <div class="widget-content padding">
+                    <div class="widget-icon">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <div class="text-box">
+                        <p class="maindata">TOTAL <b>USERS</b></p>
+                        <h2><span class="animate-number" data-value="65" data-duration="3000">0</span>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="widget-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <i class="fa fa-users rel-change"></i> <b>6%</b> of users assigned
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-6">
+            <div class="btn-wrapper">
+
+                <a href="{% url "assets" %}" class="btn btn-success btn-lg btn-block">Hardware Inventory Page</a>
 
             </div>
-            <div class="row">
-									<div class="col-lg-4 col-md-6">
-										<div class="btn-wrapper">
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="btn-wrapper">
 
-							                <a href="{% url "assets" %}" class="btn btn-success btn-lg btn-block">Hardware Inventory Page</a>
+                <a href="{% url "software" %}" class="btn btn-primary btn-lg btn-block">Software Inventory Page</a>
 
-										</div>
-									</div>
-                                    <div class="col-lg-4 col-md-6">
-										<div class="btn-wrapper">
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="btn-wrapper">
 
-							                <a href="{% url "software" %}" class="btn btn-primary btn-lg btn-block">Software Inventory Page</a>
+                <a href="{% url "users" %}" class="btn btn-default btn-lg btn-block">Users Inventory Page</a>
 
-										</div>
-									</div>
-                                    <div class="col-lg-4 col-md-6">
-										<div class="btn-wrapper">
-
-							                <a href="{% url "users" %}" class="btn btn-default btn-lg btn-block">Users Inventory Page</a>
-
-										</div>
-									</div>
-                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

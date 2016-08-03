@@ -1,40 +1,58 @@
 {% extends 'dashboard/base.html' %}
 {% load staticfiles %}
 {% block page_title %}Invoices{% endblock %}
-{% block body_class %}fixed-left{% endblock %}
-{% block extra_css %}
-    <link href="{% static "dashboard/assets/libs/rickshaw/rickshaw.min.css" %}" rel="stylesheet" type="text/css"/>
-    <link href="{% static "dashboard/assets/libs/morrischart/morris.css" %}" rel="stylesheet" type="text/css"/>
-    <link href="{% static "dashboard/assets/libs/jquery-jvectormap/css/jquery-jvectormap-1.2.2.css" %}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{% static "dashboard/assets/libs/jquery-clock/clock.css" %}" rel="stylesheet" type="text/css"/>
-    <link href="{% static "dashboard/assets/libs/bootstrap-calendar/css/bic_calendar.css" %}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{% static "dashboard/assets/libs/sortable/sortable-theme-bootstrap.css" %}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{% static "dashboard/assets/libs/jquery-weather/simpleweather.css" %}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{% static "dashboard/assets/libs/bootstrap-xeditable/css/bootstrap-editable.css" %}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{% static "dashboard/assets/css/style.css" %}" rel="stylesheet" type="text/css"/>
-{% endblock %}
-{% block extra_js %}
-    <script src="{% static "dashboard/assets/libs/d3/d3.v3.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/rickshaw/rickshaw.min.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/raphael/raphael-min.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/morrischart/morris.min.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/jquery-knob/jquery.knob.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/jquery-jvectormap/js/jquery-jvectormap-1.2.2.min.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/jquery-jvectormap/js/jquery-jvectormap-us-aea-en.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/jquery-clock/clock.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/jquery-easypiechart/jquery.easypiechart.min.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/jquery-weather/jquery.simpleWeather-2.6.min.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/bootstrap-xeditable/js/bootstrap-editable.min.js" %}"></script>
-    <script src="{% static "dashboard/assets/libs/bootstrap-calendar/js/bic_calendar.min.js" %}"></script>
-    <script src="{% static "dashboard/assets/js/apps/calculator.js" %}"></script>
-    <script src="{% static "dashboard/assets/js/apps/todo.js" %}"></script>
-    <script src="{% static "dashboard/assets/js/apps/notes.js" %}"></script>
-    <script src="{% static "dashboard/assets/js/pages/index.js" %}"></script>
-{% endblock %}
 {% block right_content %}
+    <!-- Page Heading Start -->
+    <div class="page-heading">
+        <h1><i class='fa fa-file'></i> Invoices</h1>
+    </div>
+    <!-- Page Heading End-->                <!-- Your awesome content goes here -->
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="widget-content">
+                    <div class="table-responsive">
+                        <table data-sortable class="table">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th style="width: 30px" data-sortable="false"><input type="checkbox" class="rows-check">
+                                </th>
+                                <th>Full Name</th>
+                                <th>Location</th>
+                                <th>Date of birth</th>
+                                <th>Email</th>
+                                <th data-sortable="false">Sort : Off</th>
+                                <th>Status</th>
+                                <th data-sortable="false">Option</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><input type="checkbox" class="rows-check"></td>
+                                <td><strong>John Doe</strong></td>
+                                <td>Yogyakarta, Indonesia</td>
+                                <td>January 01, 1985</td>
+                                <td><a href="mailto:#">name@domain.com</a></td>
+                                <td>123</td>
+                                <td><span class="label label-success">Active</span></td>
+                                <td>
+                                    <div class="btn-group btn-group-xs">
+                                        <a data-toggle="tooltip" title="Off" class="btn btn-default"><i
+                                                class="fa fa-power-off"></i></a>
+                                        <a data-toggle="tooltip" title="Edit" class="btn btn-default"><i
+                                                class="fa fa-edit"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

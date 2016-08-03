@@ -99,106 +99,109 @@
             <h2>OUR PACKAGES</h2><br>
             <div class="row">
 
-            <div class="col-md-6 col-sm-6">
-                <div class="pricing text-center">
-
-                    <div class="h1">
-                        <h1>Monthly</h1>
-                    </div>
-                <div class="row">
-                {% for price in prices %}
-                    {% if price.type == 'Monthly'%}
-                <div class="col-md-{{ col }} col-sm-6">
+                <div class="col-md-6 col-sm-6">
                     <div class="pricing text-center">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-header">
-                                    <h3>{{ price.name }}</h3>
-                                </div>
-                            </div>
+
+                        <div class="h1">
+                            <h1>Monthly</h1>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-price">
-                                    {% if price.price == 0 %}
-                                        free<br>
-                                        {% else %}
-                                    <span class="pricing-currency">$</span>{{ price.price }}<span class="pricing-period">/m</span>
-                                    {% endif %}
-                                    <p class="text-sm">Small text here</p>
-                                </div>
-                            </div>
+                            {% for price in prices %}
+                                {% if price.type == 'Monthly' %}
+                                    <div class="col-md-{{ col }} col-sm-6">
+                                        <div class="pricing text-center">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="pricing-header">
+                                                        <h3>{{ price.name }}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="pricing-price">
+                                                        {% if price.price == 0 %}
+                                                            free<br>
+                                                        {% else %}
+                                                            <span class="pricing-currency">$</span>{{ price.price }}
+                                                            <span class="pricing-period">/m</span>
+                                                        {% endif %}
+                                                        <p class="text-sm">Small text here</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <br>
+                                                {{ price.details|safe }}
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="pricing-buttons">
+                                                        <a class="btn btn-block btn-primary">PURCHASE</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
                         </div>
-                       <div class="row">
-                            <br>
-                            {{ price.details|safe }}
-                            </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-buttons">
-                                    <a class="btn btn-block btn-primary">PURCHASE</a>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-
-            </div>
-            </div>
 
 
-            <div class="col-md-6 col-sm-6">
-                <div class="pricing text-center">
-
-                    <div class="h1">
-                        <h1>Annually</h1>
-                    </div>
-                <div class="row">
-                {% for price in prices %}
-                    {% if price.type == 'Annually'%}
-                <div class="col-md-{{ col }} col-sm-6">
+                <div class="col-md-6 col-sm-6">
                     <div class="pricing text-center">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-header">
-                                    <h3>{{ price.name }}</h3>
-                                </div>
-                            </div>
+
+                        <div class="h1">
+                            <h1>Annually</h1>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-price">
-                                    {% if price.price == 0 %}
-                                        free<br>
-                                        {% else %}
-                                    <span class="pricing-currency">$</span>{{ price.price }}<span class="pricing-period">/m</span><span class="pricing-m">x12</span>
-                                    {% endif %}
-                                    <p class="text-sm">small text here</p>
-                                </div>
-                            </div>
+                            {% for price in prices %}
+                                {% if price.type == 'Annually' %}
+                                    <div class="col-md-{{ col }} col-sm-6">
+                                        <div class="pricing text-center">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="pricing-header">
+                                                        <h3>{{ price.name }}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="pricing-price">
+                                                        {% if price.price == 0 %}
+                                                            free<br>
+                                                        {% else %}
+                                                            <span class="pricing-currency">$</span>{{ price.price }}
+                                                            <span class="pricing-period">/m</span>
+                                                            <span class="pricing-m">x12</span>
+                                                        {% endif %}
+                                                        <p class="text-sm">small text here</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <br>
+                                                {{ price.details|safe }}
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="pricing-buttons">
+                                                        <a class="btn btn-block btn-primary">PURCHASE</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
                         </div>
-                        <div class="row">
-                            <br>
-                            {{ price.details|safe }}
-                            </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="pricing-buttons">
-                                    <a class="btn btn-block btn-primary">PURCHASE</a>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-
-            </div>
-            </div>
 
             </div>
 
