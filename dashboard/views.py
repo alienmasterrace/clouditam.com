@@ -5,13 +5,17 @@ from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
+from web.models import Customer, Account
+
 
 class DashboardView(View):
     template_name = 'dashboard/index.html'
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        customer = Customer.objects.get(user=request.user)
+        context = {"customer": customer,}
+        return render(request, self.template_name, context)
 
 
 class AccountSettingsView(View):
@@ -19,7 +23,9 @@ class AccountSettingsView(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        customer = Customer.objects.get(user=request.user)
+        context = {"customer": customer,}
+        return render(request, self.template_name, context)
 
 
 class SubscriptionView(View):
@@ -27,7 +33,10 @@ class SubscriptionView(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        customer = Customer.objects.get(user=request.user)
+        plans = Account.objects.all().exclude(name=customer.plan_name, type=customer.type).exclude(type="Free")
+        context = {"customer": customer, "plans":plans}
+        return render(request, self.template_name, context)
 
 
 class AssetsView(View):
@@ -35,7 +44,9 @@ class AssetsView(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        customer = Customer.objects.get(user=request.user)
+        context = {"customer": customer,}
+        return render(request, self.template_name,context)
 
 
 class BilingView(View):
@@ -43,7 +54,9 @@ class BilingView(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        customer = Customer.objects.get(user=request.user)
+        context = {"customer": customer,}
+        return render(request, self.template_name,context)
 
 
 class InvoicesView(View):
@@ -51,7 +64,9 @@ class InvoicesView(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        customer = Customer.objects.get(user=request.user)
+        context = {"customer": customer,}
+        return render(request, self.template_name, context)
 
 
 class ReportsView(View):
@@ -59,7 +74,9 @@ class ReportsView(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        customer = Customer.objects.get(user=request.user)
+        context = {"customer": customer,}
+        return render(request, self.template_name, context)
 
 
 class SoftwareView(View):
@@ -67,7 +84,9 @@ class SoftwareView(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        customer = Customer.objects.get(user=request.user)
+        context = {"customer": customer,}
+        return render(request, self.template_name, context)
 
 
 class UsersView(View):
@@ -75,4 +94,6 @@ class UsersView(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        customer = Customer.objects.get(user=request.user)
+        context = {"customer": customer,}
+        return render(request, self.template_name, context)
