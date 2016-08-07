@@ -12,47 +12,87 @@
         <div class="col-md-12">
             <div class="widget">
                 <div class="widget-content">
+                    <br>
                     <div class="table-responsive">
-                        <table data-sortable class="table">
-                            <thead>
-                            <tr>
-                                <th>No</th>
-                                <th style="width: 30px" data-sortable="false"><input type="checkbox" class="rows-check">
-                                </th>
-                                <th>Full Name</th>
-                                <th>Location</th>
-                                <th>Date of birth</th>
-                                <th>Email</th>
-                                <th data-sortable="false">Sort : Off</th>
-                                <th>Status</th>
-                                <th data-sortable="false">Option</th>
-                            </tr>
-                            </thead>
+                        <form class='form-horizontal' role='form'>
+                            <table id="datatables-1" class="table table-striped table-bordered" cellspacing="0"
+                                   width="100%">
+                                <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Asset Tag</th>
+                                    <th>Serial</th>
+                                    <th>Model</th>
+                                    <th>Status</th>
+                                    <th>Location</th>
+                                    <th>Category</th>
+                                    <th>Notes</th>
+                                    <th>Order Number</th>
+                                    <th>Checkout Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
 
-                            <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td><input type="checkbox" class="rows-check"></td>
-                                <td><strong>John Doe</strong></td>
-                                <td>Yogyakarta, Indonesia</td>
-                                <td>January 01, 1985</td>
-                                <td><a href="mailto:#">name@domain.com</a></td>
-                                <td>123</td>
-                                <td><span class="label label-success">Active</span></td>
-                                <td>
-                                    <div class="btn-group btn-group-xs">
-                                        <a data-toggle="tooltip" title="Off" class="btn btn-default"><i
-                                                class="fa fa-power-off"></i></a>
-                                        <a data-toggle="tooltip" title="Edit" class="btn btn-default"><i
-                                                class="fa fa-edit"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+
+                                <tbody>
+                                <tr>
+                                    <td>Tiger Nixon</td>
+                                    <td>System Architect</td>
+                                    <td>Edinburgh</td>
+                                    <td>61</td>
+                                    <td>2011/04/25</td>
+                                    <td>$320,800</td>
+                                    <td>$320,800</td>
+                                    <td>$320,800</td>
+                                    <td>$320,800</td>
+                                    <td>$320,800</td>
+                                    <td><div class="btn-group btn-group-xs">
+                                        <a data-toggle="tooltip" title="Dublicate" class="btn btn-blue-1"><i
+                                            class="fa fa-files-o"></i></a>
+                                        <a data-toggle="tooltip" title="Edit" class="btn btn-warning"><i
+                                                class="fa fa-pencil"></i></a>
+                                        <a data-toggle="tooltip" title="Remove" class="btn btn-danger"><i
+                                                class="fa fa-trash-o"></i></a>
+                                    </div></td>
+                                </tr>
+                                <tr>
+                                    <td>Garrett Winters</td>
+                                    <td>Accountant</td>
+                                    <td>Tokyo</td>
+                                    <td>63</td>
+                                    <td>2011/07/25</td>
+                                    <td>$170,750</td>
+                                    <td>$170,750</td>
+                                    <td>$170,750</td>
+                                    <td>$170,750</td>
+                                    <td>$170,750</td>
+                                    <td><div class="btn-group btn-group-xs">
+                                        <a data-toggle="tooltip" title="Dublicate" class="btn btn-blue-1"><i
+                                            class="fa fa-files-o"></i></a>
+                                        <a data-toggle="tooltip" title="Edit" class="btn btn-warning"><i
+                                                class="fa fa-pencil"></i></a>
+                                        <a data-toggle="tooltip" title="Remove" class="btn btn-danger"><i
+                                                class="fa fa-trash-o"></i></a>
+                                    </div></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+{% block extra_css %}
+    <link href="{% static "dashboard/assets/libs/jquery-datatables/css/dataTables.bootstrap.css" %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static "dashboard/assets/libs/jquery-datatables/extensions/TableTools/css/dataTables.tableTools.css" %}"
+          rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block extra_js %}
+    <script src="{% static "dashboard/assets/libs/jquery-datatables/js/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/jquery-datatables/js/dataTables.bootstrap.js" %}"></script>
+    <script src="{% static "dashboard/assets/libs/jquery-datatables/extensions/TableTools/js/dataTables.tableTools.min.js" %}"></script>
+    <script src="{% static "dashboard/assets/js/pages/datatables.js" %}"></script>
 {% endblock %}

@@ -49,6 +49,16 @@ class AssetsView(View):
         return render(request, self.template_name,context)
 
 
+class AssetNewView(View):
+    template_name = 'dashboard/layouts/asset_new.html'
+
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        customer = Customer.objects.get(user=request.user)
+        context = {"customer": customer,}
+        return render(request, self.template_name,context)
+
+
 class BilingView(View):
     template_name = 'dashboard/biling.html'
 
@@ -61,6 +71,15 @@ class BilingView(View):
 
 class InvoicesView(View):
     template_name = 'dashboard/invoices.html'
+
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        customer = Customer.objects.get(user=request.user)
+        context = {"customer": customer,}
+        return render(request, self.template_name, context)
+
+class InvoiceDetailView(View):
+    template_name = 'dashboard/layouts/invoice_base.html'
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):

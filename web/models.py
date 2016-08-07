@@ -62,7 +62,8 @@ class Customer(models.Model):
 class Payment(models.Model):
     fullname = models.CharField(max_length=64, null=True, blank=True)
     company = models.CharField(max_length=64, null=True, blank=True)
-    address = models.TextField(null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    address2 = models.CharField(max_length=255, blank=True)
     city = models.CharField(max_length=64, null=True, blank=True)
     state = models.CharField(max_length=64, null=True, blank=True)
     zip_or_postal = models.CharField(max_length=64, null=True, blank=True)
