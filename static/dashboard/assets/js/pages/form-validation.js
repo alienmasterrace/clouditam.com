@@ -74,7 +74,10 @@ $(document).ready(function() {
             phoneNumber: {
                 validators: {
                     digits: {
-                        message: 'The value can contain only digits'
+                        message: 'Please give without "+". The value can contain only digits'
+                    },
+                    notEmpty: {
+                        message: 'The phone number can\'t be empty'
                     }
                 }
             },

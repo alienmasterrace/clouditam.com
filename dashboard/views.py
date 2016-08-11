@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.shortcuts import render
 
 # Create your views here.
@@ -65,7 +66,21 @@ class BilingView(View):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         customer = Customer.objects.get(user=request.user)
-        context = {"customer": customer,}
+        from paypal.standard.forms import PayPalPaymentsForm
+        paypal_dict = {
+            "business": "ci-facilitator@clouditam.com",
+            "amount": "100.00",
+            "item_name": "Pro Hesap",
+            "invoice": "112931224",
+            "notify_url": "http://127.0.0.1:8000" + reverse('paypal-ipn'),
+            "return_url": "http://127.0.0.1:8000/paypal/",
+            "cancel_return": "http://127.0.0.1:8000/paypal/",
+            "custom": "Upgrade all users!",  # Custom command to correlate to some function later (optional)
+        }
+
+        # Create the instance.
+        form = PayPalPaymentsForm(initial=paypal_dict)
+        context = {"customer": customer,"form":form}
         return render(request, self.template_name,context)
 
 
