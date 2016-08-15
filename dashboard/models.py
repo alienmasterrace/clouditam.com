@@ -1,6 +1,8 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
+from web.models import Customer
+
 CURRENCIES = (
     ("$", "$"),
 )
@@ -11,6 +13,35 @@ COUNTRIES = (
 
 CATEGORY_TYPES = (
     ("Asset", "Asset"),
+    ("Access Point", "Access Point"),
+    ("Chassis", "Chassis"),
+    ("Computer", "Computer"),
+    ("Switch", "Switch"),
+    ("Router", "Router"),
+    ("Firewall", "Firewall"),
+    ("Printer", "Printer"),
+    ("Scanner", "Scanner"),
+    ("Projector", "Projector"),
+    ("Phone", "Phone"),
+    ("Tablet", "Tablet"),
+    ("Mobile Phone", "Mobile Phone"),
+    ("Video Conference", "Video Conference"),
+    ("VoIP Gateway", "VoIP Gateway"),
+    ("VoIP Phone", "VoIP Phone"),
+    ("Monitor", "Monitor"),
+    ("KVM (Keyboard, Video, Mouse switch)", "KVM (Keyboard, Video, Mouse switch)"),
+    ("Load Balancer", "Load Balancer"),
+    ("SAN (Storage Area Network)", "SAN (Storage Area Network)"),
+    ("NAS (Network Attached Storage", "NAS (Network Attached Storage)"),
+    ("Tape Library", "Tape Library"),
+    ("UPS", "UPS"),
+    ("General Purpose", "General Purpose"),
+    ("Other Computer Device", "Other Computer Device"),
+    ("Other Network Device", "Other Network Device"),
+    ("Other Security Device", "Other Security Device"),
+    ("Other Storage Device", "Other Storage Device"),
+    ("Other Telecom Device", "Other Telecom Device"),
+    ("Other Device", "Other Device"),
 )
 
 MEMORY_TYPES = (
@@ -23,13 +54,20 @@ PLATFORMS = (
     ("Physical", "Physical"),
 )
 
+STATUS = (
+    ("Physical", "Physical"),
+    ("Ready to Deploy", "Ready to Deploy"),
+)
+
 
 class Manufacturer(models.Model):
     name = models.CharField(max_length=64, null=True)
+    customer = models.ForeignKey(Customer, null=True)
 
 
 class Company(models.Model):
     name = models.CharField(max_length=64, null=True)
+    customer = models.ForeignKey(Customer, null=True)
 
 
 class Location(models.Model):
@@ -41,6 +79,7 @@ class Location(models.Model):
     state = models.CharField(max_length=64, null=True)
     postal_code = models.CharField(max_length=64, null=True)
     country = models.CharField(max_length=64, null=True, choices=COUNTRIES)
+    customer = models.ForeignKey(Customer, null=True)
 
 
 class Supplier(models.Model):
@@ -57,23 +96,38 @@ class Supplier(models.Model):
     url = models.URLField(blank=True)
     notes = models.TextField(null=True)
     image = models.ImageField(upload_to="suppliers")
+    customer = models.ForeignKey(Customer, null=True)
 
 
-class Category(models.Model):
+class Software(models.Model):
     name = models.CharField(max_length=64, null=True)
-    type = models.CharField(max_length=64, null=True, choices=CATEGORY_TYPES)
-
-
-class Application(models.Model):
-    pass
+    company = models.ForeignKey("Company", null=True)
+    customer = models.ForeignKey(Customer, null=True)
+    serial = models.CharField(max_length=64, null=True)
+    licensed_to_name = models.CharField(max_length=64, null=True)
+    licensed_to_email = models.EmailField(blank=True)
+    seats = models.IntegerField(null=True, default=0)
+    reassignable = models.BooleanField(default=False)
+    maintained = models.BooleanField(default=False)
+    supplier = models.ForeignKey("Supplier", null=True)
+    purchase_date = models.DateField(null=True)
+    order_number = models.IntegerField(null=True, default=0)
+    purchase_cost = models.DecimalField(max_digits=64, decimal_places=2, null=True, default=0)
+    expiration_date = models.DateField(null=True)
+    termination_date = models.DateField(null=True)
+    notes = models.TextField(null=True)
 
 
 class Hardware(models.Model):
     manufacturer = models.ForeignKey("Manufacturer")
-    category = models.ForeignKey("Category")
+    category = models.CharField(max_length=64, null=True, choices=CATEGORY_TYPES)
     model = models.CharField(max_length=64, null=True)
     notes = models.TextField(null=True)
     image = models.ImageField(upload_to="suppliers")
+    customer = models.ForeignKey(Customer, null=True)
+
+    def __str__(self):
+        return self.model
 
 
 class Asset(models.Model):
@@ -86,6 +140,7 @@ class Asset(models.Model):
     disk_type = models.CharField(max_length=64, null=True, choices=MEMORY_TYPES)
     ip_address = models.GenericIPAddressField(null=True)
     role = models.CharField(max_length=64, null=True)
+    os = models.CharField(max_length=64, null=True)
     platform = models.CharField(max_length=64, null=True, choices=PLATFORMS)
     serial = models.CharField(max_length=64, null=True)
     purchase_date = models.DateField(null=True)
@@ -93,17 +148,23 @@ class Asset(models.Model):
     purchase_cost = models.DecimalField(max_digits=64, decimal_places=2, null=True, default=0)
     warranty = models.IntegerField(null=True, default=0)
     notes = models.TextField(null=True)
-    localiton = models.ForeignKey("Location", null=True)
+    location = models.ForeignKey("Location", null=True)
     supplier = models.ForeignKey("Supplier", null=True)
-    application = models.ForeignKey("Application", null=True)
+    application = models.ForeignKey("Software", null=True)
     model = models.ForeignKey("Hardware", null=True)
-    status = models.ForeignKey("Status", null=True)
+    status = models.CharField(max_length=64, null=True, choices=STATUS)
     company = models.ForeignKey("Company", null=True)
-
-
-class Status(models.Model):
-    status = models.CharField(max_length=64, null=True)
+    customer = models.ForeignKey(Customer, null=True)
 
 
 class DashUser(models.Model):
     fullname = models.CharField(max_length=64, null=True)
+    address = models.TextField(null=True)
+    city = models.CharField(max_length=64, null=True)
+    state = models.CharField(max_length=64, null=True)
+    postal_code = models.CharField(max_length=64, null=True)
+    country = models.CharField(max_length=64, null=True, choices=COUNTRIES)
+    phone_number = PhoneNumberField(blank=True)
+    email = models.EmailField(blank=True)
+    notes = models.TextField(null=True)
+    customer = models.ForeignKey(Customer, null=True)

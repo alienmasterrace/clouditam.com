@@ -1,293 +1,179 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // Generate a simple captcha
     function randomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     };
     $('#captchaOperation').html([randomNumber(1, 20), '+', randomNumber(1, 30), '='].join(' '));
-	
-	
-	//EXAMPLE REGISTER FORM
-    $('#registerForm').bootstrapValidator({
-        message: 'This value is not valid',
-        fields: {
-            username: {
-                message: 'The username is not valid',
-                validators: {
-                    notEmpty: {
-                        message: 'The username is required and can\'t be empty'
-                    },
-                    stringLength: {
-                        min: 6,
-                        max: 30,
-                        message: 'The username must be more than 6 and less than 30 characters long'
-                    },
-                    regexp: {
-                        regexp: /^[a-zA-Z0-9_\.]+$/,
-                        message: 'The username can only consist of alphabetical, number, dot and underscore'
-                    },
-                    different: {
-                        field: 'password',
-                        message: 'The username and password can\'t be the same as each other'
-                    }
-                }
-            },
-            email: {
-                validators: {
-                    notEmpty: {
-                        message: 'The email address is required and can\'t be empty'
-                    },
-                    emailAddress: {
-                        message: 'The input is not a valid email address'
-                    }
-                }
-            },
-            password: {
-                validators: {
-                    notEmpty: {
-                        message: 'The password is required and can\'t be empty'
-                    },
-                    identical: {
-                        field: 'confirmPassword',
-                        message: 'The password and its confirm are not the same'
-                    },
-                    different: {
-                        field: 'username',
-                        message: 'The password can\'t be the same as username'
-                    }
-                }
-            },
-            confirmPassword: {
-                validators: {
-                    notEmpty: {
-                        message: 'The confirm password is required and can\'t be empty'
-                    },
-                    identical: {
-                        field: 'password',
-                        message: 'The password and its confirm are not the same'
-                    },
-                    different: {
-                        field: 'username',
-                        message: 'The password can\'t be the same as username'
-                    }
-                }
-            },
-            phoneNumber: {
-                validators: {
-                    digits: {
-                        message: 'Please give without "+". The value can contain only digits'
-                    },
-                    notEmpty: {
-                        message: 'The phone number can\'t be empty'
-                    }
-                }
-            },
-            acceptTerms: {
-                validators: {
-                    notEmpty: {
-                        message: 'You have to accept the terms and policies'
-                    }
-                }
-            },
-            captcha: {
-                validators: {
-                    callback: {
-                        message: 'Wrong answer',
-                        callback: function(value, validator) {
-                            var items = $('#captchaOperation').html().split(' '), sum = parseInt(items[0]) + parseInt(items[2]);
-                            return value == sum;
-                        }
-                    }
-                }
-            }
-        }
-    });
-	
-	
-	//EXAMPLE CONTACT FORM
-    $('#contactForm').bootstrapValidator({
-        message: 'This value is not valid',
+
+    $('#createSupplierForm').bootstrapValidator({
         fields: {
             name: {
-                message: 'Name is not valid',
+                message: 'The supplier name is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'Name is required and can\'t be empty'
+                        message: 'The supplier name is required and can\'t be empty'
                     },
-                    regexp: {
-                        regexp: /^[a-zA-Z0-9_\.]+$/,
-                        message: 'Name can only consist of alphabetical, number, dot and underscore'
-                    }
                 }
-            },
-            email: {
+            }
+        }
+    });
+
+    $('#createManufacturerForm').bootstrapValidator({
+        fields: {
+            name: {
+                message: 'The manufacturer name is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'The email address is required and can\'t be empty'
+                        message: 'The manufacturer name is required and can\'t be empty'
                     },
-                    emailAddress: {
-                        message: 'The input is not a valid email address'
-                    }
                 }
-            },
-            website: {
-                validators: {
-                    uri: {
-                        message: 'The input is not a valid URL'
-                    }
-                }
-            },
-            Contactmessage: {
+            }
+        }
+    });
+    $('#createCompanyForm').bootstrapValidator({
+        fields: {
+            name: {
+                message: 'The company name is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'Message is required and can\'t be empty'
+                        message: 'The company name is required and can\'t be empty'
                     },
-                    stringLength: {
-                        min: 6,
-                        message: 'Message must be more than 6 characters long'
+                }
+            }
+        }
+    });
+
+    $('#createAssetForm').bootstrapValidator({
+        fields: {
+            model: {
+                message: 'The model is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The model is required'
                     }
                 }
             },
-            captcha: {
+            status: {
+                message: 'The status is not valid',
                 validators: {
-                    callback: {
-                        message: 'Wrong answer',
-                        callback: function(value, validator) {
-                            var items = $('#captchaOperation').html().split(' '), sum = parseInt(items[0]) + parseInt(items[2]);
-                            return value == sum;
-                        }
+                    notEmpty: {
+                        message: 'The status is required'
                     }
                 }
             }
         }
     });
-	
-	
-	//Regular expression based validators
-    $('#ExpressionValidator').bootstrapValidator({
-        message: 'This value is not valid',
+
+    $('#createLocationForm').bootstrapValidator({
         fields: {
-             email: {
+            name: {
+                message: 'The location name is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'The email address is required and can\'t be empty'
-                    },
-                    emailAddress: {
-                        message: 'The input is not a valid email address'
+                        message: 'The location name is required and can\'t be empty'
                     }
                 }
             },
-            website: {
-                validators: {
-                    uri: {
-                        message: 'The input is not a valid URL'
-                    }
-                }
-            },
-            phoneNumber: {
-                validators: {
-                    digits: {
-                        message: 'The value can contain only digits'
-                    }
-                }
-            },
-            color: {
-                validators: {
-                    hexColor: {
-                        message: 'The input is not a valid hex color'
-                    }
-                }
-            },
-            zipCode: {
-                validators: {
-                    usZipCode: {
-                        message: 'The input is not a valid US zip code'
-                    }
-                }
-            }
-        }
-    });
-	
-	
-	//Regular expression based validators
-    $('#NotEmptyValidator').bootstrapValidator({
-        message: 'This value is not valid',
-        fields: {
-            username: {
-                message: 'The username is not valid',
+            city: {
+                message: 'The city is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'The username is required and can\'t be empty'
-                    },
-                    stringLength: {
-                        min: 6,
-                        max: 30,
-                        message: 'The username must be more than 6 and less than 30 characters long'
-                    },
-                    regexp: {
-                        regexp: /^[a-zA-Z0-9_\.]+$/,
-                        message: 'The username can only consist of alphabetical, number, dot and underscore'
+                        message: 'The city is required and can\'t be empty'
                     }
                 }
             },
             country: {
+                message: 'The country is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'The country is required and can\'t be empty'
+                        message: 'The country is required'
                     }
                 }
             }
         }
     });
-	
-	
-	//Regular expression based validators
-    $('#IdenticalValidator').bootstrapValidator({
-        message: 'This value is not valid',
+
+    $('#createHardwareForm').bootstrapValidator({
         fields: {
-            password: {
+            model: {
+                message: 'The model name is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'The password is required and can\'t be empty'
-                    },
-                    identical: {
-                        field: 'confirmPassword',
-                        message: 'The password and its confirm are not the same'
+                        message: 'The model name is required and can\'t be empty'
                     }
                 }
             },
-            confirmPassword: {
+            category: {
+                message: 'The category is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'The confirm password is required and can\'t be empty'
-                    },
-                    identical: {
-                        field: 'password',
-                        message: 'The password and its confirm are not the same'
+                        message: 'The category is required'
                     }
                 }
-            }
-        }
-    });
-	
-	//Regular expression based validators
-    $('#OtherValidator').bootstrapValidator({
-        message: 'This value is not valid',
-        fields: {
-            ages: {
+            },
+            manufacturer: {
+                message: 'The manufacturer is not valid',
                 validators: {
-                    lessThan: {
-                        value: 100,
-                        inclusive: true,
-                        message: 'The ages has to be less than 100'
-                    },
-                    greaterThan: {
-                        value: 10,
-                        inclusive: false,
-                        message: 'The ages has to be greater than or equals to 10'
+                    notEmpty: {
+                        message: 'The manufacturer is required'
                     }
                 }
             }
         }
     });
-	
+
+    $('#createSoftwareForm').bootstrapValidator({
+        fields: {
+            name: {
+                message: 'The software name is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The software name is required and can\'t be empty'
+                    }
+                }
+            },
+            serial: {
+                message: 'The serial is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The serial is required and can\'t be empty'
+                    }
+                }
+            },
+            seats: {
+                message: 'The seats is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The seats is required'
+                    },
+                    digits: {
+                        message: 'The seats should be digits'
+                    }
+                }
+            }
+        }
+    });
+    $('#createUserForm').bootstrapValidator({
+        fields: {
+            fullname: {
+                message: 'The fullname is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The fullname is required and can\'t be empty'
+                    }
+                }
+            },
+            email: {
+                validators: {
+                    notEmpty: {
+                        message: 'The email address is required and can\'t be empty'
+                    },
+                    emailAddress: {
+                        message: 'The input is not a valid email address'
+                    }
+                }
+            }
+        }
+    });
+
 });

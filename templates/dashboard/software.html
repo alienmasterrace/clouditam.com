@@ -11,41 +11,42 @@
 
         <div class="col-md-12">
             <div class="widget">
+                <div class="widget-header">
+								<h2><strong>All</strong> Software</h2>
+								<div class="additional-btn">
+									<a href="{% url 'software_new' %}" ><i class="fa fa-plus"></i> Create New</a>
+								</div>
+							</div>
                 <div class="widget-content">
                     <br>
                     <div class="table-responsive">
                         <form class='form-horizontal' role='form'>
-                            <table id="datatables-1" class="table table-striped table-bordered" cellspacing="0"
+                            <table id="software-data" class="table table-striped table-bordered" cellspacing="0"
                                    width="100%">
                                 <thead>
                                 <tr>
-                                    <th>Company</th>
-                                    <th>Asset Tag</th>
+                                    <th>Software Name</th>
                                     <th>Serial</th>
-                                    <th>Model</th>
-                                    <th>Status</th>
-                                    <th>Location</th>
-                                    <th>Category</th>
-                                    <th>Notes</th>
                                     <th>Order Number</th>
-                                    <th>Checkout Date</th>
+                                    <th>Purchase Date</th>
+                                    <th>Purchase Cost</th>
+                                    <th>Seats</th>
+                                    <th>Reassignable</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
 
 
                                 <tbody>
+                                {% for d in data %}
                                 <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                    <td>$320,800</td>
-                                    <td>$320,800</td>
-                                    <td>$320,800</td>
-                                    <td>$320,800</td>
+                                    <td><a href="{% url 'software_show' %}">{{ d.name}}</a></td>
+                                    <td>{{ d.serial}}</td>
+                                    <td>{{ d.order_number}}</td>
+                                    <td>{{ d.purchase_date}}</td>
+                                    <td>{{ d.purchase_cost}}</td>
+                                    <td>{{ d.seats}}</td>
+                                    <td>{{ d.reassignable}}</td>
                                     <td><div class="btn-group btn-group-xs">
                                         <a data-toggle="tooltip" title="Dublicate" class="btn btn-blue-1"><i
                                             class="fa fa-files-o"></i></a>
@@ -55,26 +56,7 @@
                                                 class="fa fa-trash-o"></i></a>
                                     </div></td>
                                 </tr>
-                                <tr>
-                                    <td>Garrett Winters</td>
-                                    <td>Accountant</td>
-                                    <td>Tokyo</td>
-                                    <td>63</td>
-                                    <td>2011/07/25</td>
-                                    <td>$170,750</td>
-                                    <td>$170,750</td>
-                                    <td>$170,750</td>
-                                    <td>$170,750</td>
-                                    <td>$170,750</td>
-                                    <td><div class="btn-group btn-group-xs">
-                                        <a data-toggle="tooltip" title="Dublicate" class="btn btn-blue-1"><i
-                                            class="fa fa-files-o"></i></a>
-                                        <a data-toggle="tooltip" title="Edit" class="btn btn-warning"><i
-                                                class="fa fa-pencil"></i></a>
-                                        <a data-toggle="tooltip" title="Remove" class="btn btn-danger"><i
-                                                class="fa fa-trash-o"></i></a>
-                                    </div></td>
-                                </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </form>

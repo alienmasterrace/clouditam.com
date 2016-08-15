@@ -10,7 +10,7 @@
                         <i class="icon-barcode"></i>
                     </div>
                     <div class="text-box">
-                        <p class="maindata">TOTAL COUNT OF <b>HARDWARE</b></p>
+                        <p class="maindata">TOTAL COUNT OF <b>ASSETS</b></p>
                         <h2><span class="animate-number" data-value="161" data-duration="3000">0</span>
                         </h2>
                         <div class="clearfix"></div>
@@ -34,7 +34,7 @@
                         <i class="icon-certificate"></i>
                     </div>
                     <div class="text-box">
-                        <p class="maindata">TOTAL COUNT OF <b>SOFTWARE TYPE</b></p>
+                        <p class="maindata">TOTAL COUNT OF <b>SOFTWARE</b></p>
                         <h2><span class="animate-number" data-value="195" data-duration="3000">0</span>
                         </h2>
 
@@ -53,7 +53,7 @@
         </div>
 
         <div class="col-lg-4 col-md-6">
-            <div class="widget lightblue-1 animated fadeInDown">
+            <div class="widget green-2 animated fadeInDown">
                 <div class="widget-content padding">
                     <div class="widget-icon">
                         <i class="fa fa-users"></i>
@@ -81,7 +81,7 @@
         <div class="col-lg-4 col-md-6">
             <div class="btn-wrapper">
 
-                <a href="{% url "assets" %}" class="btn btn-success btn-lg btn-block">Hardware Inventory Page</a>
+                <a href="{% url "assets" %}" class="btn btn-success btn-lg btn-block">Assets Inventory Page</a>
 
             </div>
         </div>
@@ -95,7 +95,107 @@
         <div class="col-lg-4 col-md-6">
             <div class="btn-wrapper">
 
-                <a href="{% url "users" %}" class="btn btn-default btn-lg btn-block">Users Inventory Page</a>
+                <a href="{% url "users" %}" class="btn btn-green-2 btn-lg btn-block">Users Inventory Page</a>
+
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="row top-summary">
+        <div class="col-lg-4 col-md-6">
+            <div class="widget red-1 animated fadeInDown">
+                <div class="widget-content padding">
+                    <div class="widget-icon">
+                        <i class="icon-hdd"></i>
+                    </div>
+                    <div class="text-box">
+                        <p class="maindata">TOTAL COUNT OF <b>HARDWARE</b></p>
+                        <h2><span class="animate-number" data-value="23" data-duration="3000">0</span>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="widget-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <i class="fa fa-hdd-o rel-change"></i> <b>39%</b> of hardware assigned
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="widget blue-2 animated fadeInDown">
+                <div class="widget-content padding">
+                    <div class="widget-icon">
+                        <i class="fa fa-gears"></i>
+                    </div>
+                    <div class="text-box">
+                        <p class="maindata">TOTAL COUNT OF <b>MANUFACTURERS</b></p>
+                        <h2><span class="animate-number" data-value="6" data-duration="3000">0</span>
+                        </h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="widget-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <i class="fa fa-gears rel-change"></i> <b>11%</b> of manufacturers assigned
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="widget warning animated fadeInDown">
+                <div class="widget-content padding">
+                    <div class="widget-icon">
+                        <i class="fa fa-truck"></i>
+                    </div>
+                    <div class="text-box">
+                        <p class="maindata">TOTAL <b>SUPPLIERS</b></p>
+                        <h2><span class="animate-number" data-value="8" data-duration="3000">0</span>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="widget-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <i class="fa fa-truck rel-change"></i> <b>6%</b> of supplier assigned
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-6">
+            <div class="btn-wrapper">
+
+                <a href="{% url "hardware" %}" class="btn btn-danger btn-lg btn-block">Hardware Inventory Page</a>
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="btn-wrapper">
+
+                <a href="{% url "manufacturers" %}" class="btn btn-blue-2 btn-lg btn-block">Manufacturers Inventory Page</a>
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="btn-wrapper">
+
+                <a href="{% url "supplier" %}" class="btn btn-warning btn-lg btn-block">Supplier Inventory Page</a>
 
             </div>
         </div>

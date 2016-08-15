@@ -1,65 +1,64 @@
 $(function () {
-    $("#datatables-1").dataTable({
+    $("#assets-data").dataTable({
         "columnDefs": [
-            {"width": "20%", "targets": 10},
+            {"width": "12%", "targets": 10},
             {"bSortable": false, "aTargets": [10]}
         ]
     });
-
-    var table = $('#datatables-2').DataTable();
-
-    $("#datatables-2 tfoot th").each(function (i) {
-        var select = $('<select class="form-control input-sm"><option value=""></option></select>')
-            .appendTo($(this).empty())
-            .on('change', function () {
-                table.column(i)
-                    .search('^' + $(this).val() + '$', true, false)
-                    .draw();
-            });
-
-        table.column(i).data().unique().sort().each(function (d, j) {
-            select.append('<option value="' + d + '">' + d + '</option>')
-        });
+    $("#manufacturer-data").dataTable({
+        "columnDefs": [
+            {"width": "30%", "targets": 0},
+            {"width": "30%", "targets": 2},
+            {"width": "30%", "targets": 1},
+            {"bSortable": false, "aTargets": [1,2]}
+        ]
+    });
+    $("#supplier-data").dataTable({
+        "columnDefs": [
+            {"width": "30%", "targets": 0},
+            {"width": "30%", "targets": 2},
+            {"width": "30%", "targets": 7},
+            {"bSortable": false, "aTargets": [6,7]}
+        ]
+    });
+    $("#location-data").dataTable({
+        "columnDefs": [
+            {"width": "30%", "targets": 0},
+            {"width": "30%", "targets": 2},
+            {"width": "30%", "targets": 9},
+            {"bSortable": false, "aTargets": [2,3,9]}
+        ]
+    });
+    $("#hardware-data").dataTable({
+        "columnDefs": [
+            {"width": "30%", "targets": 0},
+            {"width": "30%", "targets": 1},
+            {"width": "15%", "targets": 3},
+            {"bSortable": false, "aTargets": [3]}
+        ]
+    });
+    $("#software-data").dataTable({
+        "columnDefs": [
+            {"width": "30%", "targets": 0},
+            {"width": "30%", "targets": 1},
+            {"width": "15%", "targets": 7},
+            {"bSortable": false, "aTargets": [1,7]}
+        ]
+    });
+    $("#users-data").dataTable({
+        "columnDefs": [
+            {"width": "30%", "targets": 0},
+            {"width": "30%", "targets": 1},
+            {"width": "15%", "targets": 6},
+            {"bSortable": false, "aTargets": [6]}
+        ]
+    });
+    $("#company-data").dataTable({
+        "columnDefs": [
+            {"width": "30%", "targets": 0},
+            {"width": "15%", "targets": 1},
+            {"bSortable": false, "aTargets": [1]}
+        ]
     });
 
-    $('#datatables-3').dataTable({
-        "footerCallback": function (row, data, start, end, display) {
-            var api = this.api(), data;
-
-            // Remove the formatting to get integer data for summation
-            var intVal = function (i) {
-                return typeof i === 'string' ?
-                i.replace(/[\$,]/g, '') * 1 :
-                    typeof i === 'number' ?
-                        i : 0;
-            };
-
-            // Total over all pages
-            data = api.column(4).data();
-            total = data.length ?
-                data.reduce(function (a, b) {
-                    return intVal(a) + intVal(b);
-                }) :
-                0;
-
-            // Total over this page
-            data = api.column(4, {page: 'current'}).data();
-            pageTotal = data.length ?
-                data.reduce(function (a, b) {
-                    return intVal(a) + intVal(b);
-                }) :
-                0;
-
-            // Update footer
-            $(api.column(4).footer()).html(
-                '$' + pageTotal + ' ( $' + total + ' total)'
-            );
-        }
-    });
-    $('#datatables-4').DataTable({
-        dom: 'T<"clear">lfrtip',
-        tableTools: {
-            "sSwfPath": "./assets/libs/jquery-datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
-        }
-    });
 })

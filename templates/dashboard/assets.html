@@ -21,7 +21,7 @@
                     <br>
                     <div class="table-responsive">
                         <form class='form-horizontal' role='form'>
-                            <table id="datatables-1" class="table table-striped table-bordered" cellspacing="0"
+                            <table id="assets-data" class="table table-striped table-bordered" cellspacing="0"
                                    width="100%">
                                 <thead>
                                 <tr>
@@ -41,17 +41,18 @@
 
 
                                 <tbody>
+                                {% for d in data %}
                                 <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                    <td>$320,800</td>
-                                    <td>$320,800</td>
-                                    <td>$320,800</td>
-                                    <td>$320,800</td>
+                                    <td>{{ d.company.name }}</td>
+                                    <td><a href="{% url 'asset_show' %}">NNY28622112</a></td>
+                                    <td>{{ d.serial }}</td>
+                                    <td>{{ d.model.model }}</td>
+                                    <td>{{ d.status }}</td>
+                                    <td>{{ d.location.name }}</td>
+                                    <td>{{ d.model.category }}</td>
+                                    <td>{{ d.notes }}</td>
+                                    <td>{{ d.order_number }}</td>
+                                    <td>{{ d.purchase_date }}</td>
                                     <td><div class="btn-group btn-group-xs">
                                         <a data-toggle="tooltip" title="Dublicate" class="btn btn-blue-1"><i
                                             class="fa fa-files-o"></i></a>
@@ -61,26 +62,7 @@
                                                 class="fa fa-trash-o"></i></a>
                                     </div></td>
                                 </tr>
-                                <tr>
-                                    <td>Garrett Winters</td>
-                                    <td>Accountant</td>
-                                    <td>Tokyo</td>
-                                    <td>63</td>
-                                    <td>2011/07/25</td>
-                                    <td>$170,750</td>
-                                    <td>$170,750</td>
-                                    <td>$170,750</td>
-                                    <td>$170,750</td>
-                                    <td>$170,750</td>
-                                    <td><div class="btn-group btn-group-xs">
-                                        <a data-toggle="tooltip" title="Dublicate" class="btn btn-blue-1"><i
-                                            class="fa fa-files-o"></i></a>
-                                        <a data-toggle="tooltip" title="Edit" class="btn btn-warning"><i
-                                                class="fa fa-pencil"></i></a>
-                                        <a data-toggle="tooltip" title="Remove" class="btn btn-danger"><i
-                                                class="fa fa-trash-o"></i></a>
-                                    </div></td>
-                                </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </form>

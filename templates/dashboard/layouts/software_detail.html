@@ -20,10 +20,10 @@
                                       action="{% url 'asset_new' %}" method="post">
                                     {% csrf_token %}
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Model *</label>
+                                        <label class="col-sm-2 control-label">Model*</label>
                                         <div class="col-sm-9">
                                             <select class="form-control" id="model" name="model">
-                                                <option value="">Select Model</option>
+                                                <option>Select Model</option>
                                                 {% for choice in models %}
                                                 <option>{{ choice.model }}</option>
                                                 {% endfor %}
@@ -38,11 +38,10 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Status *</label>
+                                        <label class="col-sm-2 control-label">Status*</label>
                                         <div class="col-sm-10">
 
-                                            <select class="form-control" name="status">
-                                                <option value="">Select Status</option>
+                                            <select class="form-control">
                                                 <option>Ready to Deploy</option>
                                                 <option>2</option>
                                                 <option>3</option>
@@ -59,10 +58,10 @@
                                         <label class="col-sm-2 control-label">Memory Size</label>
 
                                         <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="phoneNumber" name="memory_size">
+                                            <input type="text" class="form-control" id="phoneNumber" name="">
                                         </div>
                                         <div class="col-sm-2">
-                                            <select class="form-control" name="memory_type">
+                                            <select class="form-control">
                                                 <option>GB</option>
                                                 <option>2</option>
                                                 <option>3</option>
@@ -75,7 +74,7 @@
                                         <label class="col-sm-2 control-label">CPU Speed</label>
 
                                         <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="phoneNumber" name="cpu_speed">
+                                            <input type="text" class="form-control" id="phoneNumber" name="">
                                         </div>
                                         <div class="col-sm-2">
                                             <label class="col-sm-2 control-label">Ghz</label>
@@ -86,53 +85,46 @@
                                         <label class="col-sm-2 control-label">CPU Count</label>
 
                                         <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="phoneNumber" name="cpu_count">
+                                            <input type="text" class="form-control" id="phoneNumber" name="">
                                         </div>
 
                                     </div>
 
-                                <div class="form-group">
-                                        <label class="col-sm-2 control-label">Disk Size</label>
 
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" name="disk_size">
+                                    <div class="form-group">
+                                        <label for="input-text" class="col-sm-2 control-label">IP Address</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control">
                                         </div>
-                                        <div class="col-sm-2">
-                                            <select class="form-control" name="disk_type">
-                                                <option>GB</option>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">OS</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control">
+                                                <option>Select Software</option>
                                                 <option>2</option>
                                                 <option>3</option>
                                                 <option>4</option>
                                                 <option>5</option>
                                             </select>
                                         </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="input-text" class="col-sm-2 control-label">IP Address</label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" name="ip_address">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="input-text" class="col-sm-2 control-label">OS</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="os">
-                                        </div>
+                                        {#                                        <div class="col-sm-1">#}
+                                        {#                                            <button class="fa fa-plus"></button>#}
+                                        {#                                        </div>#}
                                     </div>
 
                                     <div class="form-group">
                                         <label for="input-text" class="col-sm-2 control-label">Role</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" name="role">
+                                            <input type="text" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Platform</label>
                                         <div class="col-sm-10">
-                                            <select class="form-control" name="platform">
+                                            <select class="form-control">
                                                 <option>Physical</option>
                                                 <option>2</option>
                                                 <option>3</option>
@@ -145,7 +137,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Assigned to</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" name="assigned_to">
+                                            <select class="form-control">
                                                 <option>Select User</option>
                                                 <option>Bayram, Fatih (fatih)</option>
                                                 <option>2</option>
@@ -162,21 +154,21 @@
                                     <div class="form-group">
                                         <label for="input-text" class="col-sm-2 control-label">Serial</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="serial">
+                                            <input type="text" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="input-text" class="col-sm-2 control-label">Asset Name</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="name">
+                                            <input type="text" class="form-control" name="name" id="name">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Company</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" name="company">
+                                            <select class="form-control">
                                                 <option>Select Company</option>
                                                 <option>2</option>
                                                 <option>3</option>
@@ -194,7 +186,7 @@
                                         <label class="col-sm-2 control-label">Purchase Date</label>
                                         <div class="col-sm-3">
                                             <div class="input-group">
-                                                <input type="text" class="form-control datepicker-input" name="purchase_date">
+                                                <input type="text" class="form-control datepicker-input">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                             </div>
                                         </div>
@@ -204,7 +196,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Supplier</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" name="supplier">
+                                            <select class="form-control">
                                                 <option>Select Supplier</option>
                                                 <option>2</option>
                                                 <option>3</option>
@@ -220,7 +212,7 @@
                                     <div class="form-group">
                                         <label for="input-text" class="col-sm-2 control-label">Order Number</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="order_number">
+                                            <input type="text" class="form-control">
                                         </div>
                                     </div>
 
@@ -229,7 +221,7 @@
                                         <div class="col-sm-4">
                                             <div class="input-group">
                                                 <span class="input-group-addon">$</span>
-                                                <input type="text" class="form-control" value="0.00" name="purchase_cost">
+                                                <input type="text" class="form-control" value="0.00">
 
                                             </div>
                                         </div>
@@ -240,7 +232,7 @@
                                         <label class="col-sm-2 control-label">Warranty</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="warranty">
+                                                <input type="text" class="form-control">
                                                 <span class="input-group-addon">months</span>
 
                                             </div>
@@ -251,7 +243,7 @@
                                         <label class="col-sm-2 control-label">Notes</label>
                                         <div class="col-sm-10">
                                             <div class="input-group">
-                                    <textarea type="text" class="form-control" cols="140" rows="3" name="notes">
+                                    <textarea type="text" class="form-control" cols="140" rows="3">
                                         </textarea>
 
                                             </div>
@@ -261,7 +253,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Default Location</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" name="location">
+                                            <select class="form-control">
                                                 <option>Select a Location</option>
                                                 <option>2</option>
                                                 <option>3</option>

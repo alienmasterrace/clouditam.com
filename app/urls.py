@@ -19,6 +19,8 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 from app import settings
+from web.views import SignInView, LogoutView
+from web.views import SignUpView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -31,5 +33,14 @@ urlpatterns = [
 
 if settings.MAINTENANCE:
     urlpatterns = [
-    url(r'^', TemplateView.as_view(template_name='web/maintenance.html')),
+    url(r'^$', TemplateView.as_view(template_name='web/maintenance.html'), name="index"),
+    url(r'^$', TemplateView.as_view(template_name='web/maintenance.html'), name="clients"),
+    url(r'^$', TemplateView.as_view(template_name='web/maintenance.html'), name="contact"),
+    url(r'^$', TemplateView.as_view(template_name='web/maintenance.html'), name="about"),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^dashboard/', include('dashboard.urls')),
+    url('^social/', include('social.apps.django_app.urls', namespace='social')),
+    url(r'^signin/$', SignInView.as_view(), name='signin'),
+    url(r'^signup/$', SignUpView.as_view(), name='signup'),
+    url(r'^logout/$', LogoutView.as_view(), name='logout'),
 ]

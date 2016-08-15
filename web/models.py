@@ -3,8 +3,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
-from dashboard.models import Asset, DashUser, Application
-
 PAGE_TYPE = (
     ('Index', 'Index'),
     ('Pricing', 'Pricing'),
@@ -48,20 +46,8 @@ class Account(models.Model):
 
 class Customer(models.Model):
     user = models.OneToOneField(User)
-    assets = models.ManyToManyField(Asset,blank=True)
-    users = models.ManyToManyField(DashUser,blank=True)
-    apps = models.ManyToManyField(Application,blank=True)
-    payment = models.OneToOneField("Payment",null=True,blank=True)
-    plan_name = models.CharField(max_length=64, null=True)
-    asset_limit = models.IntegerField(null=True, default=10)
-    price = models.DecimalField(max_digits=64, decimal_places=2, null=True, default=0)
-    details = RichTextField(null=True, config_name='awesome_ckeditor')
-    type = models.CharField(max_length=64, default="Monthly", choices=PRICE_TYPE)
-
-
-class Payment(models.Model):
     fullname = models.CharField(max_length=64, null=True, blank=True)
-    company = models.CharField(max_length=64, null=True, blank=True)
+    company_name = models.CharField(max_length=64, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     address2 = models.CharField(max_length=255, blank=True)
     city = models.CharField(max_length=64, null=True, blank=True)
@@ -69,6 +55,11 @@ class Payment(models.Model):
     zip_or_postal = models.CharField(max_length=64, null=True, blank=True)
     country = models.CharField(max_length=64, null=True, blank=True)
     phone_number = PhoneNumberField(blank=True)
+    plan_name = models.CharField(max_length=64, null=True)
+    asset_limit = models.IntegerField(null=True, default=10)
+    price = models.DecimalField(max_digits=64, decimal_places=2, null=True, default=0)
+    details = RichTextField(null=True, config_name='awesome_ckeditor')
+    type = models.CharField(max_length=64, default="Monthly", choices=PRICE_TYPE)
 
 
 class Header(models.Model):

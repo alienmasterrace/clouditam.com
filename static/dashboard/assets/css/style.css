@@ -1681,8 +1681,9 @@ iframe {
 }
 .logo h1 {
   margin: 0px auto;
-  height: 50px;
+  height: 30px;
   text-align: center;
+  font-size: 25px;
 }
 .topbar-profile .topbar-profile-image {
   width: 35px;
