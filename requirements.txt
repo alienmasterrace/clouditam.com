@@ -23,6 +23,7 @@ python-social-auth==0.2.19
 python-utils==2.0.0
 python3-openid==3.0.10
 pytz==2016.6.1
+reportlab==3.3.0
 requests==2.10.0
 requests-oauthlib==0.6.1
 six==1.10.0
