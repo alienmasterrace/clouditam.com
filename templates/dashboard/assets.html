@@ -44,7 +44,7 @@
                                 {% for d in data %}
                                 <tr>
                                     <td>{{ d.company.name }}</td>
-                                    <td><a href="{% url 'asset_show' %}">NNY28622112</a></td>
+                                    <td><a href="{% url 'asset_show' %}">{{ d.asset_tag }}</a></td>
                                     <td>{{ d.serial }}</td>
                                     <td>{{ d.model.model }}</td>
                                     <td>{{ d.status }}</td>

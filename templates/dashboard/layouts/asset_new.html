@@ -24,8 +24,8 @@
                                         <div class="col-sm-9">
                                             <select class="form-control" id="model" name="model">
                                                 <option value="">Select Model</option>
-                                                {% for choice in models %}
-                                                <option>{{ choice.model }}</option>
+                                                {% for choice in form.model.field.queryset %}
+                                                <option value="{{ choice.pk }}">{{ choice.model }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -42,12 +42,9 @@
                                         <div class="col-sm-10">
 
                                             <select class="form-control" name="status">
-                                                <option value="">Select Status</option>
-                                                <option>Ready to Deploy</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                {% for value, choice in form.status.field.choices %}
+                                                <option value="{{ value }}">{{ choice }}</option>
+                                                {% endfor %}
                                             </select>
                                             <p class="help-block">If you wish to assign this immediately, select "Ready
                                                 to Deploy" from the status list above</p>
@@ -63,11 +60,9 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <select class="form-control" name="memory_type">
-                                                <option>GB</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                {% for value, choice in form.memory_type.field.choices %}
+                                                <option value="{{ value }}">{{ choice }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
@@ -99,11 +94,9 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <select class="form-control" name="disk_type">
-                                                <option>GB</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                {% for value, choice in form.disk_type.field.choices %}
+                                                <option value="{{ value }}">{{ choice }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
@@ -116,9 +109,14 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="input-text" class="col-sm-2 control-label">OS</label>
+                                        <label class="col-sm-2 control-label">OS</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="os">
+                                            <select class="form-control" name="os">
+                                                <option value="">Select Operating System</option>
+                                                {% for choice in form.os.field.queryset %}
+                                                <option value="{{ choice.pk }}">{{ choice.name }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
 
@@ -133,11 +131,9 @@
                                         <label class="col-sm-2 control-label">Platform</label>
                                         <div class="col-sm-10">
                                             <select class="form-control" name="platform">
-                                                <option>Physical</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                {% for value, choice in form.platform.field.choices %}
+                                                <option value="{{ value }}">{{ choice }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
@@ -146,12 +142,10 @@
                                         <label class="col-sm-2 control-label">Assigned to</label>
                                         <div class="col-sm-9">
                                             <select class="form-control" name="assigned_to">
-                                                <option>Select User</option>
-                                                <option>Bayram, Fatih (fatih)</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                <option value="">Select User</option>
+                                                {% for choice in form.assigned_to.field.queryset %}
+                                                <option value="{{ choice.pk }}">{{ choice.fullname }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         {#                                        <div class="col-sm-1">#}
@@ -177,11 +171,10 @@
                                         <label class="col-sm-2 control-label">Company</label>
                                         <div class="col-sm-9">
                                             <select class="form-control" name="company">
-                                                <option>Select Company</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                <option value="">Select Company</option>
+                                                {% for choice in form.company.field.queryset %}
+                                                <option value="{{ choice.pk }}">{{ choice.name }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         {#                                        <div class="col-sm-1">#}
@@ -205,11 +198,10 @@
                                         <label class="col-sm-2 control-label">Supplier</label>
                                         <div class="col-sm-9">
                                             <select class="form-control" name="supplier">
-                                                <option>Select Supplier</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                <option value="">Select Supplier</option>
+                                                {% for choice in form.supplier.field.queryset %}
+                                                <option value="{{ choice.pk }}">{{ choice.name }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         {#                                        <div class="col-sm-1">#}
@@ -262,11 +254,10 @@
                                         <label class="col-sm-2 control-label">Default Location</label>
                                         <div class="col-sm-9">
                                             <select class="form-control" name="location">
-                                                <option>Select a Location</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                <option value="">Select a Location</option>
+                                                {% for choice in form.location.field.queryset %}
+                                                <option value="{{ choice.pk }}">{{ choice.name }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         {#                                        <div class="col-sm-1">#}

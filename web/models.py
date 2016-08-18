@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
+from dashboard.models import Manufacturer, Company, Location, Supplier, Software, Hardware, Asset, DashUser
+
 PAGE_TYPE = (
     ('Index', 'Index'),
     ('Pricing', 'Pricing'),
@@ -60,6 +62,14 @@ class Customer(models.Model):
     price = models.DecimalField(max_digits=64, decimal_places=2, null=True, default=0)
     details = RichTextField(null=True, config_name='awesome_ckeditor')
     type = models.CharField(max_length=64, default="Monthly", choices=PRICE_TYPE)
+    manufacturers = models.ManyToManyField(Manufacturer, blank=True)
+    companies = models.ManyToManyField(Company, blank=True)
+    locations = models.ManyToManyField(Location, blank=True)
+    suppliers = models.ManyToManyField(Supplier, blank=True)
+    softwares = models.ManyToManyField(Software, blank=True)
+    hardwares = models.ManyToManyField(Hardware, blank=True)
+    assets = models.ManyToManyField(Asset, blank=True)
+    dashusers = models.ManyToManyField(DashUser, blank=True)
 
 
 class Header(models.Model):

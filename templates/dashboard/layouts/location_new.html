@@ -29,9 +29,9 @@
                                         <label class="col-sm-2 control-label">Parent</label>
                                         <div class="col-sm-9">
                                             <select class="form-control" name="parent">
-                                                <option>Top Level</option>
-                                                {% for choice in locations %}
-                                                <option>{{ choice.name }}</option>
+                                                <option value="">Top Level</option>
+                                                 {% for choice in form.parent.field.queryset %}
+                                                <option value="{{ choice.pk }}">{{ choice.name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -42,11 +42,9 @@
                                         <div class="col-sm-4">
 
                                             <select class="form-control" name="location_currency">
-                                                <option>$</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                <{% for value, choice in form.location_currency.field.choices %}
+                                                <option value="{{ value }}">{{ choice }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
 
@@ -89,11 +87,9 @@
                                         <div class="col-sm-4">
 
                                             <select class="form-control" name="country">
-                                                <option value="">Select a Country</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                {% for value, choice in form.country.field.choices %}
+                                                <option value="{{ value }}">{{ choice }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
 

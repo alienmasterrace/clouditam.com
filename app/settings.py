@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+from django.contrib.messages import constants
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -37,7 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'debug_toolbar',
+    # 'debug_toolbar',
     'paypal.standard.ipn',
     'cities_light',
     'ckeditor',
@@ -133,7 +135,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'web/media')
 
-
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -148,7 +149,6 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.linkedin.LinkedinOAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
-
 
 ######### SOCIAL AUTH #################
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
@@ -166,7 +166,7 @@ SOCIAL_AUTH_LINKEDIN_FIELD_SELECTORS = ['email-address', ]
 SOCIAL_AUTH_LINKEDIN_EXTRA_DATA = [('id', 'id'),
                                    ('firstName', 'first_name'),
                                    ('lastName', 'last_name'),
-                                   ('emailAddress', 'email_address'),]
+                                   ('emailAddress', 'email_address'), ]
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/signin/'
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error'
@@ -181,3 +181,8 @@ CKEDITOR_CONFIGS = {
 }
 
 PAYPAL_TEST = True
+
+MESSAGE_TAGS = {
+    constants.ERROR: 'danger',
+    50: 'critical',
+}

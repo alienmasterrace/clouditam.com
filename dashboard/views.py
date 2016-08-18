@@ -1,15 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-
-# Create your views here.
+from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
-from dashboard.forms import AssetForm
-from dashboard.models import Hardware, Asset, Manufacturer, Supplier, Location, Software, DashUser, Company
+from dashboard.forms import AssetForm, CompanyForm, ManufacturerForm, SupplierForm, SoftwareForm, DashUserForm, \
+    HardwareForm, LocationForm
+from dashboard.models import CATEGORY_TYPES
 from web.models import Customer, Account
+from django.contrib import messages
 
 
 class DashboardView(View):
@@ -18,7 +17,7 @@ class DashboardView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        context = {"customer": customer,}
+        context = {"customer": customer}
         return render(request, self.template_name, context)
 
 
@@ -39,7 +38,7 @@ class SubscriptionView(View):
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
         plans = Account.objects.all().exclude(name=customer.plan_name, type=customer.type).exclude(type="Free")
-        context = {"customer": customer, "plans":plans}
+        context = {"customer": customer, "plans": plans}
         return render(request, self.template_name, context)
 
 
@@ -49,9 +48,9 @@ class AssetsView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        assets = Asset.objects.filter(customer=customer)
+        assets = customer.assets.all()
         context = {"customer": customer, "data": assets}
-        return render(request, self.template_name,context)
+        return render(request, self.template_name, context)
 
 
 class AssetShowView(View):
@@ -60,9 +59,8 @@ class AssetShowView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        assets = Asset.objects.filter(customer=customer)
-        context = {"customer": customer, "data": assets}
-        return render(request, self.template_name,context)
+        context = {"customer": customer}
+        return render(request, self.template_name, context)
 
 
 class AssetNewView(View):
@@ -70,25 +68,30 @@ class AssetNewView(View):
     form_class = AssetForm
 
     @method_decorator(login_required)
-    def get(self, request, *args):
-        form = self.form_class
-        if args:
-            form = args[0]
+    def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        models = Hardware.objects.filter(customer=customer)
-        context = {"customer": customer, "form": form, "models": models}
-
+        form = self.form_class(customer=customer)
+        context = {"customer": customer, "form": form}
         return render(request, self.template_name, context)
 
     @method_decorator(login_required)
     def post(self, request):
-        form = self.form_class(request.POST)
+        customer = Customer.objects.get(user=request.user)
+        form = self.form_class(request.POST, customer=customer)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/dashboard/assets')
+            obj = form.save()
+            cats = dict(CATEGORY_TYPES)
+            obj.asset_tag = "{0}{1:04d}{2:05d}".format({cats[k] : k for k in cats}[obj.model.get_category_display()], customer.id, obj.id)
+            obj.save()
+            customer.assets.add(obj)
+            message = 'Asset "{0}" successfully added.'.format(form.cleaned_data['model'])
+            messages.add_message(request, messages.SUCCESS, message)
+            return redirect('assets')
         else:
-            return self.get(request, form)
-
+            print(form.errors)
+            message = 'Something happened please try again.'
+            messages.add_message(request, messages.ERROR, message)
+            return self.get(request)
 
 
 class BilingView(View):
@@ -111,8 +114,8 @@ class BilingView(View):
 
         # Create the instance.
         form = PayPalPaymentsForm(initial=paypal_dict)
-        context = {"customer": customer,"form":form}
-        return render(request, self.template_name,context)
+        context = {"customer": customer, "form": form}
+        return render(request, self.template_name, context)
 
 
 class InvoicesView(View):
@@ -121,7 +124,7 @@ class InvoicesView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        context = {"customer": customer,}
+        context = {"customer": customer}
         return render(request, self.template_name, context)
 
 
@@ -131,7 +134,7 @@ class InvoiceDetailView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        context = {"customer": customer,}
+        context = {"customer": customer}
         return render(request, self.template_name, context)
 
 
@@ -141,7 +144,7 @@ class ReportsView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        context = {"customer": customer,}
+        context = {"customer": customer}
         return render(request, self.template_name, context)
 
 
@@ -151,7 +154,7 @@ class SoftwareView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        software = Software.objects.filter(customer=customer)
+        software = customer.softwares.all()
         context = {"customer": customer, "data": software}
         return render(request, self.template_name, context)
 
@@ -162,34 +165,35 @@ class SoftwareShowView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        software = Software.objects.filter(customer=customer)
-        context = {"customer": customer, "data": software}
+        context = {"customer": customer}
         return render(request, self.template_name, context)
 
 
 class SoftwareNewView(View):
     template_name = 'dashboard/layouts/software_new.html'
-    form_class = AssetForm
+    form_class = SoftwareForm
 
     @method_decorator(login_required)
-    def get(self, request, *args):
-        form = self.form_class
-        if args:
-            form = args[0]
+    def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        models = Hardware.objects.filter(customer=customer)
-        context = {"customer": customer, "form": form, "models": models}
-
+        form = self.form_class(customer=customer)
+        context = {"customer": customer, "form": form}
         return render(request, self.template_name, context)
 
     @method_decorator(login_required)
     def post(self, request):
-        form = self.form_class(request.POST)
+        customer = Customer.objects.get(user=request.user)
+        form = self.form_class(request.POST, customer=customer)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/dashboard/assets')
+            obj = form.save()
+            customer.softwares.add(obj)
+            message = 'Software "{0}" successfully added.'.format(form.cleaned_data['name'])
+            messages.add_message(request, messages.SUCCESS, message)
+            return redirect('software')
         else:
-            return self.get(request, form)
+            message = 'Something happened please try again.'
+            messages.add_message(request, messages.ERROR, message)
+            return self.get(request)
 
 
 class UsersView(View):
@@ -198,7 +202,7 @@ class UsersView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        users = DashUser.objects.filter(customer=customer)
+        users = customer.dashusers.all()
         context = {"customer": customer, "data": users}
         return render(request, self.template_name, context)
 
@@ -209,34 +213,35 @@ class UserShowView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        users = DashUser.objects.filter(customer=customer)
+        users = customer.dashusers.all()
         context = {"customer": customer, "data": users}
         return render(request, self.template_name, context)
 
 
 class UsersNewView(View):
     template_name = 'dashboard/layouts/user_new.html'
-    form_class = AssetForm
+    form_class = DashUserForm
 
     @method_decorator(login_required)
-    def get(self, request, *args):
-        form = self.form_class
-        if args:
-            form = args[0]
+    def get(self, request):
+        form = self.form_class()
         customer = Customer.objects.get(user=request.user)
-        models = Hardware.objects.filter(customer=customer)
-        context = {"customer": customer, "form": form, "models": models}
-
+        context = {"customer": customer, "form": form}
         return render(request, self.template_name, context)
 
     @method_decorator(login_required)
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/dashboard/assets')
+            obj = form.save()
+            Customer.objects.get(user=request.user).dashusers.add(obj)
+            message = 'User "{0}" successfully added.'.format(form.cleaned_data['fullname'])
+            messages.add_message(request, messages.SUCCESS, message)
+            return redirect('users')
         else:
-            return self.get(request, form)
+            message = 'Something happened please try again.'
+            messages.add_message(request, messages.ERROR, message)
+            return self.get(request)
 
 
 class HardwareView(View):
@@ -245,34 +250,36 @@ class HardwareView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        hardware = Hardware.objects.filter(customer=customer)
+        hardware = customer.hardwares.all()
         context = {"customer": customer, "data": hardware}
         return render(request, self.template_name, context)
 
 
 class HardwareNewView(View):
     template_name = 'dashboard/layouts/hardware_new.html'
-    form_class = AssetForm
+    form_class = HardwareForm
 
     @method_decorator(login_required)
-    def get(self, request, *args):
-        form = self.form_class
-        if args:
-            form = args[0]
+    def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        models = Hardware.objects.filter(customer=customer)
-        context = {"customer": customer, "form": form, "models": models}
-
+        form = self.form_class(customer=customer)
+        context = {"customer": customer, "form": form}
         return render(request, self.template_name, context)
 
     @method_decorator(login_required)
     def post(self, request):
-        form = self.form_class(request.POST)
+        customer = Customer.objects.get(user=request.user)
+        form = self.form_class(request.POST, customer=customer)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/dashboard/assets')
+            obj = form.save()
+            customer.hardwares.add(obj)
+            message = 'Hardware "{0}" successfully added.'.format(form.cleaned_data['model'])
+            messages.add_message(request, messages.SUCCESS, message)
+            return redirect('hardware')
         else:
-            return self.get(request, form)
+            message = 'Something happened please try again.'
+            messages.add_message(request, messages.ERROR, message)
+            return self.get(request)
 
 
 class CompanyView(View):
@@ -281,34 +288,36 @@ class CompanyView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        companies = Company.objects.filter(customer=customer)
+        companies = customer.companies.all()
         context = {"customer": customer, "data": companies}
         return render(request, self.template_name, context)
 
 
 class CompanyNewView(View):
     template_name = 'dashboard/layouts/company_new.html'
-    form_class = AssetForm
+    form_class = CompanyForm
 
     @method_decorator(login_required)
-    def get(self, request, *args):
-        form = self.form_class
-        if args:
-            form = args[0]
+    def get(self, request):
+        form = self.form_class()
         customer = Customer.objects.get(user=request.user)
-        models = Hardware.objects.filter(customer=customer)
-        context = {"customer": customer, "form": form, "models": models}
-
+        context = {"customer": customer, "form": form}
         return render(request, self.template_name, context)
 
     @method_decorator(login_required)
     def post(self, request):
+        customer = Customer.objects.get(user=request.user)
         form = self.form_class(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/dashboard/assets')
+            obj = form.save()
+            customer.companies.add(obj)
+            message = 'Company "{0}" successfully added.'.format(form.cleaned_data['name'])
+            messages.add_message(request, messages.SUCCESS, message)
+            return redirect('company')
         else:
-            return self.get(request, form)
+            message = 'Something happened please try again.'
+            messages.add_message(request, messages.ERROR, message)
+            return self.get(request)
 
 
 class LocationView(View):
@@ -317,34 +326,36 @@ class LocationView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        locations = Location.objects.filter(customer=customer)
+        locations = customer.locations.all()
         context = {"customer": customer, "data": locations}
         return render(request, self.template_name, context)
 
 
 class LocationNewView(View):
     template_name = 'dashboard/layouts/location_new.html'
-    form_class = AssetForm
+    form_class = LocationForm
 
     @method_decorator(login_required)
-    def get(self, request, *args):
-        form = self.form_class
-        if args:
-            form = args[0]
+    def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        locations = Location.objects.filter(customer=customer)
-        context = {"customer": customer, "form": form, "locations": locations}
-
+        form = self.form_class(customer=customer)
+        context = {"customer": customer, "form": form}
         return render(request, self.template_name, context)
 
     @method_decorator(login_required)
     def post(self, request):
-        form = self.form_class(request.POST)
+        customer = Customer.objects.get(user=request.user)
+        form = self.form_class(request.POST, customer=customer)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/dashboard/assets')
+            obj = form.save()
+            customer.locations.add(obj)
+            message = 'Location "{0}" successfully added.'.format(form.cleaned_data['name'])
+            messages.add_message(request, messages.SUCCESS, message)
+            return redirect('location')
         else:
-            return self.get(request, form)
+            message = '{0}'.format(form.errors)
+            messages.add_message(request, messages.ERROR, message)
+            return self.get(request)
 
 
 class ManufacturersView(View):
@@ -353,34 +364,35 @@ class ManufacturersView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        manufacturers = Manufacturer.objects.filter(customer=customer)
+        manufacturers = customer.manufacturers.all()
         context = {"customer": customer, "data": manufacturers}
         return render(request, self.template_name, context)
 
 
 class ManufacturersNewView(View):
     template_name = 'dashboard/layouts/manufacturers_new.html'
-    form_class = AssetForm
+    form_class = ManufacturerForm
 
     @method_decorator(login_required)
-    def get(self, request, *args):
-        form = self.form_class
-        if args:
-            form = args[0]
+    def get(self, request):
+        form = self.form_class()
         customer = Customer.objects.get(user=request.user)
-        models = Hardware.objects.filter(customer=customer)
-        context = {"customer": customer, "form": form, "models": models}
-
+        context = {"customer": customer, "form": form}
         return render(request, self.template_name, context)
 
     @method_decorator(login_required)
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/dashboard/assets')
+            obj = form.save()
+            Customer.objects.get(user=request.user).manufacturers.add(obj)
+            message = 'Manufacturer "{0}" successfully added.'.format(form.cleaned_data['name'])
+            messages.add_message(request, messages.SUCCESS, message)
+            return redirect('manufacturers')
         else:
-            return self.get(request, form)
+            message = 'Something happened please try again.'
+            messages.add_message(request, messages.ERROR, message)
+            return self.get(request)
 
 
 class SupplierView(View):
@@ -389,31 +401,33 @@ class SupplierView(View):
     @method_decorator(login_required)
     def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        suppliers = Supplier.objects.filter(customer=customer)
+        suppliers = customer.suppliers.all()
         context = {"customer": customer, "data": suppliers}
         return render(request, self.template_name, context)
 
 
 class SupplierNewView(View):
     template_name = 'dashboard/layouts/supplier_new.html'
-    form_class = AssetForm
+    form_class = SupplierForm
 
     @method_decorator(login_required)
-    def get(self, request, *args):
-        form = self.form_class
-        if args:
-            form = args[0]
+    def get(self, request):
         customer = Customer.objects.get(user=request.user)
-        models = Hardware.objects.filter(customer=customer)
-        context = {"customer": customer, "form": form, "models": models}
-
+        form = self.form_class()
+        context = {"customer": customer, "form": form}
         return render(request, self.template_name, context)
 
     @method_decorator(login_required)
     def post(self, request):
+        customer = Customer.objects.get(user=request.user)
         form = self.form_class(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/dashboard/assets')
+            obj = form.save()
+            customer.suppliers.add(obj)
+            message = 'Supplier "{0}" successfully added.'.format(form.cleaned_data['name'])
+            messages.add_message(request, messages.SUCCESS, message)
+            return redirect('supplier')
         else:
-            return self.get(request, form)
+            message = 'Something happened please try again.'
+            messages.add_message(request, messages.ERROR, message)
+            return self.get(request)

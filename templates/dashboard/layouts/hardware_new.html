@@ -26,6 +26,9 @@
 
                                             <select class="form-control" name="manufacturer">
                                                 <option value="">Select Manufacturer</option>
+                                                {% for choice in form.manufacturer.field.queryset %}
+                                                <option value="{{ choice.pk }}">{{ choice.name }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
 
@@ -36,7 +39,9 @@
                                         <div class="col-sm-4">
 
                                             <select class="form-control" name="category">
-                                                <option value="">Select Category</option>
+                                                {% for value, choice in form.category.field.choices %}
+                                                <option value="{{ value }}">{{ choice }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
 
@@ -61,12 +66,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Upload Image</label>
-                                        <div class="col-sm-10">
-                                            <input type="file" class="btn btn-default" title="Select Image">
-                                        </div>
-                                    </div>
+{#                                    <div class="form-group">#}
+{#                                        <label class="col-sm-2 control-label">Upload Image</label>#}
+{#                                        <div class="col-sm-10">#}
+{#                                            <input type="file" class="btn btn-default" title="Select Image">#}
+{#                                        </div>#}
+{#                                    </div>#}
 
 
                                     <a href="{% url 'hardware' %}">
