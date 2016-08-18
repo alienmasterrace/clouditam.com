@@ -20,11 +20,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='asset',
-            name='asset_tag',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False),
-        ),
-        migrations.AddField(
-            model_name='asset',
             name='is_os',
             field=models.BooleanField(default=True),
         ),
