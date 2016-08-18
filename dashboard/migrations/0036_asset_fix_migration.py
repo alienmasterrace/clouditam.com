@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.AddField(
             model_name='asset',
             name='asset_tag',
             field=models.CharField(default='UNKNOWN', editable=False, max_length=12),
