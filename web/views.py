@@ -1,68 +1,21 @@
 from django.contrib.auth import logout, authenticate, login, get_user_model
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, HttpResponseRedirect
 from django.utils.datetime_safe import datetime
 from django.views.generic import View
-from django.utils.decorators import method_decorator
 from web.forms import SignUpForm, SignInForm
 import datetime
-from web.models import Header, Account, PRICE_TYPE
-
-
-# TODO: Move better place
-def get_header(pagen):
-    try:
-        return Header.objects.get(page=pagen)
-    except ObjectDoesNotExist:
-        return ""
+from web.models import Header, Account, Settings
 
 
 class IndexView(View):
     template_name = 'web/index.html'
 
     def get(self, request):
-        header = get_header('Index')
-        return render(request, self.template_name, {"header":header})
-
-
-class PricingView(View):
-    template_name = 'web/pricing.html'
-
-    def get(self, request):
-        if request.user.is_authenticated():
-            return HttpResponseRedirect('/')
-        else:
-            header = get_header('Pricing')
-            prices = Account.objects.all()
-            col = int(12/len(prices)+1)*2
-            context = {"header": header, 'prices': prices, 'col':col}
-            return render(request, self.template_name, context)
-
-
-class ClientsView(View):
-    template_name = 'web/clients.html'
-
-    def get(self, request, *args, **kwargs):
-        header = get_header(3)
-        return render(request, self.template_name)
-
-
-class ContactView(View):
-    template_name = 'web/contact.html'
-
-    def get(self, request, *args, **kwargs):
-        header = get_header(4)
-        return render(request, self.template_name)
-
-
-class AboutView(View):
-    template_name = 'web/about.html'
-
-
-    def get(self, request, *args, **kwargs):
-        header = get_header(5)
-        return render(request, self.template_name)
+        header = Header.objects.filter().first()
+        setting = Settings.objects.filter().first()
+        context = {"header":header, "setting": setting}
+        return render(request, self.template_name, context)
 
 
 class SignInView(View):
@@ -141,7 +94,7 @@ class SignUpView(View):
 
 class LogoutView(View):
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         if request.user.is_authenticated():
             logout(request)
         return HttpResponseRedirect('/')

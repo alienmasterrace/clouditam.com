@@ -18,7 +18,7 @@ class AssetForm(forms.ModelForm):
 
     class Meta:
         model = Asset
-        exclude = ['application', 'asset_id', 'asset_tag']
+        exclude = ['application', 'asset_tag', 'history',]
 
 
 class CompanyForm(forms.ModelForm):
@@ -46,18 +46,17 @@ class SoftwareForm(forms.ModelForm):
 
         if customer:
             self.fields['supplier'].queryset = Supplier.objects.filter(customer=customer)
-            self.fields['company'].queryset = Company.objects.filter(customer=customer)
             self.fields['assigned_to'].queryset = DashUser.objects.filter(customer=customer)
 
     class Meta:
         model = Software
-        exclude = []
+        exclude = ['history',]
 
 
 class DashUserForm(forms.ModelForm):
     class Meta:
         model = DashUser
-        exclude = []
+        exclude = ['history',]
 
 
 class HardwareForm(forms.ModelForm):

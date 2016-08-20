@@ -1,14 +1,16 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
 from dashboard.forms import AssetForm, CompanyForm, ManufacturerForm, SupplierForm, SoftwareForm, DashUserForm, \
     HardwareForm, LocationForm
-from dashboard.models import CATEGORY_TYPES
+from dashboard.models import CATEGORY_TYPES, Asset, Software, DashUser
 from web.models import Customer, Account
 from django.contrib import messages
+from django.contrib.admin.models import LogEntry, ADDITION
 
 
 class DashboardView(View):
@@ -16,9 +18,7 @@ class DashboardView(View):
 
     @method_decorator(login_required)
     def get(self, request):
-        customer = Customer.objects.get(user=request.user)
-        context = {"customer": customer}
-        return render(request, self.template_name, context)
+        return render(request, self.template_name)
 
 
 class AccountSettingsView(View):
@@ -47,19 +47,19 @@ class AssetsView(View):
 
     @method_decorator(login_required)
     def get(self, request):
-        customer = Customer.objects.get(user=request.user)
-        assets = customer.assets.all()
-        context = {"customer": customer, "data": assets}
-        return render(request, self.template_name, context)
+        return render(request, self.template_name)
 
 
 class AssetShowView(View):
     template_name = 'dashboard/layouts/asset_show.html'
 
     @method_decorator(login_required)
-    def get(self, request):
+    def get(self, request, tag):
         customer = Customer.objects.get(user=request.user)
-        context = {"customer": customer}
+        obj = get_object_or_404(Asset, asset_tag=tag, customer=customer)
+        # logs = LogEntry.objects.filter(object_id=obj.id, content_type__id__exact=ContentType.objects.get_for_model(Asset).id)
+        logs = obj.history.all().order_by('-timestamp')
+        context = {"asset": obj, "history": logs}
         return render(request, self.template_name, context)
 
 
@@ -81,7 +81,8 @@ class AssetNewView(View):
         if form.is_valid():
             obj = form.save()
             cats = dict(CATEGORY_TYPES)
-            obj.asset_tag = "{0}{1:04d}{2:05d}".format({cats[k] : k for k in cats}[obj.model.get_category_display()], customer.id, obj.id)
+            obj.asset_tag = "{0}{1:04d}{2:05d}".format({cats[k]: k for k in cats}[obj.model.get_category_display()],
+                                                       customer.id, obj.id)
             obj.save()
             customer.assets.add(obj)
             message = 'Asset "{0}" successfully added.'.format(form.cleaned_data['model'])
@@ -163,9 +164,24 @@ class SoftwareShowView(View):
     template_name = 'dashboard/layouts/software_show.html'
 
     @method_decorator(login_required)
-    def get(self, request):
-        customer = Customer.objects.get(user=request.user)
-        context = {"customer": customer}
+    def get(self, request, id_obj):
+        obj = get_object_or_404(Software, id=id_obj, customer=request.user.customer)
+        logs = obj.history.all().order_by('-timestamp')
+        seats = []
+        s_number = 0
+        if obj.seats:
+            s_number = obj.seats
+        for j in obj.software.all():
+            d = {}
+            d['asset'] = j
+            d['user'] = j.assigned_to
+            d['button'] = 'Unassign'
+            seats.append(d)
+        for i in range(s_number - len(seats)):
+            n_d = {}
+            n_d['button'] = 'Assign To'
+            seats.append(n_d)
+        context = {'software': obj, 'history': logs, 'seats': seats}
         return render(request, self.template_name, context)
 
 
@@ -211,10 +227,11 @@ class UserShowView(View):
     template_name = 'dashboard/layouts/user_show.html'
 
     @method_decorator(login_required)
-    def get(self, request):
-        customer = Customer.objects.get(user=request.user)
-        users = customer.dashusers.all()
-        context = {"customer": customer, "data": users}
+    def get(self, request, id_obj):
+        obj = get_object_or_404(DashUser, id=id_obj, customer=request.user.customer)
+        assigned_assets = obj.asset_set.all()
+        assigned_softwares = obj.software_set.all()
+        context = {"user": obj, 'assigned_assets': assigned_assets, 'assigned_softwares': assigned_softwares}
         return render(request, self.template_name, context)
 
 

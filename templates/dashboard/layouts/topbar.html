@@ -12,19 +12,17 @@
     <div class="navbar navbar-default" role="navigation">
         <div class="container">
             <div class="navbar-collapse2">
-                {% load activeurl %}
-                {% activeurl %}
                     <ul class="nav navbar-nav hidden-xs">
                         <li><a href="{% url 'index' %}"><i
                                 class='fa fa-home'></i><span> Home</span></a>
                         </li>
-                        <li><a href='{% url 'clients' %}'><i
+                        <li><a href='#'><i
                                 class='fa fa-child'></i><span> Clients</span></a>
                         </li>
-                        <li><a href='{% url 'contact' %}'><i
+                        <li><a href='#'><i
                                 class='fa fa-phone'></i><span> Contact</span></a>
                         </li>
-                        <li><a href='{% url 'about' %}'><i
+                        <li><a href='#'><i
                                 class='fa fa-info'></i><span> About</span></a>
                         </li>
                         <li><a class="md-trigger" data-modal="logout-modal"><i
@@ -32,7 +30,6 @@
                         </li>
 
                     </ul>
-                {% endactiveurl %}
                 <ul class="nav navbar-nav navbar-right top-navbar">
 
                     {#                    <li class="dropdown iconify hide-phone"><a href="#"#}

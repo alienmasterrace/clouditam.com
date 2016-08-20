@@ -5,14 +5,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from dashboard.models import Manufacturer, Company, Location, Supplier, Software, Hardware, Asset, DashUser
 
-PAGE_TYPE = (
-    ('Index', 'Index'),
-    ('Pricing', 'Pricing'),
-    ('Clients', 'Clients'),
-    ('Contact', 'Contact'),
-    ('About', 'About'),
-)
-
 PRICE_TYPE = (
     ('Monthly', 'Monthly'),
     ('Annually', 'Annually'),
@@ -21,7 +13,22 @@ PRICE_TYPE = (
 
 
 class Settings(models.Model):
-    maintenance_message = models.TextField()
+    maintenance_message = models.TextField(null=True, blank=True)
+    maintenance_mode = models.BooleanField(default=False)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    contact_email = models.CharField(max_length=255, null=True, blank=True)
+    phone_number = models.CharField(max_length=255, null=True, blank=True)
+    social_facebook_link = models.CharField(max_length=255, null=True, blank=True)
+    social_twitter_link = models.CharField(max_length=255, null=True, blank=True)
+    footer = models.CharField(max_length=255, null=True, blank=True)
+
+
+class Demos(models.Model):
+    pass
+
+
+class Features(models.Model):
+    pass
 
 
 class About(models.Model):
@@ -73,12 +80,10 @@ class Customer(models.Model):
 
 
 class Header(models.Model):
-    title = models.CharField(max_length=64, null=True)
     bg_image = models.ImageField(default="headers/default.jpg", upload_to="headers")
     text_area = RichTextField(config_name='awesome_ckeditor')
     button_text = models.CharField(max_length=64, null=True)
     button_url = models.CharField(max_length=64, null=True)
-    page = models.CharField(max_length=64, choices=PAGE_TYPE, default="Index", unique=True)
 
     def __str__(self):
-        return "{} Page".format(self.page)
+        return "HEADER DETAILS"

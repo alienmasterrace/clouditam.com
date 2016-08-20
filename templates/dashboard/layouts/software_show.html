@@ -4,7 +4,7 @@
 {% block right_content %}
     <!-- Page Heading Start -->
     <div class="page-heading">
-        <h1><i class='fa fa-certificate'></i> Software Details: Adobe Photoshop CS6</h1>
+        <h1><i class='fa fa-certificate'></i> Software Details: {% if software.is_os %}[OS] {% endif %}{{ software.name }}</h1>
     </div>
     <!-- Page Heading End-->                <!-- Your awesome content goes here -->
 
@@ -15,28 +15,39 @@
 
               <div class="widget-header">
 								<h2><strong>Software</strong> Details</h2>
+                  <div class="additional-btn">
+									<a href="{% url 'asset_new' %}" ><i class="fa fa-edit"></i> Edit Software</a>
+									<a href="{% url 'asset_new' %}" ><i class="fa fa-remove"></i> Remove</a>
+								</div>
 							</div>
                 <div class="widget-content padding">
 
-                    <p><strong>Serial: </strong>ZRAXAS-141XA1-6HAJXA</p>
-                    <p><strong>Purchase Date: </strong>Aug. 12, 2016</p>
-                    <p><strong>Order Number: </strong>17777291</p>
-                    <p><strong>Purchase Cost: </strong>$ 1597</p>
-                    <p><strong>Seats: </strong>5</p>
-                    <p><strong>Serial: </strong>WS516236611122</p>
-                    <p><strong>Reassingable: </strong>Yes</p>
+                    {% if software.serial %}<p><strong>Serial: </strong>{{ software.serial }}</p>{% endif %}
+                    {% if software.licensed_to_name %}<p><strong>Licensed To Name: </strong>{{ software.licensed_to_name }}</p>{% endif %}
+                    {% if software.licensed_to_email %}<p><strong>Licensed To Email: </strong>{{ software.licensed_to_email }}</p>{% endif %}
+                    {% if software.purchase_date %}<p><strong>Purchase Date: </strong>{{ software.purchase_date }}</p>{% endif %}
+                    {% if software.order_number %}<p><strong>Order Number: </strong>{{ software.order_number }}</p>{% endif %}
+                    {% if software.purchase_cost %}<p><strong>Purchase Cost: </strong>$ {{ software.purchase_cost }}</p>{% endif %}
+                    {% if software.seats %}<p><strong>Seats: </strong>{{ software.seats }}</p>{% endif %}
+                    {% if software.reassignable %}<p><strong>Reassignable: </strong>{{ software.reassignable }}</p>{% endif %}
+                    {% if software.maintained %}<p><strong>Maintained: </strong>{{ software.maintained }}</p>{% endif %}
+                    {% if software.supplier %}<p><strong>Supplier: </strong>{{ software.supplier }}</p>{% endif %}
+                    {% if software.expiration_date %}<p><strong>Expiration Date: </strong>{{ software.expiration_date }}</p>{% endif %}
+                    {% if software.termination_date %}<p><strong>Termination Date: </strong>{{ software.termination_date }}</p>{% endif %}
+                    {% if software.notes %}<p><strong>Notes: </strong>{{ software.notes }}</p>{% endif %}
+                    {% if software.notes %}<p><strong>Notes: </strong>{{ software.notes }}</p>{% endif %}
                 </div>
             </div>
         </div>
     </div>
-
+    {% if not software.is_os %}
     <div class="row">
 
         <div class="col-md-12">
             <div class="widget">
 
               <div class="widget-header">
-								<h2>5 License <strong>Seats</strong></h2>
+								<h2>{% if software.seats %}{{ software.seats }}{% else %}0{% endif %} License <strong>Seats</strong></h2>
 							</div>
                 <div class="widget-content">
                     <div class="table-responsive">
@@ -53,12 +64,25 @@
 
 
                                 <tbody>
+                                {% if software.seats %}
+                                    {% for i in seats %}
+
                                 <tr>
-                                    <td>Seat 1</td>
-                                    <td><a href="{% url 'user_show' %}">Fatih Bayram</a></td>
-                                    <td><a href="{% url 'asset_show' %}">Alison MBP NNY281212131</a></td>
-                                    <td><button class="btn btn-primary">Unassign</button></td>
+                                    <td>Seat {{ forloop.counter }}</td>
+                                    <td>{% if i.user %}<a href="{% url 'user_show' id_obj=i.user.id %}">{{ i.user.fullname }}</a></td>{% endif %}
+                                    <td>{% if i.asset %}<a href="{% url 'asset_show' tag=i.asset.asset_tag %}">{{ i.asset.model.model }}</a></td>{% endif %}
+                                    <td><button class="btn btn-primary">{{ i.button }}</button></td>
                                 </tr>
+
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                    <td>There is not available seat</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    </tr>
+                                {% endif %}
                                 </tbody>
                             </table>
 
@@ -67,6 +91,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 
     <div class="row">
 
@@ -82,23 +107,33 @@
                                    width="100%">
                                 <thead>
                                 <tr>
-                                    <th>Date</th>
-                                    <th>User</th>
                                     <th>Event</th>
-                                    <th>Old Value</th>
-                                    <th>New Value</th>
+                                    <th>Summary</th>
+                                    <th>User</th>
+                                    <th>Date/Time</th>
                                 </tr>
                                 </thead>
 
 
                                 <tbody>
+                                {% if history %}
+                                {% for h in history %}
                                 <tr>
-                                    <td>Aug. 12, 2016</td>
-                                    <td>Fatih Bayram</td>
-                                    <td>create software</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{% if h.action == 0 %}Create{% elif h.action == 1 %}Update{% endif %}</td>
+                                    <td>{{ h.changes_str }}</td>
+                                    <td>{{ h.actor.first_name }} {{ h.actor.last_name }}</td>
+                                    <td>{{ h.timestamp }}</td>
                                 </tr>
+                                {% endfor %}
+                                {% else %}
+                            <tr>
+                                <td>There is not available history</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {% endif %}
                                 </tbody>
                             </table>
 

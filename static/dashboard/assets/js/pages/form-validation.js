@@ -12,7 +12,7 @@ $(document).ready(function () {
                 validators: {
                     notEmpty: {
                         message: 'The supplier name is required and can\'t be empty'
-                    },
+                    }
                 }
             }
         }
@@ -25,7 +25,7 @@ $(document).ready(function () {
                 validators: {
                     notEmpty: {
                         message: 'The manufacturer name is required and can\'t be empty'
-                    },
+                    }
                 }
             }
         }
@@ -37,7 +37,7 @@ $(document).ready(function () {
                 validators: {
                     notEmpty: {
                         message: 'The company name is required and can\'t be empty'
-                    },
+                    }
                 }
             }
         }
@@ -71,22 +71,6 @@ $(document).ready(function () {
                 validators: {
                     notEmpty: {
                         message: 'The location name is required and can\'t be empty'
-                    }
-                }
-            },
-            city: {
-                message: 'The city is not valid',
-                validators: {
-                    notEmpty: {
-                        message: 'The city is required and can\'t be empty'
-                    }
-                }
-            },
-            country: {
-                message: 'The country is not valid',
-                validators: {
-                    notEmpty: {
-                        message: 'The country is required'
                     }
                 }
             }
@@ -131,26 +115,8 @@ $(document).ready(function () {
                         message: 'The software name is required and can\'t be empty'
                     }
                 }
-            },
-            serial: {
-                message: 'The serial is not valid',
-                validators: {
-                    notEmpty: {
-                        message: 'The serial is required and can\'t be empty'
-                    }
-                }
-            },
-            seats: {
-                message: 'The seats is not valid',
-                validators: {
-                    notEmpty: {
-                        message: 'The seats is required'
-                    },
-                    digits: {
-                        message: 'The seats should be digits'
-                    }
-                }
             }
+
         }
     });
     $('#createUserForm').bootstrapValidator({

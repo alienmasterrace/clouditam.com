@@ -41,15 +41,15 @@
 
 
                                 <tbody>
-                                {% for d in data %}
+                                {% for d in request.user.customer.assets.all %}
                                 <tr>
                                     <td>{{ d.company.name }}</td>
-                                    <td><a href="{% url 'asset_show' %}">{{ d.asset_tag }}</a></td>
+                                    <td><a href="{% url 'asset_show' tag=d.asset_tag %}">{{ d.asset_tag }}</a></td>
                                     <td>{{ d.serial }}</td>
                                     <td>{{ d.model.model }}</td>
                                     <td>{{ d.status }}</td>
                                     <td>{{ d.location.name }}</td>
-                                    <td>{{ d.model.category }}</td>
+                                    <td>{{ d.model.get_category_display }}</td>
                                     <td>{{ d.notes }}</td>
                                     <td>{{ d.order_number }}</td>
                                     <td>{{ d.purchase_date }}</td>

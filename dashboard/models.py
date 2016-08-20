@@ -1,5 +1,7 @@
 import uuid
 
+from auditlog.models import AuditlogHistoryField
+from auditlog.registry import auditlog
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -64,10 +66,10 @@ class Location(models.Model):
     parent = models.ForeignKey('self', blank=True, null=True, related_name='children')
     location_currency = models.CharField(null=True, max_length=255, choices=CURRENCIES, blank=True)
     address = models.TextField(null=True, blank=True)
-    city = models.CharField(max_length=255, null=True)
+    city = models.CharField(max_length=255, null=True, blank=True)
     state = models.CharField(max_length=255, null=True, blank=True)
     postal_code = models.CharField(max_length=255, null=True, blank=True)
-    country = models.CharField(max_length=255, null=True, choices=COUNTRIES)
+    country = models.CharField(max_length=255, null=True, choices=COUNTRIES, blank=True)
 
 
 class Supplier(models.Model):
@@ -88,11 +90,10 @@ class Supplier(models.Model):
 
 class Software(models.Model):
     name = models.CharField(max_length=255, null=True)
-    company = models.ForeignKey("Company", null=True, blank=True)
-    serial = models.CharField(max_length=255, null=True)
+    serial = models.CharField(max_length=255, null=True, blank=True)
     licensed_to_name = models.CharField(max_length=255, null=True, blank=True)
     licensed_to_email = models.EmailField(blank=True, null=True)
-    seats = models.IntegerField(null=True)
+    seats = models.IntegerField(null=True, blank=True)
     reassignable = models.BooleanField(default=False, blank=True)
     maintained = models.BooleanField(default=False, blank=True)
     supplier = models.ForeignKey("Supplier", null=True, blank=True)
@@ -104,6 +105,10 @@ class Software(models.Model):
     notes = models.TextField(null=True, blank=True)
     is_os = models.BooleanField(default=False, blank=True)
     assigned_to = models.ForeignKey("DashUser", null=True, blank=True)
+    history = AuditlogHistoryField()
+
+
+auditlog.register(Software, exclude_fields=[])
 
 
 class Hardware(models.Model):
@@ -131,31 +136,42 @@ class Asset(models.Model):
         ("Amazon Web Services", "Amazon Web Services"),
     )
 
-    name = models.CharField(max_length=255, null=True, blank=True)
-    asset_tag = models.CharField(max_length=12, editable=False, default="UNKNOWN")
-    memory_size = models.DecimalField(max_digits=64, decimal_places=2, null=True, blank=True)
-    memory_type = models.CharField(max_length=255, null=True, choices=MEMORY_TYPES, blank=True)
-    cpu_speed = models.DecimalField(max_digits=64, decimal_places=2, null=True, blank=True)
-    cpu_count = models.IntegerField(null=True, blank=True)
-    disk_size = models.DecimalField(max_digits=64, decimal_places=2, null=True, blank=True)
-    disk_type = models.CharField(max_length=255, null=True, choices=MEMORY_TYPES, blank=True)
-    ip_address = models.GenericIPAddressField(null=True, blank=True)
-    role = models.CharField(max_length=255, null=True, blank=True)
-    os = models.ForeignKey("Software", null=True, blank=True, related_name="os")
-    platform = models.CharField(max_length=255, null=True, choices=PLATFORMS, blank=True)
-    serial = models.CharField(max_length=255, null=True, blank=True)
-    purchase_date = models.DateField(null=True, blank=True)
-    order_number = models.IntegerField(null=True, blank=True)
-    purchase_cost = models.DecimalField(max_digits=64, decimal_places=2, null=True, blank=True)
-    warranty = models.IntegerField(null=True, blank=True)
-    notes = models.TextField(null=True, blank=True)
-    location = models.ForeignKey("Location", null=True, blank=True)
-    supplier = models.ForeignKey("Supplier", null=True, blank=True)
-    application = models.ManyToManyField("Software", blank=True, related_name='software')
-    model = models.ForeignKey("Hardware", null=True)
-    status = models.CharField(max_length=255, null=True, choices=STATUS)
-    company = models.ForeignKey("Company", null=True, blank=True)
-    assigned_to = models.ForeignKey("DashUser", null=True, blank=True)
+    name = models.CharField(max_length=255, null=True, blank=True, verbose_name="Asset Name")
+    asset_tag = models.CharField(max_length=12, editable=False, default="UNKNOWN", verbose_name="Asset Tag")
+    memory_size = models.DecimalField(max_digits=64, decimal_places=2, null=True, blank=True,
+                                      verbose_name="Memory Size")
+    memory_type = models.CharField(max_length=255, null=True, choices=MEMORY_TYPES, blank=True,
+                                   verbose_name="Memory Type")
+    cpu_speed = models.DecimalField(max_digits=64, decimal_places=2, null=True, blank=True, verbose_name="Cpu Speed")
+    cpu_count = models.IntegerField(null=True, blank=True, verbose_name="CPU Count")
+    disk_size = models.DecimalField(max_digits=64, decimal_places=2, null=True, blank=True, verbose_name="Disk Size")
+    disk_type = models.CharField(max_length=255, null=True, choices=MEMORY_TYPES, blank=True, verbose_name="Disk Type")
+    ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name="IP Address")
+    role = models.CharField(max_length=255, null=True, blank=True, verbose_name="Role")
+    os = models.ForeignKey("Software", null=True, blank=True, related_name="os", verbose_name="Operating System")
+    platform = models.CharField(max_length=255, null=True, choices=PLATFORMS, blank=True, verbose_name="Platform")
+    serial = models.CharField(max_length=255, null=True, blank=True, verbose_name="Serial")
+    purchase_date = models.DateField(null=True, blank=True, verbose_name="Purchase Date")
+    order_number = models.IntegerField(null=True, blank=True, verbose_name="Order Number")
+    purchase_cost = models.DecimalField(max_digits=64, decimal_places=2, null=True, blank=True,
+                                        verbose_name="Purchase Cost")
+    warranty = models.IntegerField(null=True, blank=True, verbose_name="Warranty")
+    notes = models.TextField(null=True, blank=True, verbose_name="Notes")
+    location = models.ForeignKey("Location", null=True, blank=True, verbose_name="Location")
+    supplier = models.ForeignKey("Supplier", null=True, blank=True, verbose_name="Supplier")
+    application = models.ManyToManyField("Software", blank=True, related_name='software',
+                                         verbose_name="Assigned Software")
+    model = models.ForeignKey("Hardware", null=True, verbose_name="Hardware Model")
+    status = models.CharField(max_length=255, null=True, choices=STATUS, verbose_name="Status")
+    company = models.ForeignKey("Company", null=True, blank=True, verbose_name="Company")
+    assigned_to = models.ForeignKey("DashUser", null=True, blank=True, verbose_name="User Assigned")
+    history = AuditlogHistoryField()
+
+    def __str__(self):
+        return "{0}{1}".format(self.name, self.model.model)
+
+
+auditlog.register(Asset, exclude_fields=['asset_tag', 'id', ])
 
 
 class DashUser(models.Model):
@@ -168,6 +184,10 @@ class DashUser(models.Model):
     phone_number = PhoneNumberField(null=True, blank=True)
     email = models.EmailField()
     notes = models.TextField(null=True, blank=True)
+    history = AuditlogHistoryField()
+
+
+auditlog.register(DashUser, exclude_fields=[])
 
 
 class Manufacturer(models.Model):

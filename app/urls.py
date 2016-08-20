@@ -24,23 +24,26 @@ from web.views import SignUpView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^', include('web.urls')),
-    url(r'^dashboard/', include('dashboard.urls')),
-    url('^social/', include('social.apps.django_app.urls', namespace='social')),
-    url(r'^api/v1/', include('api.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-if settings.MAINTENANCE:
-    urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='web/maintenance.html'), name="index"),
-    url(r'^$', TemplateView.as_view(template_name='web/maintenance.html'), name="clients"),
-    url(r'^$', TemplateView.as_view(template_name='web/maintenance.html'), name="contact"),
-    url(r'^$', TemplateView.as_view(template_name='web/maintenance.html'), name="about"),
-    url(r'^admin/', include(admin.site.urls)),
     url(r'^dashboard/', include('dashboard.urls')),
     url('^social/', include('social.apps.django_app.urls', namespace='social')),
     url(r'^signin/$', SignInView.as_view(), name='signin'),
     url(r'^signup/$', SignUpView.as_view(), name='signup'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    features = [
+        url(r'^api/v1/', include('api.urls')),
+    ]
+    urlpatterns += features
+MAINTENANCE = True
+if MAINTENANCE:
+    urlpatterns += [
+    url(r'^$', TemplateView.as_view(template_name='web/maintenance.html'), name="index"),
+    url(r'^demo/', include('web.urls')),
+]
+if not MAINTENANCE:
+    urlpatterns += [
+        url(r'^', include('web.urls')),
+        ]

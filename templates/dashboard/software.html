@@ -40,7 +40,7 @@
                                 <tbody>
                                 {% for d in data %}
                                 <tr>
-                                    <td><a href="{% url 'software_show' %}">{{ d.name}}</a></td>
+                                    <td><a href="{% url 'software_show' id_obj=d.pk %}">{{ d.name}}</a></td>
                                     <td>{{ d.serial}}</td>
                                     <td>{{ d.order_number}}</td>
                                     <td>{{ d.purchase_date}}</td>

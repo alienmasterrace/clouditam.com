@@ -15,6 +15,8 @@ import os
 
 from django.contrib.messages import constants
 
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -24,11 +26,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = ')lsmbbo7ivr%8$bvgf1*77g9+lv4p^=^2l1qsb0%u=*co*!38$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-DEVELOPMENT = True
-MAINTENANCE = True
+DEVELOPMENT = False
 
-ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -49,6 +48,7 @@ INSTALLED_APPS = (
     'web',
     'api',
     'rest_framework',
+    'auditlog',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -62,6 +62,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
+    'auditlog.middleware.AuditlogMiddleware',
+
 )
 
 ROOT_URLCONF = 'app.urls'
@@ -92,8 +94,9 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-
+DEBUG = False
 if DEVELOPMENT:
+    DEBUG =True
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -101,6 +104,7 @@ if DEVELOPMENT:
         }
     }
 elif not DEVELOPMENT:
+    DEBUG = False
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -111,6 +115,12 @@ elif not DEVELOPMENT:
             'PORT': '5432',
         }
     }
+
+
+if DEBUG:
+    ALLOWED_HOSTS = []
+else:
+    ALLOWED_HOSTS = ["*"]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
