@@ -98,3 +98,13 @@ class LogoutView(View):
         if request.user.is_authenticated():
             logout(request)
         return HttpResponseRedirect('/')
+
+# HTTP Error 404
+def notFoundView(request):
+    template_name = '404.html'
+    return render(request, template_name)
+
+# HTTP Error 500
+def serverErrorView(request):
+    template_name = '500.html'
+    return render(request, template_name)

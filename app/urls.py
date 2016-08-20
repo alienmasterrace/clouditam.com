@@ -47,3 +47,9 @@ if not MAINTENANCE:
     urlpatterns += [
         url(r'^', include('web.urls')),
         ]
+
+
+handler400 = 'web.views.badRequestView.'
+handler403 = 'web.views.forbiddenView'
+handler404 = 'web.views.notFoundView'
+handler500 = 'web.views.serverErrorView'
