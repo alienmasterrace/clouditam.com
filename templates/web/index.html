@@ -539,7 +539,7 @@
         </div>
     </section>
 
-    <section id="contact-form" class="contact-form block">
+    <section id="contact" class="contact-form block">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
@@ -597,12 +597,15 @@
         </div>
     </section>
 
-    <section class="contact-map">
+    <section class="contact-map" id="contact">
         <div id="gmap" style="height:300px"></div>
     </section>
 {% endblock %}
 {% block extra_js %}
     <script>
+    function capitalise(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+};
         $(document).ready(function () {
             $(document).on("scroll", onScroll);
 
@@ -641,7 +644,7 @@
     if (cur_pos >= top && cur_pos <= bottom) {
       nav.find('a').removeClass('active');
       sections.removeClass('active');
-
+        document.title = capitalise($(this).context.id) + ' - CloudITAM';
       $(this).addClass('active');
       nav.find('a[href="#'+$(this).attr('id')+'"]').addClass('active');
     }
