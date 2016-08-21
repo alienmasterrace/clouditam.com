@@ -42,7 +42,7 @@ $(function() {
       }
     });
 
-    $('#contactForm').bootstrapValidator({
+    $('#contact-form').bootstrapValidator({
         container: 'tooltip',
         feedbackIcons: {
             valid: 'icon-checkmark2',

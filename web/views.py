@@ -14,7 +14,8 @@ class IndexView(View):
     def get(self, request):
         header = Header.objects.filter().first()
         setting = Settings.objects.filter().first()
-        context = {"header":header, "setting": setting}
+        prices = Account.objects.all()
+        context = {"header":header, "setting": setting, 'prices': prices}
         return render(request, self.template_name, context)
 
 

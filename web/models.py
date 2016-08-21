@@ -28,15 +28,23 @@ class Demos(models.Model):
 
 
 class Features(models.Model):
-    pass
+    image1 = models.ImageField(upload_to='features', null=True)
+    image1_text = RichTextField(null=True, config_name='awesome_ckeditor')
+    image2 = models.ImageField(upload_to='features', null=True)
+    image2_text = RichTextField(null=True, config_name='awesome_ckeditor')
+    image3 = models.ImageField(upload_to='features', null=True)
+    image3_text = RichTextField(null=True, config_name='awesome_ckeditor')
 
 
 class About(models.Model):
-    pass
+    title = models.CharField(max_length=255, null=True, blank=True)
+    about = RichTextField(null=True)
 
 
 class Contact(models.Model):
-    pass
+    title = models.CharField(max_length=255, null=True, blank=True)
+    desc = models.CharField(max_length=255, null=True)
+    phone = models.CharField(max_length=255, null=True, blank=True)
 
 
 class Client(models.Model):
