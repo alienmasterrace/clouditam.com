@@ -183,7 +183,7 @@ class DashUser(models.Model):
     postal_code = models.CharField(max_length=255, null=True, blank=True)
     country = models.ForeignKey(Country, null=True, blank=True)
     phone_number = PhoneNumberField(null=True, blank=True)
-    email = models.EmailField()
+    email = models.EmailField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     history = AuditlogHistoryField()
 
