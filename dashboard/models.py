@@ -2,6 +2,7 @@ import uuid
 
 from auditlog.models import AuditlogHistoryField
 from auditlog.registry import auditlog
+from cities_light.models import Country
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -69,7 +70,7 @@ class Location(models.Model):
     city = models.CharField(max_length=255, null=True, blank=True)
     state = models.CharField(max_length=255, null=True, blank=True)
     postal_code = models.CharField(max_length=255, null=True, blank=True)
-    country = models.CharField(max_length=255, null=True, choices=COUNTRIES, blank=True)
+    country = models.ForeignKey(Country, null=True, blank=True)
 
 
 class Supplier(models.Model):
@@ -78,7 +79,7 @@ class Supplier(models.Model):
     city = models.CharField(max_length=255, null=True, blank=True)
     state = models.CharField(max_length=255, null=True, blank=True)
     postal_code = models.CharField(max_length=255, null=True, blank=True)
-    country = models.CharField(max_length=255, null=True, choices=COUNTRIES, blank=True)
+    country = models.ForeignKey(Country, null=True, blank=True)
     contact_name = models.CharField(max_length=255, null=True, blank=True)
     phone_number = PhoneNumberField(null=True, blank=True)
     fax_number = PhoneNumberField(null=True, blank=True)
@@ -180,7 +181,7 @@ class DashUser(models.Model):
     city = models.CharField(max_length=255, null=True, blank=True)
     state = models.CharField(max_length=255, null=True, blank=True)
     postal_code = models.CharField(max_length=255, null=True, blank=True)
-    country = models.CharField(max_length=255, null=True, choices=COUNTRIES, blank=True)
+    country = models.ForeignKey(Country, null=True, blank=True)
     phone_number = PhoneNumberField(null=True, blank=True)
     email = models.EmailField()
     notes = models.TextField(null=True, blank=True)
