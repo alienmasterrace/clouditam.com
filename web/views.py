@@ -5,7 +5,7 @@ from django.utils.datetime_safe import datetime
 from django.views.generic import View
 from web.forms import SignUpForm, SignInForm
 import datetime
-from web.models import Header, Account, Settings
+from web.models import Header, Account, Setting, Feature, Demo, Client, About, Contact
 
 
 class IndexView(View):
@@ -13,10 +13,14 @@ class IndexView(View):
 
     def get(self, request):
         header = Header.objects.filter().first()
-        setting = Settings.objects.filter().first()
+        setting = Setting.objects.filter().first()
         prices = Account.objects.all()
-        context = {"header":header, "setting": setting, 'prices': prices}
-        return render(request, self.template_name, context)
+        features = Feature.objects.all()
+        demos = Demo.objects.all()
+        clients = Client.objects.all()
+        about = About.objects.filter().first()
+        contact = Contact.objects.filter().first()
+        return render(request, self.template_name, locals())
 
 
 class SignInView(View):

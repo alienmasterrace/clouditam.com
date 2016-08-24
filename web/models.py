@@ -12,9 +12,7 @@ PRICE_TYPE = (
 )
 
 
-class Settings(models.Model):
-    maintenance_message = models.TextField(null=True, blank=True)
-    maintenance_mode = models.BooleanField(default=False)
+class Setting(models.Model):
     address = models.CharField(max_length=255, null=True, blank=True)
     contact_email = models.CharField(max_length=255, null=True, blank=True)
     phone_number = models.CharField(max_length=255, null=True, blank=True)
@@ -23,41 +21,41 @@ class Settings(models.Model):
     footer = models.CharField(max_length=255, null=True, blank=True)
 
 
-class Demos(models.Model):
-    pass
+class Feature(models.Model):
+    icon = models.CharField(max_length=255, blank=True, null=True)
+    title = models.CharField(max_length=255, blank=True, null=True)
+    text = models.TextField(blank=True, null=True)
 
-
-class Features(models.Model):
-    image1 = models.ImageField(upload_to='features', null=True)
-    image1_text = RichTextField(null=True, config_name='awesome_ckeditor')
-    image2 = models.ImageField(upload_to='features', null=True)
-    image2_text = RichTextField(null=True, config_name='awesome_ckeditor')
-    image3 = models.ImageField(upload_to='features', null=True)
-    image3_text = RichTextField(null=True, config_name='awesome_ckeditor')
-
+class Demo(models.Model):
+    image = models.ImageField(upload_to='demos', null=True)
+    title = models.CharField(max_length=255, blank=True, null=True)
+    text = models.TextField(blank=True, null=True)
 
 class About(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
-    about = RichTextField(null=True)
-
+    text = models.TextField(blank=True, null=True)
 
 class Contact(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
-    desc = models.CharField(max_length=255, null=True)
+    text = models.TextField(blank=True, null=True)
     phone = models.CharField(max_length=255, null=True, blank=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+
 
 
 class Client(models.Model):
     name = models.CharField(max_length=64, null=True)
     logo = models.ImageField(upload_to="clients", null=True)
-    url = models.URLField(null=True)
+    url = models.CharField(max_length=64, null=True)
 
 
 class Account(models.Model):
     name = models.CharField(max_length=64, null=True)
     asset_limit = models.IntegerField(null=True, default=10, help_text="Give 0 for unlimited.")
     price = models.DecimalField(max_digits=64, decimal_places=2, null=True, default=0)
+    price_detail = models.CharField(max_length=255, null=True)
     details = RichTextField(null=True, config_name='awesome_ckeditor')
+    color_code = models.CharField(max_length=64, null=True)
     type = models.CharField(max_length=64, default="Monthly", choices=PRICE_TYPE)
 
 
@@ -89,7 +87,7 @@ class Customer(models.Model):
 
 class Header(models.Model):
     bg_image = models.ImageField(default="headers/default.jpg", upload_to="headers")
-    text_area = RichTextField(config_name='awesome_ckeditor')
+    text_area = models.TextField(blank=True, null=True)
     button_text = models.CharField(max_length=64, null=True)
     button_url = models.CharField(max_length=64, null=True)
 

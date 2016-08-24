@@ -11,11 +11,6 @@ CURRENCIES = (
     ("$", "$"),
 )
 
-COUNTRIES = (
-    ('', 'Select Country'),
-    ("Turkey", "Turkey"),
-)
-
 CATEGORY_TYPES = (
     ("", "Select Category Type"),
     ("ASS", "Asset"),

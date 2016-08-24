@@ -51,8 +51,8 @@
                 <div class="row">
                     <div class="col-sm-6 col-xs-6">
                         <span class="hidden-sm hidden-xs"><i
-                                class="icon-location4"></i>1375 RICHMOND AVE. MN </span><span
-                            class="vertical-space"></span> <i class="icon-phone4"></i>1-800-666-666
+                                class="icon-location4"></i>{{ setting.address }} </span><span
+                            class="vertical-space"></span> <i class="icon-phone4"></i>{{ setting.phone_number }}
                     </div>
                     <div class="col-sm-6 col-xs-6 text-right">
                         <div class="btn-group social-links hidden-sm hidden-xs">
@@ -86,7 +86,7 @@
                     <a class="navbar-brand" href="{% url 'index' %}">
                         <img src="{% static "web/assets/img/clouditampng.png" %}"
                              data-dark-src="{% static "web/assets/img/clouditampng.png" %}"
-                             alt="CloudITAM" class="logo">
+                             alt="Cloud Based IT Asset Management" class="logo">
                     </a>
                 </div>
 
@@ -105,9 +105,8 @@
             <section class="main-slider" data-stellar-background-ratio="0.5"
                      style="background-image: url({{ header.bg_image.url }})" id="home">
                 <div class="slider-caption">
-                    <div data-animate="fadeInDown" data-delay="100"
-                         data-duration="2s">{{ header.text_area|safe }} </div>
-                    <a data-animate="fadeInUp" data-duration="2s" data-delay="200" href="{{ header.button_url }}"
+                         <h1 data-animate="fadeInDown" data-delay="1000" data-duration="2s">{{ header.text_area|safe }}</h1>
+                    <a data-animate="fadeInUp" data-duration="2s" data-delay="1000" href="{{ header.button_url }}"
                        class="btn btn-primary btn-lg">{{ header.button_text }}</a></div>
             </section>
         {% endblock %}
@@ -120,10 +119,10 @@
             <div class="row">
                 <div class="col-sm-4">
                     <a href="#">
-                        <img src="{% static "web/assets/img/logo.png" %}" alt="Coco Frontend Template"
+                        <img src="{% static "dashboard/assets/img/cloud.png" %}" alt="Cloud Based IT Asset Management"
                              class="footer-logo">
                     </a>
-                    <h5>Designing your future...</h5>
+                    <h5>Cloud Based IT Asset Management</h5>
 
                 </div>
 
@@ -131,12 +130,10 @@
                 <div class="col-sm-4">
                     <h4>CONTACT US</h4>
                     <ul class="list-unstyled company-info">
-                        <li><i class="icon-map-marker"></i> 1375 Richmond Avenue<br>Minneapolis, MN 90017</li>
-                        <li><i class="icon-phone3"></i> 1-800-666-666</li>
-                        <li><i class="icon-envelope"></i> <a href="mailto:contact@somecorporation.com">contact@somecorporation.com</a>
+                        <li><i class="icon-map-marker"></i> {{ setting.address }}</li>
+                        <li><i class="icon-phone3"></i> {{ setting.phone_number }}/li>
+                        <li><i class="icon-envelope"></i> <a href="mailto:{{ setting.contact_email }}">{{ setting.contact_email }}</a>
                         </li>
-                        <li><i class="icon-alarm2"></i> Monday - Friday: <strong>8:00 am - 7:00 pm</strong><br>Saturday
-                            - Sunday: <strong>Closed</strong></li>
                     </ul>
                 </div>
 
@@ -157,7 +154,7 @@
             <hr>
             <div class="row">
                 <div class="col-sm-6">
-                    <p>Copyright &copy; 2014 by <a href="http://www.hubancreative.com" target="_blank">HubanCreative</a>
+                    <p>{{ setting.footer|safe }}
                     </p>
                 </div>
                 <div class="col-sm-6 text-right">
