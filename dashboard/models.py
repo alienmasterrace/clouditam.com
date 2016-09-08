@@ -55,6 +55,9 @@ MEMORY_TYPES = (
 class Company(models.Model):
     name = models.CharField(max_length=255, null=True)
 
+    def __str__(self):
+        return self.name
+
     def clone(self):
         new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
         return self.__class__.objects.create(**new_kwargs)
@@ -68,6 +71,9 @@ class Location(models.Model):
     state = models.CharField(max_length=255, null=True, blank=True)
     postal_code = models.CharField(max_length=255, null=True, blank=True)
     country = models.ForeignKey(Country, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
 
     def clone(self):
         new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
@@ -87,6 +93,9 @@ class Supplier(models.Model):
     url = models.URLField(null=True, blank=True)
     notes = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to="suppliers", blank=True)
+
+    def __str__(self):
+        return self.name
 
     def clone(self):
         new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
@@ -110,6 +119,9 @@ class Software(models.Model):
     is_os = models.BooleanField(default=False, blank=True)
     assigned_to = models.ForeignKey("DashUser", null=True, blank=True)
     history = AuditlogHistoryField()
+
+    def __str__(self):
+        return self.name
 
     def clone(self):
         new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
@@ -157,7 +169,7 @@ class Asset(models.Model):
     cpu_count = models.IntegerField(null=True, blank=True, verbose_name="CPU Count")
     disk_size = models.DecimalField(max_digits=64, decimal_places=2, null=True, blank=True, verbose_name="Disk Size")
     disk_type = models.CharField(max_length=255, null=True, choices=MEMORY_TYPES, blank=True, verbose_name="Disk Type")
-    ip_address = models.CharField(null=True, max_length=255, blank=True, verbose_name="IP Address")
+    ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name="IP Address")
     role = models.CharField(max_length=255, null=True, blank=True, verbose_name="Role")
     os = models.ForeignKey("Software", null=True, blank=True, related_name="os", verbose_name="Operating System")
     platform = models.CharField(max_length=255, null=True, choices=PLATFORMS, blank=True, verbose_name="Platform")
@@ -179,7 +191,7 @@ class Asset(models.Model):
     history = AuditlogHistoryField()
 
     def __str__(self):
-        return "{0}{1}".format(self.name, self.model.model)
+        return self.asset_tag
 
     def clone(self):
         new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
@@ -201,6 +213,9 @@ class DashUser(models.Model):
     notes = models.TextField(null=True, blank=True)
     history = AuditlogHistoryField()
 
+    def __str__(self):
+        return self.fullname
+
     def clone(self):
         new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
         return self.__class__.objects.create(**new_kwargs)
@@ -210,6 +225,9 @@ auditlog.register(DashUser, exclude_fields=[])
 
 class Manufacturer(models.Model):
     name = models.CharField(max_length=255, null=True)
+
+    def __str__(self):
+        return self.name
 
     def clone(self):
         new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
