@@ -39,7 +39,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 'debug_toolbar',
-    'paypal.standard.ipn',
     'cities_light',
     'ckeditor',
     'django_activeurl',
@@ -190,7 +189,6 @@ CKEDITOR_CONFIGS = {
     },
 }
 
-PAYPAL_TEST = True
 
 MESSAGE_TAGS = {
     constants.ERROR: 'danger',

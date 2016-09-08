@@ -19,20 +19,31 @@ class Setting(models.Model):
     social_twitter_link = models.CharField(max_length=255, null=True, blank=True)
     footer = models.CharField(max_length=255, null=True, blank=True)
 
+    def __str__(self):
+        return "SETTINGS"
 
 class Feature(models.Model):
     icon = models.CharField(max_length=255, blank=True, null=True)
     title = models.CharField(max_length=255, blank=True, null=True)
     text = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return self.title
+
 class Demo(models.Model):
     image = models.ImageField(upload_to='demos', null=True)
     title = models.CharField(max_length=255, blank=True, null=True)
     text = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return self.title
+
 class About(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
     text = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return "ABOUT DETAILS"
 
 class Contact(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
@@ -40,12 +51,16 @@ class Contact(models.Model):
     phone = models.CharField(max_length=255, null=True, blank=True)
     address = models.CharField(max_length=255, blank=True, null=True)
 
-
+    def __str__(self):
+        return "CONTACT DETAILS"
 
 class Client(models.Model):
     name = models.CharField(max_length=64, null=True)
     logo = models.ImageField(upload_to="clients", null=True)
     url = models.CharField(max_length=64, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Account(models.Model):
@@ -56,6 +71,9 @@ class Account(models.Model):
     details = RichTextField(null=True, config_name='awesome_ckeditor')
     color_code = models.CharField(max_length=64, null=True)
     type = models.CharField(max_length=64, default="Monthly", choices=PRICE_TYPE)
+
+    def __str__(self):
+        return self.name
 
 
 class Customer(models.Model):
@@ -83,6 +101,11 @@ class Customer(models.Model):
     assets = models.ManyToManyField(Asset, blank=True)
     dashusers = models.ManyToManyField(DashUser, blank=True)
 
+    def assets_count(self):
+        return self.assets.all().count()
+
+    def __str__(self):
+        return self.fullname
 
 class Header(models.Model):
     bg_image = models.ImageField(default="headers/default.jpg", upload_to="headers")
