@@ -40,11 +40,11 @@
                                     <td>{{ d.category }}</td>
                                     <td>{{ d.model }}</td>
                                     <td><div class="btn-group btn-group-xs">
-                                        <a data-toggle="tooltip" title="Dublicate" class="btn btn-blue-1"><i
+                                        <a href="{% url 'hardware_duplicate' d.id %}" data-toggle="tooltip" title="Duplicate" class="btn btn-blue-1"><i
                                             class="fa fa-files-o"></i></a>
-                                        <a data-toggle="tooltip" title="Edit" class="btn btn-warning"><i
+                                        <a href="{% url 'hardware_edit' d.id %}" data-toggle="tooltip" title="Edit" class="btn btn-warning"><i
                                                 class="fa fa-pencil"></i></a>
-                                        <a data-toggle="tooltip" title="Remove" class="btn btn-danger"><i
+                                        <a href="{% url 'hardware_delete' d.id %}" data-toggle="tooltip" title="Remove" class="btn btn-danger"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </div></td>
                                 </tr>
