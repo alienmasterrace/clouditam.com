@@ -22,6 +22,15 @@ class CustomerAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
 
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def get_actions(self, request):
+        actions = super(CustomerAdmin, self).get_actions(request)
+        del actions['delete_selected']
+        return actions
+
+
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
     list_display = ('name', 'asset_limit', 'price', 'price_detail', 'color_code', 'type')
