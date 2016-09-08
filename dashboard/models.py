@@ -90,7 +90,7 @@ class Supplier(models.Model):
     phone_number = models.CharField(max_length=255, null=True, blank=True)
     fax_number = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
-    url = models.URLField(null=True, blank=True)
+    url = models.CharField(max_length=255, null=True, blank=True)
     notes = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to="suppliers", blank=True)
 
@@ -169,7 +169,7 @@ class Asset(models.Model):
     cpu_count = models.IntegerField(null=True, blank=True, verbose_name="CPU Count")
     disk_size = models.DecimalField(max_digits=64, decimal_places=2, null=True, blank=True, verbose_name="Disk Size")
     disk_type = models.CharField(max_length=255, null=True, choices=MEMORY_TYPES, blank=True, verbose_name="Disk Type")
-    ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name="IP Address")
+    ip_address = models.CharField(null=True, blank=True, max_length=255, verbose_name="IP Address")
     role = models.CharField(max_length=255, null=True, blank=True, verbose_name="Role")
     os = models.ForeignKey("Software", null=True, blank=True, related_name="os", verbose_name="Operating System")
     platform = models.CharField(max_length=255, null=True, choices=PLATFORMS, blank=True, verbose_name="Platform")

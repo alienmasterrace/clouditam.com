@@ -17,15 +17,21 @@ class HeaderAdmin(admin.ModelAdmin):
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('user', 'fullname', 'phone_number', 'plan_name', 'asset_limit', 'price', 'type', 'assets_count')
+
+    def has_add_permission(self, request):
+        return False
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'asset_limit', 'price', 'price_detail', 'color_code', 'type')
+    list_display_links = ('name',)
+
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'url')
+    list_display_links = ('name',)
 
 @admin.register(About)
 class AboutAdmin(admin.ModelAdmin):
@@ -74,7 +80,8 @@ class SettingsAdmin(admin.ModelAdmin):
 
 @admin.register(Feature)
 class FeatureAdmin(admin.ModelAdmin):
-    list_display = ('title','text')
+    list_display = ('icon','title','text')
+    list_display_links = ('title',)
 
     def has_add_permission(self, request):
         return False if self.model.objects.count() > 5 else True
@@ -82,6 +89,7 @@ class FeatureAdmin(admin.ModelAdmin):
 @admin.register(Demo)
 class DemoAdmin(admin.ModelAdmin):
     list_display = ('title','text')
+    list_display_links = ('title',)
 
     def has_add_permission(self, request):
         return False if self.model.objects.count() > 2 else True
