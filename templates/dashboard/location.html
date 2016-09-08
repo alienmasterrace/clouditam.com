@@ -44,19 +44,19 @@
                                 <tr>
                                     <td>{{ d.name }}</td>
                                     <td>{{ d.parent.name }}</td>
-                                    <td>0</td>
+                                    <td>{{ d.asset_set.count }}</td>
                                     <td>0</td>
                                     <td>{{ d.location_currency }}</td>
                                     <td>{{ d.address }}</td>
                                     <td>{{ d.city }}</td>
                                     <td>{{ d.state }}</td>
                                     <td>{{ d.country }}</td>
-                                    <td><div class="btn-group btn-group-xs">
-                                        <a data-toggle="tooltip" title="Dublicate" class="btn btn-blue-1"><i
+                                     <td><div class="btn-group btn-group-xs">
+                                        <a href="{% url 'location_duplicate' d.id %}" data-toggle="tooltip" title="Duplicate" class="btn btn-blue-1"><i
                                             class="fa fa-files-o"></i></a>
-                                        <a data-toggle="tooltip" title="Edit" class="btn btn-warning"><i
+                                        <a href="{% url 'location_edit' d.id %}" data-toggle="tooltip" title="Edit" class="btn btn-warning"><i
                                                 class="fa fa-pencil"></i></a>
-                                        <a data-toggle="tooltip" title="Remove" class="btn btn-danger"><i
+                                        <a href="{% url 'location_delete' d.id %}" data-toggle="tooltip" title="Remove" class="btn btn-danger"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </div></td>
                                 </tr>

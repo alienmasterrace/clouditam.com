@@ -16,8 +16,8 @@
               <div class="widget-header">
 								<h2><strong>Software</strong> Details</h2>
                   <div class="additional-btn">
-									<a href="{% url 'asset_new' %}" ><i class="fa fa-edit"></i> Edit Software</a>
-									<a href="{% url 'asset_new' %}" ><i class="fa fa-remove"></i> Remove</a>
+									<a href="{% url 'software_edit' software.id %}" ><i class="fa fa-edit"></i> Edit Software</a>
+									<a href="{% url 'software_delete' software.id %}" ><i class="fa fa-remove"></i> Remove</a>
 								</div>
 							</div>
                 <div class="widget-content padding">
@@ -64,20 +64,27 @@
 
 
                                 <tbody>
-                                {% if software.seats %}
-                                    {% for i in seats %}
+                                {% if software.software.all  %}
+                                    {% for i in software.software.all %}
 
                                 <tr>
                                     <td>Seat {{ forloop.counter }}</td>
-                                    <td>{% if i.user %}<a href="{% url 'user_show' id_obj=i.user.id %}">{{ i.user.fullname }}</a></td>{% endif %}
-                                    <td>{% if i.asset %}<a href="{% url 'asset_show' tag=i.asset.asset_tag %}">{{ i.asset.model.model }}</a></td>{% endif %}
-                                    <td><button class="btn btn-primary">{{ i.button }}</button></td>
+                                    <td>{% if i.assigned_to %}<a href="{% url 'user_show' id_obj=i.assigned_to.id %}">{{ i.assigned_to.fullname }}</a></td>{% endif %}
+                                    <td>{% if i %}<a href="{% url 'asset_show' tag=i.asset_tag %}">{{ i.model.model }}</a></td>{% endif %}
+                                    <td><button class="btn btn-primary">Unassign</button></td>
                                 </tr>
 
                                     {% endfor %}
-                                {% else %}
+                                {% elif not software.seats %}
                                     <tr>
                                     <td>There is not available seat</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                    <td>Your seats ready to assign</td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -143,3 +150,29 @@
         </div>
     </div>
 {% endblock %}
+<table class="table table-striped" cellspacing="0"
+                               width="100%">
+                            <tbody>
+                            <form class="form-horizontal" role="form" action="{% url 'users_new' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Software</label>
+                                <div class="col-sm-6">
+
+                                    <select class="form-control">
+                                        <option>Select Software</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="submit" class="btn btn-primary">Assign</button>
+                                    </div>
+                            </div>
+
+                        </form>
+                            </tbody>
+                        </table>

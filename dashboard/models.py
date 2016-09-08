@@ -4,7 +4,6 @@ from auditlog.models import AuditlogHistoryField
 from auditlog.registry import auditlog
 from cities_light.models import Country
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
 
 CURRENCIES = (
     ("", "Select Curency"),
@@ -56,6 +55,9 @@ MEMORY_TYPES = (
 class Company(models.Model):
     name = models.CharField(max_length=255, null=True)
 
+    def clone(self):
+        new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
+        return self.__class__.objects.create(**new_kwargs)
 
 class Location(models.Model):
     name = models.CharField(max_length=255, null=True)
@@ -67,6 +69,9 @@ class Location(models.Model):
     postal_code = models.CharField(max_length=255, null=True, blank=True)
     country = models.ForeignKey(Country, null=True, blank=True)
 
+    def clone(self):
+        new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
+        return self.__class__.objects.create(**new_kwargs)
 
 class Supplier(models.Model):
     name = models.CharField(max_length=255, null=True)
@@ -76,13 +81,16 @@ class Supplier(models.Model):
     postal_code = models.CharField(max_length=255, null=True, blank=True)
     country = models.ForeignKey(Country, null=True, blank=True)
     contact_name = models.CharField(max_length=255, null=True, blank=True)
-    phone_number = PhoneNumberField(null=True, blank=True)
-    fax_number = PhoneNumberField(null=True, blank=True)
+    phone_number = models.CharField(max_length=255, null=True, blank=True)
+    fax_number = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     url = models.URLField(null=True, blank=True)
     notes = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to="suppliers", blank=True)
 
+    def clone(self):
+        new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
+        return self.__class__.objects.create(**new_kwargs)
 
 class Software(models.Model):
     name = models.CharField(max_length=255, null=True)
@@ -103,6 +111,9 @@ class Software(models.Model):
     assigned_to = models.ForeignKey("DashUser", null=True, blank=True)
     history = AuditlogHistoryField()
 
+    def clone(self):
+        new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
+        return self.__class__.objects.create(**new_kwargs)
 
 auditlog.register(Software, exclude_fields=[])
 
@@ -116,6 +127,10 @@ class Hardware(models.Model):
 
     def __str__(self):
         return self.model
+
+    def clone(self):
+        new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
+        return self.__class__.objects.create(**new_kwargs)
 
 
 class Asset(models.Model):
@@ -142,7 +157,7 @@ class Asset(models.Model):
     cpu_count = models.IntegerField(null=True, blank=True, verbose_name="CPU Count")
     disk_size = models.DecimalField(max_digits=64, decimal_places=2, null=True, blank=True, verbose_name="Disk Size")
     disk_type = models.CharField(max_length=255, null=True, choices=MEMORY_TYPES, blank=True, verbose_name="Disk Type")
-    ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name="IP Address")
+    ip_address = models.CharField(null=True, max_length=255, blank=True, verbose_name="IP Address")
     role = models.CharField(max_length=255, null=True, blank=True, verbose_name="Role")
     os = models.ForeignKey("Software", null=True, blank=True, related_name="os", verbose_name="Operating System")
     platform = models.CharField(max_length=255, null=True, choices=PLATFORMS, blank=True, verbose_name="Platform")
@@ -166,6 +181,10 @@ class Asset(models.Model):
     def __str__(self):
         return "{0}{1}".format(self.name, self.model.model)
 
+    def clone(self):
+        new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
+        return self.__class__.objects.create(**new_kwargs)
+
 
 auditlog.register(Asset, exclude_fields=['asset_tag', 'id', ])
 
@@ -177,14 +196,21 @@ class DashUser(models.Model):
     state = models.CharField(max_length=255, null=True, blank=True)
     postal_code = models.CharField(max_length=255, null=True, blank=True)
     country = models.ForeignKey(Country, null=True, blank=True)
-    phone_number = PhoneNumberField(null=True, blank=True)
+    phone_number = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     history = AuditlogHistoryField()
 
+    def clone(self):
+        new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
+        return self.__class__.objects.create(**new_kwargs)
 
 auditlog.register(DashUser, exclude_fields=[])
 
 
 class Manufacturer(models.Model):
     name = models.CharField(max_length=255, null=True)
+
+    def clone(self):
+        new_kwargs = dict([(fld.name, getattr(self, fld.name)) for fld in self._meta.fields if fld.name != 'id'])
+        return self.__class__.objects.create(**new_kwargs)

@@ -33,7 +33,7 @@
                             <div class="form-group">
 							<label for="input-text" class="col-sm-2 control-label">Company</label>
 							<div class="col-sm-10">
-							  <input type="text" class="form-control" id="input-text" placeholder="Company" value="{{ customer.payment.company }}">
+							  <input type="text" class="form-control" id="input-text" placeholder="Company" value="{{ request.user.customer.payment.company }}">
 							</div>
 						  </div>
 
@@ -55,28 +55,28 @@
 								</select>
 							</div>
                                 <div class="col-sm-8">
-							  <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number" value="{{ customer.payment.phone_number }}" name="phoneNumber">
+							  <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number" value="{{ request.user.customer.payment.phone_number }}" name="phoneNumber">
 							</div>
 						  </div>
 
                             <div class="form-group">
 							<label for="input-text" class="col-sm-2 control-label">Address</label>
 							<div class="col-sm-10">
-							  <input type="text" class="form-control" id="input-text" placeholder="Address" value="{{ customer.payment.address }}">
+							  <input type="text" class="form-control" id="input-text" placeholder="Address" value="{{ request.user.customer.payment.address }}">
 							</div>
 						  </div>
 
                             <div class="form-group">
 							<label for="input-text" class="col-sm-2 control-label">Address 2</label>
 							<div class="col-sm-10">
-							  <input type="text" class="form-control" id="input-text" placeholder="Address 2" value="{{ customer.payment.address2 }}">
+							  <input type="text" class="form-control" id="input-text" placeholder="Address 2" value="{{ request.user.customer.payment.address2 }}">
 							</div>
 						  </div>
 
                             <div class="form-group">
 							<label for="input-text" class="col-sm-2 control-label">Zip/Postal Code</label>
 							<div class="col-sm-10">
-							  <input type="text" class="form-control" id="input-text" placeholder="Zip/Postal Code" value="{{ customer.payment.zip_or_postal }}">
+							  <input type="text" class="form-control" id="input-text" placeholder="Zip/Postal Code" value="{{ request.user.customer.payment.zip_or_postal }}">
 							</div>
 						  </div>
 

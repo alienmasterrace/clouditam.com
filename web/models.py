@@ -1,7 +1,6 @@
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
 
 from dashboard.models import Manufacturer, Company, Location, Supplier, Software, Hardware, Asset, DashUser
 
@@ -69,7 +68,7 @@ class Customer(models.Model):
     state = models.CharField(max_length=64, null=True, blank=True)
     zip_or_postal = models.CharField(max_length=64, null=True, blank=True)
     country = models.CharField(max_length=64, null=True, blank=True)
-    phone_number = PhoneNumberField(blank=True)
+    phone_number = models.CharField(max_length=255, null=True, blank=True)
     plan_name = models.CharField(max_length=64, null=True)
     asset_limit = models.IntegerField(null=True, default=10)
     price = models.DecimalField(max_digits=64, decimal_places=2, null=True, default=0)

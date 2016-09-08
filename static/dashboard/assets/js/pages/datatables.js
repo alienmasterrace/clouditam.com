@@ -17,8 +17,8 @@ $(function () {
         "columnDefs": [
             {"width": "30%", "targets": 0},
             {"width": "30%", "targets": 2},
-            {"width": "30%", "targets": 7},
-            {"bSortable": false, "aTargets": [6,7]}
+            {"width": "30%", "targets": 6},
+            {"bSortable": false, "aTargets": [5,6]}
         ]
     });
     $("#location-data").dataTable({
