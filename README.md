@@ -1,7 +1,7 @@
 # CloudITAM Web Project
 
 ## Documentation
-link
+https://github.com/dogukankotan/clouditam-web/wiki
 
 # Development
 Make sure
