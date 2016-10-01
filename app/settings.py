@@ -15,8 +15,6 @@ import os
 
 from django.contrib.messages import constants
 
-
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -27,7 +25,6 @@ SECRET_KEY = ')lsmbbo7ivr%8$bvgf1*77g9+lv4p^=^2l1qsb0%u=*co*!38$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEVELOPMENT = False
-
 
 # Application definition
 
@@ -62,7 +59,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
     'auditlog.middleware.AuditlogMiddleware',
-
+    'app.middleware.ProtectAdminMiddleware',
 )
 
 ROOT_URLCONF = 'app.urls'
@@ -95,7 +92,7 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 DEBUG = False
 if DEVELOPMENT:
-    DEBUG =True
+    DEBUG = True
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -114,7 +111,6 @@ elif not DEVELOPMENT:
             'PORT': '5432',
         }
     }
-
 
 if DEBUG:
     ALLOWED_HOSTS = []
@@ -157,6 +153,23 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.twitter.TwitterOAuth',
     'social.backends.linkedin.LinkedinOAuth',
     'django.contrib.auth.backends.ModelBackend',
+
+)
+
+SOCIAL_AUTH_DISCONNECT_PIPELINE = (
+    # Verifies that the social association can be disconnected from the current
+    # user (ensure that the user login mechanism is not compromised by this
+    # disconnection).
+    'social.pipeline.disconnect.allowed_to_disconnect',
+
+    # Collects the social associations to disconnect.
+    'social.pipeline.disconnect.get_entries',
+
+    # Revoke any access_token when possible.
+    'social.pipeline.disconnect.revoke_tokens',
+
+    # Removes the social associations.
+    'social.pipeline.disconnect.disconnect',
 )
 
 ######### SOCIAL AUTH #################
@@ -176,10 +189,11 @@ SOCIAL_AUTH_LINKEDIN_EXTRA_DATA = [('id', 'id'),
                                    ('firstName', 'first_name'),
                                    ('lastName', 'last_name'),
                                    ('emailAddress', 'email_address'), ]
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/dashboard'
+SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/dashboard/account-settings'
 LOGIN_URL = '/signin/'
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error'
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/dashboard/account-settings'
 SOCIAL_AUTH_CLEAN_USERNAMES = True
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = False
 
@@ -188,7 +202,6 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'full',
     },
 }
-
 
 MESSAGE_TAGS = {
     constants.ERROR: 'danger',
