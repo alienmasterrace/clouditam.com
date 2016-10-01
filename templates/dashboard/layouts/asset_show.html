@@ -79,13 +79,24 @@
                                 {% endfor %}
                                     {% else %}
                                     <tr>
-                                        <td>There is not software assigned for this Asset. Please go <a href="#">here</a> to assign</td>
+                                        <td>There is not software assigned for this Asset.</td>
                                         <td></td>
                                         <td></td>
                                     </tr>
                                 {% endif %}
                                 </tbody>
                             </table>
+                    <div class="form-group">
+                                        <label class="col-sm-8"><select class="form-control" name="software">
+                                                <option value="">Select Software</option>
+                                                {% for choice in softwares %}
+                                                <option value="{{ choice.pk }}">{{ choice.name }}</option>
+                                                {% endfor %}
+                                            </select></label>
+                                        <div class="col-sm-4">
+                                             <button type="submit" class="btn btn-primary">Assign</button>
+                                        </div>
+                                    </div>
 
                     </div>
                 </div>

@@ -92,12 +92,32 @@
                                 {% endif %}
                                 </tbody>
                             </table>
+                            {% if software.seats %}
+
+                            <div class="form-group">
+                                        <label class="col-sm-5"><select class="form-control" name="software">
+                                                <option value="">Select User</option>
+                                                {% for choice in softwares %}
+                                                <option value="{{ choice.pk }}">{{ choice.name }}</option>
+                                                {% endfor %}
+                                            </select></label>
+                                        <label class="col-sm-5"><select class="form-control" name="software">
+                                                <option value="">Select Asset</option>
+                                                {% for choice in softwares %}
+                                                <option value="{{ choice.pk }}">{{ choice.name }}</option>
+                                                {% endfor %}
+                                            </select></label>
+                                        <div class="col-sm-2">
+                                             <button type="submit" class="btn btn-primary">Assign</button>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                </div>
 
                     </div>
                 </div>
+              </div>
             </div>
-        </div>
-    </div>
     {% endif %}
 
     <div class="row">
@@ -150,29 +170,3 @@
         </div>
     </div>
 {% endblock %}
-<table class="table table-striped" cellspacing="0"
-                               width="100%">
-                            <tbody>
-                            <form class="form-horizontal" role="form" action="{% url 'users_new' %}" method="post">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Software</label>
-                                <div class="col-sm-6">
-
-                                    <select class="form-control">
-                                        <option>Select Software</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-primary">Assign</button>
-                                    </div>
-                            </div>
-
-                        </form>
-                            </tbody>
-                        </table>

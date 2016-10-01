@@ -11,7 +11,7 @@
                     </div>
                     <div class="text-box">
                         <p class="maindata">YOUR<b> SUBSCRIPTION</b></p>
-                        <h2>{{ customer.plan_name }}
+                        <h2>{{ request.user.customer.plan_name }}
                         </h2>
                         <div class="clearfix"></div>
                         <br>
@@ -19,22 +19,22 @@
                             <tbody>
                             <tr>
                                 <td>Plan</td>
-                                <td>{{ customer.type }}</td>
+                                <td>{{ request.user.customer.type }}</td>
                             </tr>
                             <tr>
                                 <td>Asset Limit</td>
-                                <td>{{ customer.asset_limit }}</td>
+                                <td>{{ request.user.customer.asset_limit }}</td>
                             </tr>
                             <tr>
                                 <td>Price</td>
-                                <td>${{ customer.price }}</td>
+                                <td>${{ request.user.customer.price }}</td>
                             </tr>
 
                             </tbody>
                         </table>
                         <br>
                         <h2>Details</h2>
-                        <p>{{ customer.details|safe }}</p>
+                        <p>{{ request.user.customer.details|safe }}</p>
 
                         <div class="clearfix"></div>
 
