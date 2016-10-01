@@ -78,7 +78,6 @@ class Account(models.Model):
 
 class Customer(models.Model):
     user = models.OneToOneField(User)
-    fullname = models.CharField(max_length=64, null=True, blank=True)
     company_name = models.CharField(max_length=64, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     address2 = models.CharField(max_length=255, blank=True)
@@ -87,11 +86,11 @@ class Customer(models.Model):
     zip_or_postal = models.CharField(max_length=64, null=True, blank=True)
     country = models.CharField(max_length=64, null=True, blank=True)
     phone_number = models.CharField(max_length=255, null=True, blank=True)
-    plan_name = models.CharField(max_length=64, null=True)
-    asset_limit = models.IntegerField(null=True, default=10)
-    price = models.DecimalField(max_digits=64, decimal_places=2, null=True, default=0)
-    details = RichTextField(null=True, config_name='awesome_ckeditor')
-    type = models.CharField(max_length=64, default="Monthly", choices=PRICE_TYPE)
+    plan_name = models.CharField(max_length=64, null=True, blank=True)
+    asset_limit = models.IntegerField(null=True, default=10, blank=True)
+    price = models.DecimalField(max_digits=64, decimal_places=2, null=True, default=0, blank=True)
+    details = RichTextField(null=True, config_name='awesome_ckeditor', blank=True)
+    type = models.CharField(max_length=64, default="Monthly", choices=PRICE_TYPE, blank=True)
     manufacturers = models.ManyToManyField(Manufacturer, blank=True)
     companies = models.ManyToManyField(Company, blank=True)
     locations = models.ManyToManyField(Location, blank=True)
@@ -104,8 +103,11 @@ class Customer(models.Model):
     def assets_count(self):
         return self.assets.all().count()
 
+    def fullname(self):
+        return self.user.first_name + " " + self.user.last_name
+
     def __str__(self):
-        return self.fullname
+        return self.user.first_name + " " + self.user.last_name
 
 class Header(models.Model):
     bg_image = models.ImageField(default="headers/default.jpg", upload_to="headers")

@@ -1,7 +1,18 @@
 from django import forms
 
 from dashboard.models import Asset, Hardware, Company, Manufacturer, Supplier, Software, DashUser, Location
+from web.models import Customer
 
+
+class AccountForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=255)
+    last_name = forms.CharField(max_length=255)
+    email = forms.EmailField()
+
+    class Meta:
+        model = Customer
+        fields = ['company_name', 'address', 'address2', 'city', 'state', 'zip_or_postal', 'country', 'phone_number']
+        exclude = ['user',]
 
 class AssetForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

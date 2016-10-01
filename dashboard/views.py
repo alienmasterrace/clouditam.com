@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from dashboard.forms import AssetForm, CompanyForm, ManufacturerForm, SupplierForm, SoftwareForm, DashUserForm, \
-    HardwareForm, LocationForm
+    HardwareForm, LocationForm, AccountForm
 from dashboard.models import CATEGORY_TYPES, Asset, Software, DashUser, Supplier, Manufacturer, Location, Company, \
     Hardware
 from web.models import Account
@@ -20,11 +20,29 @@ class DashboardView(View):
 
 class AccountSettingsView(View):
     template_name = 'dashboard/account-settings.html'
+    form_class = AccountForm
 
     @method_decorator(login_required)
     def get(self, request):
-        context = {}
+        form = self.form_class(instance=request.user.customer)
+        context = {"form": form}
         return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = self.form_class(request.POST, instance=request.user.customer)
+        if form.is_valid():
+            obj = form.save()
+            request.user.first_name = form.cleaned_data['first_name']
+            request.user.last_name = form.cleaned_data['last_name']
+            request.user.email = form.cleaned_data['email']
+            request.user.save()
+            message = 'Account settings updated.'
+            messages.add_message(request, messages.SUCCESS, message)
+            return redirect('account-settings')
+        else:
+            message = 'Something happened please try again.'
+            messages.add_message(request, messages.ERROR, message)
+            return self.get(request)
 
 
 class SubscriptionView(View):
@@ -53,12 +71,16 @@ class AssetShowView(View):
         obj = get_object_or_404(Asset, asset_tag=tag, customer=request.user.customer)
         # logs = LogEntry.objects.filter(object_id=obj.id, content_type__id__exact=ContentType.objects.get_for_model(Asset).id)
         logs = obj.history.all().order_by('-timestamp')
-        context = {"asset": obj, "history": logs}
+        context = {"asset": obj, "history": logs, "softwares": Software.objects.filter(customer=request.user.customer)}
         return render(request, self.template_name, context)
 
 class AssetDuplicateView(View):
     @method_decorator(login_required)
     def get(self, request, id_obj):
+        if int(request.user.customer.assets_count()) >= int(request.user.customer.asset_limit):
+            message = 'Unable to duplicate asset. Asset Limit Reached!'
+            messages.add_message(request, messages.ERROR, message)
+            return redirect('assets')
         obj = get_object_or_404(Asset, id=id_obj, customer=request.user.customer)
         try:
             clone = obj.clone()
@@ -132,12 +154,20 @@ class AssetNewView(View):
 
     @method_decorator(login_required)
     def get(self, request):
+        if int(request.user.customer.assets_count()) >= int(request.user.customer.asset_limit):
+            message = 'Unable to create asset. Asset Limit Reached!'
+            messages.add_message(request, messages.ERROR, message)
+            return redirect('assets')
         form = self.form_class(customer=request.user.customer)
         context = {"form": form}
         return render(request, self.template_name, context)
 
     @method_decorator(login_required)
     def post(self, request):
+        if int(request.user.customer.assets_count()) >= int(request.user.customer.asset_limit):
+            message = 'Unable to create asset. Asset Limit Reached!'
+            messages.add_message(request, messages.ERROR, message)
+            return redirect('assets')
         form = self.form_class(request.POST, customer=request.user.customer)
         if form.is_valid():
             obj = form.save()
@@ -229,6 +259,10 @@ class SoftwareShowView(View):
 class SoftwareDuplicateView(View):
     @method_decorator(login_required)
     def get(self, request, id_obj):
+        if int(request.user.customer.assets_count()) >= int(request.user.customer.asset_limit):
+            message = 'Unable to duplicate software. Asset Limit Reached!'
+            messages.add_message(request, messages.ERROR, message)
+            return redirect('software')
         obj = get_object_or_404(Software, id=id_obj, customer=request.user.customer)
         clone = obj.clone()
         # f_l = clone.fullname.split('-')
@@ -286,12 +320,20 @@ class SoftwareNewView(View):
 
     @method_decorator(login_required)
     def get(self, request):
+        if int(request.user.customer.assets_count()) >= int(request.user.customer.asset_limit):
+            message = 'Unable to create software. Asset Limit Reached!'
+            messages.add_message(request, messages.ERROR, message)
+            return redirect('software')
         form = self.form_class(customer=request.user.customer)
         context = {"form": form}
         return render(request, self.template_name, context)
 
     @method_decorator(login_required)
     def post(self, request):
+        if int(request.user.customer.assets_count()) >= int(request.user.customer.asset_limit):
+            message = 'Unable to create software. Asset Limit Reached!'
+            messages.add_message(request, messages.ERROR, message)
+            return redirect('software')
         form = self.form_class(request.POST, customer=request.user.customer)
         if form.is_valid():
             obj = form.save()
@@ -420,6 +462,10 @@ class HardwareView(View):
 class HardwareDuplicateView(View):
     @method_decorator(login_required)
     def get(self, request, id_obj):
+        if int(request.user.customer.assets_count()) >= int(request.user.customer.asset_limit):
+            message = 'Unable to duplicate hardware. Asset Limit Reached!'
+            messages.add_message(request, messages.ERROR, message)
+            return redirect('hardware')
         obj = get_object_or_404(Hardware, id=id_obj, customer=request.user.customer)
         clone = obj.clone()
         # f_l = clone.fullname.split('-')
@@ -477,12 +523,20 @@ class HardwareNewView(View):
 
     @method_decorator(login_required)
     def get(self, request):
+        if int(request.user.customer.assets_count()) >= int(request.user.customer.asset_limit):
+            message = 'Unable to create hardware. Asset Limit Reached!'
+            messages.add_message(request, messages.ERROR, message)
+            return redirect('hardware')
         form = self.form_class(customer=request.user.customer)
         context = {"form": form}
         return render(request, self.template_name, context)
 
     @method_decorator(login_required)
     def post(self, request):
+        if int(request.user.customer.assets_count()) >= int(request.user.customer.asset_limit):
+            message = 'Unable to create hardware. Asset Limit Reached!'
+            messages.add_message(request, messages.ERROR, message)
+            return redirect('hardware')
         form = self.form_class(request.POST, customer=request.user.customer)
         if form.is_valid():
             obj = form.save()

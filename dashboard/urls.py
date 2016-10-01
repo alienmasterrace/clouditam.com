@@ -52,4 +52,10 @@ urlpatterns = [
     url(r'^supplier/edit/(?P<id_obj>[\w-]+)/$', SupplierEditView.as_view(), name='supplier_edit'),
     url(r'^supplier/duplicate/(?P<id_obj>[\w-]+)/$', SupplierDuplicateView.as_view(), name='supplier_duplicate'),
     url(r'^supplier/delete/(?P<id_obj>[\w-]+)/$', SupplierDeleteView.as_view(), name='supplier_delete'),
+    url(r'^assign/asset-to-user/(?P<asset_id>[\w-]+)/(?P<user_id>[\w-]+)/$', AssignAssetToUser.as_view(),
+        name='assign_asset_to_user'),
+    url(r'^assign/software-to-asset/(?P<software_id>[\w-]+)/(?P<asset_id>[\w-]+)/$', AssignSoftwareToAsset.as_view(),
+        name='assign_software_to_asset'),
+    url(r'^assign/software-to-user/(?P<software_id>[\w-]+)/(?P<user_id>[\w-]+)/$', AssignSoftwareToUser.as_view(),
+        name='assign_software_to_user'),
 ]
