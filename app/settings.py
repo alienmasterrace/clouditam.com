@@ -43,7 +43,7 @@ INSTALLED_APPS = (
     'dashboard',
     'web',
     'api',
-    'ecommerce'
+    'ecommerce',
     'rest_framework',
     'auditlog',
 )
