@@ -16,6 +16,7 @@ pip install -r requirements.txt
 ```
 ## Running application
 ```bash
+python manage.py migrate
 python manage.py runsever
 ```
 
