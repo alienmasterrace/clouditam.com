@@ -106,10 +106,10 @@ elif not DEVELOPMENT:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'clouditamrds01db01',
-            'USER': 'clouditamdbconn',
-            'PASSWORD': 'WyP8Nj6x9KeA4Rv7s',
-            'HOST': 'clouditamrds01.ccaxddwfxkwc.eu-central-1.rds.amazonaws.com',
+            'NAME': '34o3RsDxT6D1_DB',
+            'USER': 'ubuntu',
+            'PASSWORD': '12qwaszxcv!',
+            'HOST': '10.1.29.19',
             'PORT': '5432',
         }
     }
