@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 from app import settings
+from ecommerce.views import test
 from web.views import SignInView, LogoutView
 from web.views import SignUpView
 
@@ -29,6 +30,7 @@ urlpatterns = [
     url(r'^signin/$', SignInView.as_view(), name='signin'),
     url(r'^signup/$', SignUpView.as_view(), name='signup'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
+    url(r'^test/$', test)
 ]
 
 if settings.DEBUG:
@@ -37,7 +39,7 @@ if settings.DEBUG:
         url(r'^api/v1/', include('api.urls')),
     ]
     urlpatterns += features
-MAINTENANCE = True
+MAINTENANCE = False
 if MAINTENANCE:
     urlpatterns += [
     url(r'^$', TemplateView.as_view(template_name='web/maintenance.html'), name="index"),

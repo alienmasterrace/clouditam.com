@@ -1,6 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login, get_user_model
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.utils.datetime_safe import datetime
 from django.views.generic import View
 from web.forms import SignUpForm, SignInForm
@@ -83,9 +84,11 @@ class SignUpView(View):
             # TODO: Simdilik active!
             user.is_active = True
             user.save()
+            message = 'You signed-up successfully!'
+            messages.add_message(request, messages.SUCCESS, message)
             u = authenticate(username=form.data['username'], password=form.data['password'])
             login(request, u)
-            return HttpResponseRedirect('/')
+            return redirect('account-settings')
         else:
             error_msg = ""
             if form['username'].errors:

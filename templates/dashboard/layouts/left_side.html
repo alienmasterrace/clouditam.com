@@ -50,7 +50,7 @@
             <div class="progress progress-xs">
                 <div data-toggle="tooltip" title="Current Assets {{ request.user.customer.assets.all.count }}/{{ request.user.customer.asset_limit }}" class="progress-bar bg-green-1"
                      role="progressbar" aria-valuenow="{{ request.user.customer.assets.all.count }}" aria-valuemin="0"
-                     aria-valuemax="100" style="width: 13%">
+                     aria-valuemax="100" style="width: {{ bar }}%">
                 </div>
             </div>
         </div>

@@ -13,6 +13,7 @@ django-filter==0.13.0
 django-jsonfield==1.0.1
 django-phonenumber-field==1.1.0
 djangorestframework==3.3.3
+iyzipay==1.0.21
 lxml==3.6.0
 Markdown==2.6.6
 oauthlib==1.1.2
