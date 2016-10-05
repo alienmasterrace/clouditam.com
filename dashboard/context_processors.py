@@ -1,4 +1,3 @@
 def bar(request):
-    if request.user.customer:
+    if not request.user.is_anonymous():
         return {"bar": 100 * (len(request.user.customer.assets.all()) / request.user.customer.asset_limit)}
-
