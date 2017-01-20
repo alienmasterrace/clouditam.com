@@ -11,8 +11,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 # CloudITAM Web Project
 
-## Documentation
-https://github.com/dogukankotan/clouditam-web/wiki
 
 # Development
 Make sure
